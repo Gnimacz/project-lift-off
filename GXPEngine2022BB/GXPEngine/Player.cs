@@ -12,7 +12,7 @@ namespace GXPEngine
     {
         private float speed = 200;
         private Vector2 velocity = new Vector2(0, 0);
-        private float rotationSpeed = 1.0f;
+        private float rotationSpeed = 1.5f;
 
         private Vector2 bulletSpawnPoints = new Vector2(0, 0);
 
@@ -22,8 +22,9 @@ namespace GXPEngine
         {
             SetOrigin(width / 2, height / 2);
 
-            bulletSpawnPoint.SetXY(50, 50);
-            AddChild(bulletSpawnPoint);
+            bulletSpawnPoint.SetXY(x, y);
+
+            LateAddChild(bulletSpawnPoint);
 
         }
 
@@ -63,9 +64,10 @@ namespace GXPEngine
             }
 
             //shooting
-            if (Input.GetKey(Key.SPACE))
+            if (Input.GetKeyDown(Key.SPACE))
             {
                 Shoot();
+                ControllerInput.GetControllerState();
             }
 
             ControllerInput.GetControllerState();
@@ -75,12 +77,12 @@ namespace GXPEngine
 
         void Shoot()
         {
-            Bullet projectile = new Bullet("circle.png", 200, 0, -1);
+            Bullet projectile = new Bullet("circle.png", 500, 0, -1);
             EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
             projectile.SetOrigin(projectile.width/ 2, projectile.height / 2);
             projectile.rotation = rotation;
-            projectile.SetXY(bulletSpawnPoint.x, bulletSpawnPoint.y);
-            canvas.AddChild(projectile);
+            projectile.SetXY(x, y);
+            canvas.AddChildAt(projectile, canvas.GetChildCount() - 1);
             
         }
     }

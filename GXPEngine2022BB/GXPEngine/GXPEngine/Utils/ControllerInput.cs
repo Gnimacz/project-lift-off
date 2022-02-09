@@ -10,6 +10,7 @@ using SharpDX.DirectInput;
 using SharpDX.IO;
 using SharpDX;
 using XInput;
+using System.IO.Ports;
 
 
 namespace GXPEngine
@@ -20,6 +21,14 @@ namespace GXPEngine
 
         public static void GetControllerState()
         {
+            String[] ports = SerialPort.GetPortNames();
+            Console.WriteLine(ports.Length);
+            foreach (String port in ports)
+            {
+                Console.WriteLine("found port: " + port);
+
+            }
+
             return;
             
             
