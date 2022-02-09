@@ -6,6 +6,8 @@ public class MyGame : Game
 {
 	public MyGame() : base(800, 600, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
+		
+
 		// Draw some things on a canvas:
 		EasyDraw canvas = new EasyDraw(800, 600);
 		canvas.Clear(Color.MediumPurple);

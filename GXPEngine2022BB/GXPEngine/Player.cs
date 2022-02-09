@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using GXPEngine;
 using GXPEngine.Core;
 
@@ -26,6 +26,9 @@ namespace GXPEngine
 
             LateAddChild(bulletSpawnPoint);
 
+            Thread thread = new Thread(ControllerInput.GetControllerState);
+            thread.Start();
+
         }
 
         void Update()
@@ -35,6 +38,7 @@ namespace GXPEngine
 
         private void Movement()
         {
+
             velocity = new Vector2(0, 0);
             if (Input.GetKey(Key.A))
             {
@@ -64,13 +68,12 @@ namespace GXPEngine
             }
 
             //shooting
-            if (Input.GetKeyDown(Key.SPACE))
+            if (ControllerInput.buttonPressed == 1)
             {
                 Shoot();
-                ControllerInput.GetControllerState();
             }
 
-            ControllerInput.GetControllerState();
+
             Move(velocity.x * speed * Time.deltaTime/1000f, velocity.y * speed * Time.deltaTime/1000f);
         }
 
