@@ -22,7 +22,10 @@ namespace GXPEngine
         public static void GetControllerState()
         {
             String[] ports = SerialPort.GetPortNames();
-            Console.WriteLine(ports.Length);
+            if(ports == null)
+            {
+                throw new Exception("Ports is null");
+            }
             foreach (String port in ports)
             {
                 Console.WriteLine("found port: " + port);
