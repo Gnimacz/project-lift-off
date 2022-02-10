@@ -31,3 +31,4 @@ D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEn
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.pdb
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Elementary.dll
+D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csprojAssemblyReference.cache

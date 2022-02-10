@@ -62,15 +62,16 @@ namespace GXPEngine
             {
                 velocity.y = 1;
             }
-
             //rotation
-            if(ControllerInput.joystickX <= 0.01 && ControllerInput.joystickX >= -0.01 || ControllerInput.joystickY <= 0.03 && ControllerInput.joystickY >= -0.03)
+            if (ControllerInput.joystickX <= 0.03 && ControllerInput.joystickX >= -0.03 || ControllerInput.joystickY <= 0.03 && ControllerInput.joystickY >= -0.03)
             {
                 rotation = lastRotation;
+                
             }
             else
             {
                 rotation = CalculateRotation(new Vector2(x - ControllerInput.joystickX, y - ControllerInput.joystickY));
+                rotation = Elementary.Mathf.Lerp(lastRotation, rotation, 0.1f);
                 lastRotation = rotation;
             }
 
