@@ -36,6 +36,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="Elementary, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elementary.1.0.5\lib\net40\Elementary.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -48,24 +51,6 @@
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyModel, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyModel.5.0.0\lib\net461\Microsoft.Extensions.DependencyModel.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.4.2.0\lib\net45\SharpDX.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DirectInput, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.DirectInput.4.2.0\lib\net45\SharpDX.DirectInput.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.RawInput, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.RawInput.4.2.0\lib\net45\SharpDX.RawInput.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.XInput, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.XInput.4.2.0\lib\net45\SharpDX.XInput.dll</HintPath>
-    </Reference>
-    <Reference Include="Silk.NET.Core, Version=2.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Silk.NET.Core.2.13.0\lib\netstandard2.0\Silk.NET.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Silk.NET.XInput, Version=2.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Silk.NET.XInput.2.13.0\lib\netstandard2.0\Silk.NET.XInput.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -101,12 +86,6 @@
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Vortice.XInput, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5431ec61a7e925da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Vortice.XInput.2.1.0\lib\netstandard2.0\Vortice.XInput.dll</HintPath>
-    </Reference>
-    <Reference Include="XInput.Wrapper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XInput.Wrapper.0.3.1\lib\net40\XInput.Wrapper.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bullet.cs" />

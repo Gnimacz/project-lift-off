@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using GXPEngine;
 using GXPEngine.Core;
+using Elementary;
+using Elementary.Forms;
 
 namespace GXPEngine
 {
@@ -62,12 +64,9 @@ namespace GXPEngine
             }
 
             //rotation
-            if(ControllerInput.joystickX <= 0.03 && ControllerInput.joystickX >= -0.03)
+            if(ControllerInput.joystickX <= 0.01 && ControllerInput.joystickX >= -0.01 || ControllerInput.joystickY <= 0.03 && ControllerInput.joystickY >= -0.03)
             {
-                if(ControllerInput.joystickY <= 0.03 && ControllerInput.joystickY >= -0.03)
-                {
-                    rotation = lastRotation;
-                }
+                rotation = lastRotation;
             }
             else
             {
@@ -88,7 +87,7 @@ namespace GXPEngine
                 
             }
 
-            Move(velocity.x * speed * Time.deltaTime/1000f, velocity.y * speed * Time.deltaTime/1000f);
+            Translate(velocity.x * speed * Time.deltaTime/1000f, velocity.y * speed * Time.deltaTime/1000f);
             
         }
 
@@ -142,7 +141,6 @@ namespace GXPEngine
             {
                 rotation = 270 + Mathf.Acos(cos) * 360 / (Mathf.PI * 2);
             }
-            Console.WriteLine(rotation);
             return rotation;
         }
     }
