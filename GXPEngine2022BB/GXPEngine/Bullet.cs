@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +14,7 @@ namespace GXPEngine
         private Vector2 movementDir;
 
 
-        public Bullet(String bulletImage, float bulletSpeed, float xDirection, float yDirection) : base(bulletImage, true)
+        public Bullet(String bulletImage, float bulletSpeed, float xDirection, float yDirection, bool canHarmPlayer) : base(bulletImage, true)
         {
             movementSpeed = bulletSpeed;
             movementDir = new Vector2(xDirection, yDirection);
@@ -29,5 +29,6 @@ namespace GXPEngine
         {
             Move(movementDir.x * movementSpeed * Time.deltaTime / 1000f, movementDir.y * movementSpeed * Time.deltaTime / 1000f);
         }
+        
     }
 }
