@@ -16,11 +16,16 @@ namespace GXPEngine
     {
         static SerialPort serialPort;
 
-        public static int buttonPressed = 0;
+        public static int D2State = 0;             // variable for reading the pushbutton status of D2
+        public static int D3State = 0;             // variable for reading the pushbutton status of D3
+        public static int D4State = 0;             // variable for reading the pushbutton status of D4
+        public static int D5State = 0;             // variable for reading the pushbutton status of D5
+        public static int D6State = 0;             // variable for reading the pushbutton status of D6
+        public static int D7State = 0;             // variable for reading the pushbutton status of D7
+        public static int D8State = 0;             // variable for reading the pushbutton status of D8
         static float _joystickX = 512;
         static float _joystickY = 512;
 
-        private static bool handshakeDone = false;
         public static void GetControllerState()
         {
             try
@@ -45,22 +50,22 @@ namespace GXPEngine
 
                 while (serialPort.IsOpen)
                 {
-                    string[] message = new string[9];
+                    string[] message = new string[10];
                     String a = "";
                     a = serialPort.ReadLine();
                     message = a.Split(' ');
-                    //Console.WriteLine(message[1]);
 
-                    if (message[0] == "1")
-                    {
-                        buttonPressed = 1;
-                        
+                    D2State = int.Parse(message[0]);             // variable for reading the pushbutton status of D2
+                    D3State = int.Parse(message[1]);             // variable for reading the pushbutton status of D3
+                    D4State = int.Parse(message[2]);             // variable for reading the pushbutton status of D4
+                    D5State = int.Parse(message[3]);             // variable for reading the pushbutton status of D5
+                    D6State = int.Parse(message[4]);             // variable for reading the pushbutton status of D6
+                    D7State = int.Parse(message[5]);             // variable for reading the pushbutton status of D7
+                    D8State = int.Parse(message[6]);             // variable for reading the pushbutton status of D8
 
-                    }
-                    if (buttonPressed == 1 && message[0] == "0") { buttonPressed = 0; }
+                    _joystickX = float.Parse(message[7]) / 100f;
+                    _joystickY = float.Parse(message[8]) / 100f;
 
-                    _joystickX = float.Parse(message[1]) / 100f;
-                    _joystickY = float.Parse(message[2]) / 100f;
 
 
                 }
@@ -83,6 +88,36 @@ namespace GXPEngine
         {
             serialPort.Close();
         }
+
+        public static int Button2
+        {
+            get { return D2State; }
+        }
+        public static int Button3
+        {
+            get { return D3State; }
+        }
+        public static int Button4
+        {
+            get { return D4State; }
+        }
+        public static int Button5
+        {
+            get { return D5State; }
+        }
+        public static int Button6
+        {
+            get { return D6State; }
+        }
+        public static int Button7
+        {
+            get { return D7State; }
+        }
+        public static int Button8
+        {
+            get { return D8State; }
+        }
+
 
         public static float joystickX
         {

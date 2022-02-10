@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using GXPEngine;
 using GXPEngine.Core;
 
@@ -12,12 +13,14 @@ namespace GXPEngine
     {
         private float speed = 200;
         private Vector2 velocity = new Vector2(0, 0);
-        private float rotationSpeed = 1.5f;
 
         private Vector2 bulletSpawnPoints = new Vector2(0, 0);
 
         private Pivot bulletSpawnPoint = new Pivot();
         private float lastRotation = 0;
+        private bool canShoot = true;
+        private int shootDelay = 100;       //delay between bullet shots in ms
+
 
         public Player() : base("triangle.png")
         {
@@ -41,19 +44,19 @@ namespace GXPEngine
         {
             
             velocity = new Vector2(0, 0);
-            if (Input.GetKey(Key.A))
+            if (ControllerInput.Button3 == 1)
             {
                 velocity.x = -1;
             }
-            if (Input.GetKey(Key.D))
+            if (ControllerInput.Button6 == 1)
             {
                 velocity.x = 1;
             }
-            if (Input.GetKey(Key.W))
+            if (ControllerInput.Button4 == 1)
             {
                 velocity.y = -1;
             }
-            if (Input.GetKey(Key.S))
+            if (ControllerInput.Button5 == 1)
             {
                 velocity.y = 1;
             }
@@ -74,12 +77,19 @@ namespace GXPEngine
 
             
             //shooting
-            if (ControllerInput.buttonPressed == 1)
+            if (ControllerInput.Button7 == 1)
             {
-                Shoot();
+                if (canShoot)
+                {
+                    Shoot();
+                    canShoot = false;
+                    ShootTimer(shootDelay);
+                }
+                
             }
 
             Move(velocity.x * speed * Time.deltaTime/1000f, velocity.y * speed * Time.deltaTime/1000f);
+            
         }
 
 
@@ -94,6 +104,20 @@ namespace GXPEngine
             
             
             
+        }
+
+
+        // <summary>
+        // Waits for a certain amount of time before allowing the player to shoot again.
+        // </summary>
+        // <param name="timeToWait">
+        // The time to wait in Miliseconds</param>
+        // <returns>void</returns>
+        async void ShootTimer(int timeToWait)
+        {
+            await Task.Delay(timeToWait);
+            canShoot = true;
+            Console.WriteLine("Done!");
         }
 
         //thanks Dan :)
