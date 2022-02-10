@@ -13,6 +13,8 @@ using TiledMapParser;
 public class Grunt : Sprite {
         private float speed = 0.3f;
         private Sprite target;
+        private float desiredRotation = 0f;
+        private float rotationSpeed = 0.2f;
         private bool isMoving = false;
         private int lastShootTime = 0;
         private int shootIntervals = 700;
@@ -26,7 +28,9 @@ public class Grunt : Sprite {
 
         void Update() {
             Movement();
-            SetRotation();
+            SetRotationBetween360();
+            SetDesiredRotation();
+            SlowRotation();
             if (Time.time > lastShootTime) {
                Shoot();
                lastShootTime = Time.time + shootIntervals;
@@ -51,38 +55,58 @@ public class Grunt : Sprite {
             canvas.AddChildAt(projectile, canvas.GetChildCount() - 1);
         }
         
-        void SetRotation() {
+        void SetDesiredRotation() {
             float diffX = target.x - x;
             float diffY = target.y - y;
             float cos = Mathf.Abs(diffX) / Mathf.Sqrt(Mathf.Pow(Mathf.Abs(diffX), 2) + Mathf.Pow(Mathf.Abs(diffY), 2)); // calculate cos of desired angle
             if (diffX > float.Epsilon && diffY < float.Epsilon) {
-                rotation = 90 - Mathf.Acos(cos) * 360 / (Mathf.PI * 2); // set rotation in degrees
+                desiredRotation = 90 - Mathf.Acos(cos) * 360 / (Mathf.PI * 2); // set rotation in degrees
             }
             else if (diffX > float.Epsilon && diffY > float.Epsilon) {
-                rotation = 90 + Mathf.Acos(cos) * 360 / (Mathf.PI * 2);
+                desiredRotation = 90 + Mathf.Acos(cos) * 360 / (Mathf.PI * 2);
             }
             else if (diffX < float.Epsilon && diffY > float.Epsilon) {
-                rotation = 270 - Mathf.Acos(cos) * 360 / (Mathf.PI * 2);
+                desiredRotation = 270 - Mathf.Acos(cos) * 360 / (Mathf.PI * 2);
             }
             else {
-                rotation = 270 + Mathf.Acos(cos) * 360 / (Mathf.PI * 2);
+                desiredRotation = 270 + Mathf.Acos(cos) * 360 / (Mathf.PI * 2);
             }
         }
 
         void Movement() {
             float lengthToPoint = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(movePoint.x - x), 2) + Mathf.Pow(Mathf.Abs(movePoint.y - y), 2));
-            Console.WriteLine("{0}, {1}", Mathf.Sqrt(Mathf.Pow(Mathf.Abs(movePoint.x - x) / lengthToPoint, 2) +
-                                                     Mathf.Pow(Mathf.Abs(movePoint.y - y) / lengthToPoint, 2)) * speed * Time.deltaTime, lengthToPoint);
-            Console.WriteLine("x = {0}, y = {1}", movePoint.x, movePoint.y);
             if (Mathf.Sqrt(Mathf.Pow(Mathf.Abs(movePoint.x - x) / lengthToPoint, 2) +
-                Mathf.Pow(Mathf.Abs(movePoint.y - y) / lengthToPoint, 2)) * speed * Time.deltaTime > lengthToPoint) {
+                           Mathf.Pow(Mathf.Abs(movePoint.y - y) / lengthToPoint, 2)) * speed * Time.deltaTime > lengthToPoint) {
                 ChoseMovement();   
             }
             else {  
                 Translate((movePoint.x - x) / lengthToPoint * speed * Time.deltaTime, (movePoint.y - y) / lengthToPoint * speed * Time.deltaTime);
             }
-
-            Console.WriteLine(Utils.frameRate);
-
         }
-    }
+
+        void SetRotationBetween360() {
+            if (rotation < float.Epsilon)
+                rotation = 360 + rotation;
+            else
+                rotation = rotation % 360;
+        }
+
+        void SlowRotation() {
+            float positiveTurn = desiredRotation - rotation;
+            float degreeToTurn = 0f;
+            Console.WriteLine("{0} - {1} = {2}", desiredRotation, rotation, positiveTurn);
+            if (positiveTurn > float.Epsilon) {
+                if (positiveTurn - 180 < float.Epsilon) degreeToTurn = positiveTurn;
+                else degreeToTurn = -positiveTurn;
+            }
+            else {
+                if (Mathf.Abs(positiveTurn) - 180 > float.Epsilon) degreeToTurn = -positiveTurn;
+                else degreeToTurn = positiveTurn;
+            }
+            if(Mathf.Abs(degreeToTurn) - rotationSpeed * Time.deltaTime < float.Epsilon)
+                rotation = desiredRotation;
+            else {
+                rotation += Mathf.Sign(degreeToTurn) * rotationSpeed * Time.deltaTime;
+            }
+        }
+}
