@@ -17,6 +17,7 @@ namespace GXPEngine
         private Vector2 bulletSpawnPoints = new Vector2(0, 0);
 
         private Pivot bulletSpawnPoint = new Pivot();
+        private float lastRotation = 0;
 
         public Player() : base("triangle.png")
         {
@@ -38,7 +39,7 @@ namespace GXPEngine
 
         private void Movement()
         {
-
+            
             velocity = new Vector2(0, 0);
             if (Input.GetKey(Key.A))
             {
@@ -58,21 +59,25 @@ namespace GXPEngine
             }
 
             //rotation
-            if (Input.GetKey(Key.LEFT))
+            if(ControllerInput.joystickX <= 0.03 && ControllerInput.joystickX >= -0.03)
             {
-                rotation -= rotationSpeed;
+                if(ControllerInput.joystickY <= 0.03 && ControllerInput.joystickY >= -0.03)
+                {
+                    rotation = lastRotation;
+                }
             }
-            if (Input.GetKey(Key.RIGHT))
+            else
             {
-                rotation += rotationSpeed;
+                rotation = CalculateRotation(new Vector2(x - ControllerInput.joystickX, y - ControllerInput.joystickY));
+                lastRotation = rotation;
             }
 
+            
             //shooting
             if (ControllerInput.buttonPressed == 1)
             {
                 Shoot();
             }
-
 
             Move(velocity.x * speed * Time.deltaTime/1000f, velocity.y * speed * Time.deltaTime/1000f);
         }
@@ -87,6 +92,34 @@ namespace GXPEngine
             projectile.SetXY(x, y);
             canvas.AddChildAt(projectile, canvas.GetChildCount() - 1);
             
+            
+            
+        }
+
+        //thanks Dan :)
+        float CalculateRotation(Vector2 target)
+        {
+            float diffX = target.x - x;
+            float diffY = target.y - y;
+            float cos = Mathf.Abs(diffX) / Mathf.Sqrt(Mathf.Pow(Mathf.Abs(diffX), 2) + Mathf.Pow(Mathf.Abs(diffY), 2)); // calculate cos of desired angle
+            if (diffX > float.Epsilon && diffY < float.Epsilon)
+            {
+                rotation = 90 - Mathf.Acos(cos) * 360 / (Mathf.PI * 2); // set rotation in degrees
+            }
+            else if (diffX > float.Epsilon && diffY > float.Epsilon)
+            {
+                rotation = 90 + Mathf.Acos(cos) * 360 / (Mathf.PI * 2);
+            }
+            else if (diffX < float.Epsilon && diffY > float.Epsilon)
+            {
+                rotation = 270 - Mathf.Acos(cos) * 360 / (Mathf.PI * 2);
+            }
+            else
+            {
+                rotation = 270 + Mathf.Acos(cos) * 360 / (Mathf.PI * 2);
+            }
+            Console.WriteLine(rotation);
+            return rotation;
         }
     }
 }
