@@ -16,7 +16,13 @@ public class MyGame : Game {
         grunt.SetXY(width/2, height/2);
         canvas.AddChild(grunt);
         grunt.SetTarget(player);
-        
+
+        SuicideBoi suicideBoi = new SuicideBoi();
+        suicideBoi.SetXY(width/3, height);
+        Console.WriteLine("{0}, {1}", suicideBoi.x, suicideBoi.y);
+        canvas.AddChild(suicideBoi);
+        suicideBoi.SetTarget(player);
+
         // Add the canvas to the engine to display it:
         AddChild(canvas);
         Console.WriteLine("MyGame initialized");

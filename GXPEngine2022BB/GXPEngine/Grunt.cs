@@ -8,14 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using GXPEngine.Core;
 using GXPEngine;
-using TiledMapParser;
 
 public class Grunt : Sprite {
         private float speed = 0.3f;
         private Sprite target;
         private float desiredRotation = 0f;
         private float rotationSpeed = 0.2f;
-        private bool isMoving = false;
         private int lastShootTime = 0;
         private int shootIntervals = 700;
         private Vector2 movePoint;
@@ -31,10 +29,10 @@ public class Grunt : Sprite {
             SetRotationBetween360();
             SetDesiredRotation();
             SlowRotation();
-            if (Time.time > lastShootTime) {
-               Shoot();
-               lastShootTime = Time.time + shootIntervals;
-             }
+            if (Time.time > lastShootTime) { 
+                Shoot(); 
+                lastShootTime = Time.time + shootIntervals;
+            }
         }
 
         void ChoseMovement() {
@@ -54,7 +52,19 @@ public class Grunt : Sprite {
             projectile.SetXY(x, y);
             canvas.AddChildAt(projectile, canvas.GetChildCount() - 1);
         }
-        
+
+        void ShootLevelTwo() {
+            Bullet[] projectiles = new Bullet[3];
+            EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
+            for (int i = 0; i < 3; i++) {
+                projectiles[i] = new Bullet("circle.png", 500, 0, -1, true);
+                projectiles[i].SetOrigin(projectiles[i].width/ 2, projectiles[i].height / 2);
+                projectiles[i].rotation = rotation - 45 + i * 45;
+                projectiles[i].SetXY(x, y);
+                canvas.AddChildAt(projectiles[i], canvas.GetChildCount() - 1);
+            }
+        }
+
         void SetDesiredRotation() {
             float diffX = target.x - x;
             float diffY = target.y - y;
@@ -94,7 +104,6 @@ public class Grunt : Sprite {
         void SlowRotation() {
             float positiveTurn = desiredRotation - rotation;
             float degreeToTurn = 0f;
-            Console.WriteLine("{0} - {1} = {2}", desiredRotation, rotation, positiveTurn);
             if (positiveTurn > float.Epsilon) {
                 if (positiveTurn - 180 < float.Epsilon) degreeToTurn = positiveTurn;
                 else degreeToTurn = -positiveTurn;
