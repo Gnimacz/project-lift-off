@@ -19,7 +19,10 @@ namespace GXPEngine
         private Vector2 bulletSpawnPoints = new Vector2(0, 0);
 
         private Pivot bulletSpawnPoint = new Pivot();
+        
         private float lastRotation = 0;
+        private float desiredRotation = 0;
+
         private bool canShoot = true;
         private int shootDelay = 100;       //delay between bullet shots in ms
 
@@ -63,19 +66,28 @@ namespace GXPEngine
                 velocity.y = 1;
             }
             //rotation
-            if (ControllerInput.joystickX <= 0.03 && ControllerInput.joystickX >= -0.03 || ControllerInput.joystickY <= 0.03 && ControllerInput.joystickY >= -0.03)
+            if (ControllerInput.joystickX <= 0.01 && ControllerInput.joystickX >= -0.01)
             {
-                rotation = lastRotation;
-                
+                if(ControllerInput.joystickY <= 0.01 && ControllerInput.joystickY >= -0.01)
+                {
+                    rotation = lastRotation;
+                }
             }
             else
             {
-                rotation = CalculateRotation(new Vector2(x - ControllerInput.joystickX, y - ControllerInput.joystickY));
-                rotation = Elementary.Mathf.Lerp(lastRotation, rotation, 0.1f);
+                desiredRotation = CalculateRotation(new Vector2(x - ControllerInput.joystickX, y - ControllerInput.joystickY));
+                SetRotationBetween360();
+                SlowRotation(0.2f);
                 lastRotation = rotation;
             }
 
-            
+            //make sure cardinal directions work with joystick
+            if(ControllerInput.joystickX <= -0.98 && ControllerInput.joystickY <= 0.01 && ControllerInput.joystickY >= -0.01) { rotation = 90; }
+            if (ControllerInput.joystickX >= 0.98 && ControllerInput.joystickY <= 0.01 && ControllerInput.joystickY >= -0.01) { rotation = -90; }
+            if (ControllerInput.joystickY >= 0.98 && ControllerInput.joystickY > 0.0 && ControllerInput.joystickX <= 0.01 && ControllerInput.joystickX >= -0.01) { rotation = 0; }
+            if (ControllerInput.joystickY <= -0.98 && ControllerInput.joystickY < 0.0 && ControllerInput.joystickX <= 0.01 && ControllerInput.joystickX >= -0.01) { rotation = 180; }
+
+
             //shooting
             if (ControllerInput.Button7 == 1)
             {
@@ -144,5 +156,36 @@ namespace GXPEngine
             }
             return rotation;
         }
+
+        void SetRotationBetween360()
+        {
+            if (rotation < float.Epsilon)
+                rotation = 360 + rotation;
+            else
+                rotation = rotation % 360;
+        }
+
+        void SlowRotation(float rotationSpeed)
+        {
+            float positiveTurn = desiredRotation - rotation;
+            float degreeToTurn = 0f;
+            if (positiveTurn > float.Epsilon)
+            {
+                if (positiveTurn - 180 < float.Epsilon) degreeToTurn = positiveTurn;
+                else degreeToTurn = -positiveTurn;
+            }
+            else
+            {
+                if (Mathf.Abs(positiveTurn) - 180 > float.Epsilon) degreeToTurn = -positiveTurn;
+                else degreeToTurn = positiveTurn;
+            }
+            if (Mathf.Abs(degreeToTurn) - rotationSpeed * Time.deltaTime < float.Epsilon)
+                rotation = desiredRotation;
+            else
+            {
+                rotation += Mathf.Sign(degreeToTurn) * rotationSpeed * Time.deltaTime;
+            }
+        }
+
     }
 }
