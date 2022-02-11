@@ -15,9 +15,10 @@ using GXPEngine;
         private float desiredRotation = 0f;
         private Sprite target;
         
-        public SuicideBoi() : base("square.png")
+        public SuicideBoi() : base("Suicide.png")
         {
             SetOrigin(width / 2, height / 2);
+            SetScaleXY(0.3f, -0.3f);
         }
 
         void Update() {

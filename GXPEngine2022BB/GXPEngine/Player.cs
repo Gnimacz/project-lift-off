@@ -10,16 +10,16 @@ namespace GXPEngine
 {
     public class Player : Sprite
     {
-        private float speed = 200;
+        private float speed = 300f;
         private Vector2 velocity = new Vector2(0, 0);
         private float rotationSpeed = 1.5f;
 
         private Pivot bulletSpawnPoint = new Pivot();
 
-        public Player() : base("triangle.png")
+        public Player() : base("player.png")
         {
             SetOrigin(width / 2, height / 2);
-
+            SetScaleXY(0.3f, 0.3f);
         }
 
         void Update()

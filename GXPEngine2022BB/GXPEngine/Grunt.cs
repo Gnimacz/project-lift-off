@@ -18,9 +18,10 @@ public class Grunt : Sprite {
         private int shootIntervals = 700;
         private Vector2 movePoint;
         
-        public Grunt() : base("square.png")
+        public Grunt() : base("Grunt.png")
         {
             SetOrigin(width / 2, height / 2);
+            SetScaleXY(0.3f, -0.3f);
             ChoseMovement();
         }
 
@@ -50,7 +51,7 @@ public class Grunt : Sprite {
             projectile.SetOrigin(projectile.width/ 2, projectile.height / 2);
             projectile.rotation = rotation;
             projectile.SetXY(x, y);
-            canvas.AddChildAt(projectile, canvas.GetChildCount() - 1);
+            canvas.AddChildAt(projectile, 0);
         }
 
         void ShootLevelTwo() {
@@ -61,7 +62,7 @@ public class Grunt : Sprite {
                 projectiles[i].SetOrigin(projectiles[i].width/ 2, projectiles[i].height / 2);
                 projectiles[i].rotation = rotation - 45 + i * 45;
                 projectiles[i].SetXY(x, y);
-                canvas.AddChildAt(projectiles[i], canvas.GetChildCount() - 1);
+                canvas.AddChildAt(projectiles[i], 0);
             }
         }
 
