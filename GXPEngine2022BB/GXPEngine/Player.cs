@@ -16,8 +16,6 @@ namespace GXPEngine
         private float speed = 300;
         private Vector2 velocity = new Vector2(0, 0);
 
-        private Vector2 bulletSpawnPoints = new Vector2(0, 0);
-
         private Pivot bulletSpawnPoint = new Pivot();
         
         private float lastRotation = 0;
@@ -25,12 +23,13 @@ namespace GXPEngine
 
         private bool canShoot = true;
         private int shootDelay = 100;       //delay between bullet shots in ms
+        private static int health = 3;
 
 
         public Player() : base("triangle.png")
         {
             SetOrigin(width / 2, height / 2);
-            SetScaleXY(0.5f, 0.5f);
+                SetScaleXY(0.5f, 0.5f);
 
             bulletSpawnPoint.SetXY(x, y);
 
@@ -48,44 +47,71 @@ namespace GXPEngine
 
         private void Movement()
         {
-            
             velocity = new Vector2(0, 0);
-            if (ControllerInput.joystickX > 0.04 || ControllerInput.joystickX < -0.04)
+            if (ControllerInput.controllerConnected)
             {
-                velocity.x = ControllerInput.joystickX;
-            }
-            if (ControllerInput.joystickY > 0.04 || ControllerInput.joystickY < -0.04)
-            {
-                velocity.y = ControllerInput.joystickY;
-            }
-            //rotation
-            if (ControllerInput.secondaryJoystickX <= 0.19 && ControllerInput.secondaryJoystickX >= -0.19)
-            {
-                if(ControllerInput.secondaryJoystickY <= 0.19 && ControllerInput.secondaryJoystickY >= -0.19)
+                if (ControllerInput.joystickX > 0.04 || ControllerInput.joystickX < -0.04)
                 {
-                    rotation = lastRotation;
+                    velocity.x = ControllerInput.joystickX;
+                }
+                if (ControllerInput.joystickY > 0.04 || ControllerInput.joystickY < -0.04)
+                {
+                    velocity.y = ControllerInput.joystickY;
+                }
+                //rotation
+                if (ControllerInput.secondaryJoystickX <= 0.19 && ControllerInput.secondaryJoystickX >= -0.19)
+                {
+                    if (ControllerInput.secondaryJoystickY <= 0.19 && ControllerInput.secondaryJoystickY >= -0.19)
+                    {
+                        rotation = lastRotation;
+                    }
+                }
+                else
+                {
+                    desiredRotation = CalculateRotation(new Vector2(x - ControllerInput.secondaryJoystickX, y - ControllerInput.secondaryJoystickY));
+                    SetRotationBetween360();
+                    SlowRotation(0.2f);
+                    lastRotation = rotation;
+
+                    //make sure cardinal directions work with joystick
+                    if (ControllerInput.secondaryJoystickX <= -0.98 && ControllerInput.secondaryJoystickY <= 0.2 && ControllerInput.secondaryJoystickY >= -0.2) { rotation = 90; }
+                    else if (ControllerInput.secondaryJoystickX >= 0.98 && ControllerInput.secondaryJoystickY <= 0.2 && ControllerInput.secondaryJoystickY >= -0.2) { rotation = -90; }
+                    else if (ControllerInput.secondaryJoystickY >= 0.98 && ControllerInput.secondaryJoystickY > 0.2 && ControllerInput.secondaryJoystickX <= 0.2 && ControllerInput.secondaryJoystickX >= -0.2) { rotation = 0; }
+                    else if (ControllerInput.secondaryJoystickY <= -0.98 && ControllerInput.secondaryJoystickY < 0.2 && ControllerInput.secondaryJoystickX <= 0.2 && ControllerInput.secondaryJoystickX >= -0.2) { rotation = 180; }
+                    else { rotation = lastRotation; }
                 }
             }
-            else
+            else if(!ControllerInput.controllerConnected)
             {
-                desiredRotation = CalculateRotation(new Vector2(x - ControllerInput.secondaryJoystickX, y - ControllerInput.secondaryJoystickY));
+                if (Input.GetKey(Key.A))
+                {
+                    velocity.x = -1;
+                }
+                if (Input.GetKey(Key.D))
+                {
+                    velocity.x = 1;
+                }
+                if (Input.GetKey(Key.W))
+                {
+                    velocity.y = -1;
+                }
+                if (Input.GetKey(Key.S))
+                {
+                    velocity.y = 1;
+                }
+
+                desiredRotation = CalculateRotation(new Vector2(Input.mouseX, Input.mouseY));
                 SetRotationBetween360();
                 SlowRotation(0.2f);
                 lastRotation = rotation;
-
-                //make sure cardinal directions work with joystick
-                if (ControllerInput.secondaryJoystickX <= -0.98 && ControllerInput.secondaryJoystickY <= 0.2 && ControllerInput.secondaryJoystickY >= -0.2) { rotation = 90; }
-                else if (ControllerInput.secondaryJoystickX >= 0.98 && ControllerInput.secondaryJoystickY <= 0.2 && ControllerInput.secondaryJoystickY >= -0.2) { rotation = -90; }
-                else if (ControllerInput.secondaryJoystickY >= 0.98 && ControllerInput.secondaryJoystickY > 0.2 && ControllerInput.secondaryJoystickX <= 0.2 && ControllerInput.secondaryJoystickX >= -0.2) { rotation = 0; }
-                else if (ControllerInput.secondaryJoystickY <= -0.98 && ControllerInput.secondaryJoystickY < 0.2 && ControllerInput.secondaryJoystickX <= 0.2 && ControllerInput.secondaryJoystickX >= -0.2) { rotation = 180; }
-                else { rotation = lastRotation; }
             }
+            
 
             
 
 
             //shooting
-            if (ControllerInput.Button2 == 1)
+            if (ControllerInput.Button2 == 1 || Input.GetKey(Key.SPACE))
             {
                 if (canShoot)
                 {
@@ -108,6 +134,7 @@ namespace GXPEngine
             projectile.SetOrigin(projectile.width/ 2, projectile.height / 2);
             projectile.rotation = rotation;
             projectile.SetXY(x, y);
+            projectile.SetColor(255, 0, 255);
             canvas.AddChildAt(projectile, canvas.GetChildCount() - 1);
             
             
@@ -183,5 +210,19 @@ namespace GXPEngine
             }
         }
 
+
+        //Bullet and health logic
+        void OnCollision(GameObject other)
+        {
+            if(other is Bullet)
+            {
+                Bullet bullet = other.FindObjectOfType<Bullet>();
+                if (bullet.canDamage)
+                {
+                    health -= bullet.damage;
+                    other.LateDestroy();
+                }
+            }
+        }
     }
 }

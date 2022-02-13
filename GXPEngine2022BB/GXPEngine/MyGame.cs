@@ -14,10 +14,10 @@ public class MyGame : Game
         player.SetXY(width / 2, height/2);
         canvas.AddChild(player);
 
-        Grunt grunt = new Grunt();
-        grunt.SetXY(width / 2, height / 2);
-        canvas.AddChild(grunt);
-        grunt.SetTarget(player);
+        //Grunt grunt = new Grunt();
+        //grunt.SetXY(width / 2, height / 2);
+        //canvas.AddChild(grunt);
+        //grunt.SetTarget(player);
 
         //SuicideBoi suicideBoi = new SuicideBoi();
         //suicideBoi.SetXY(width / 3, height);

@@ -15,6 +15,7 @@ namespace GXPEngine
     public static class ControllerInput
     {
         static SerialPort serialPort;
+        static bool _controllerConnected = false;
 
         public static int D2State = 0;             // variable for reading the pushbutton status of D2
         public static int D3State = 0;             // variable for reading the pushbutton status of D3
@@ -35,23 +36,27 @@ namespace GXPEngine
             {
 
                 String[] ports = SerialPort.GetPortNames();
-                    if (ports == null)
-                    {
-                        throw new Exception("Ports is null");
-                    }
-                    foreach (String port in ports)
-                    {
-                        Console.WriteLine("found port: " + port);
+                if (ports == null)
+                {
+                    throw new Exception("Ports is null");
+                }
+                foreach (String port in ports)
+                {
+                    Console.WriteLine("found port: " + port);
 
-                    }
+                }
 
-                    serialPort = new SerialPort();
-                    serialPort.BaudRate = 9600;
-                    serialPort.PortName = ports[1];
-                    serialPort.Open();
-                    Console.WriteLine("port " + serialPort.PortName + " opened");
+                serialPort = new SerialPort();
+                serialPort.BaudRate = 9600;
+                serialPort.PortName = ports[1];
+                serialPort.Open();
+                Console.WriteLine("port " + serialPort.PortName + " opened");
 
-                while (serialPort.IsOpen)
+                if (serialPort.IsOpen)
+                {
+                    _controllerConnected = true;
+                }
+                while (_controllerConnected)
                 {
                     string[] message = new string[13];
                     String a = "";
@@ -79,21 +84,27 @@ namespace GXPEngine
             }
             catch (Exception)
             {
-                Console.WriteLine("No Device Connected!\nPlease connect your arduino controller");
+                Console.WriteLine("No Device Connected!\nSwitching controls to keyboard mode");
                 serialPort.Close();
+                _controllerConnected = false;
+                Console.WriteLine(_controllerConnected);
                 return;
             }
-            
 
-            
+
+
             return;
-            
-            
+
+
         }
 
         public static void ClosePort()
         {
             serialPort.Close();
+        }
+        public static bool controllerConnected
+        {
+            get { return _controllerConnected; }
         }
 
         public static int Button2
