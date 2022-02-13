@@ -26,7 +26,6 @@ using GXPEngine;
             SetRotationBetween360();
             SetDesiredRotation();
             SlowRotation();
-            Console.WriteLine("{0}, {1}", x, y);
         }
 
         public void SetTarget(Sprite target) {
@@ -61,7 +60,6 @@ using GXPEngine;
         void SlowRotation() {
             float positiveTurn = desiredRotation - rotation;
             float degreeToTurn = 0f;
-            Console.WriteLine("{0} - {1} = {2}", desiredRotation, rotation, positiveTurn);
             if (positiveTurn > float.Epsilon) {
                 if (positiveTurn - 180 < float.Epsilon) degreeToTurn = positiveTurn;
                 else degreeToTurn = -positiveTurn;
