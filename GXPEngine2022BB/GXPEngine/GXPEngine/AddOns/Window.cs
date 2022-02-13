@@ -1,5 +1,6 @@
 using GXPEngine.OpenGL;
 using GXPEngine.Core;
+using GXPEngine;
 
 namespace GXPEngine {
 	/// <summary>
