@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,22 +10,16 @@ namespace GXPEngine
 {
     public class Player : Sprite
     {
-        private float speed = 200;
+        private float speed = 300f;
         private Vector2 velocity = new Vector2(0, 0);
         private float rotationSpeed = 1.5f;
 
-        private Vector2 bulletSpawnPoints = new Vector2(0, 0);
-
         private Pivot bulletSpawnPoint = new Pivot();
 
-        public Player() : base("triangle.png")
+        public Player() : base("player.png")
         {
             SetOrigin(width / 2, height / 2);
-
-            bulletSpawnPoint.SetXY(x, y);
-
-            LateAddChild(bulletSpawnPoint);
-
+            SetScaleXY(0.3f, 0.3f);
         }
 
         void Update()
@@ -67,17 +61,14 @@ namespace GXPEngine
             if (Input.GetKeyDown(Key.SPACE))
             {
                 Shoot();
-                ControllerInput.GetControllerState();
             }
-
-            ControllerInput.GetControllerState();
+            
             Move(velocity.x * speed * Time.deltaTime/1000f, velocity.y * speed * Time.deltaTime/1000f);
         }
 
 
-        void Shoot()
-        {
-            Bullet projectile = new Bullet("circle.png", 500, 0, -1);
+        void Shoot() {
+            Bullet projectile = new Bullet("circle.png", 500, 0, -1, false);
             EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
             projectile.SetOrigin(projectile.width/ 2, projectile.height / 2);
             projectile.rotation = rotation;
