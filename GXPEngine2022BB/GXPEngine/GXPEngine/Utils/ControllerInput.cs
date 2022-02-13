@@ -23,8 +23,11 @@ namespace GXPEngine
         public static int D6State = 0;             // variable for reading the pushbutton status of D6
         public static int D7State = 0;             // variable for reading the pushbutton status of D7
         public static int D8State = 0;             // variable for reading the pushbutton status of D8
+        public static int D12State = 0;             // variable for reading the pushbutton status of D8
         static float _joystickX = 512;
         static float _joystickY = 512;
+        static float _secondaryJoystickX = 512;
+        static float _secondaryJoystickY = 512;
 
         public static void GetControllerState()
         {
@@ -50,7 +53,7 @@ namespace GXPEngine
 
                 while (serialPort.IsOpen)
                 {
-                    string[] message = new string[10];
+                    string[] message = new string[13];
                     String a = "";
                     a = serialPort.ReadLine();
                     message = a.Split(' ');
@@ -62,9 +65,13 @@ namespace GXPEngine
                     D6State = int.Parse(message[4]);             // variable for reading the pushbutton status of D6
                     D7State = int.Parse(message[5]);             // variable for reading the pushbutton status of D7
                     D8State = int.Parse(message[6]);             // variable for reading the pushbutton status of D8
+                    D12State = int.Parse(message[7]);             // variable for reading the pushbutton status of D8
 
-                    _joystickX = float.Parse(message[7]) / 100f;
-                    _joystickY = float.Parse(message[8]) / 100f;
+                    _joystickX = float.Parse(message[8]) / 100f;
+                    _joystickY = float.Parse(message[9]) / 100f;
+
+                    _secondaryJoystickX = float.Parse(message[10]) / 100f;
+                    _secondaryJoystickY = float.Parse(message[11]) / 100f;
 
 
 
@@ -117,6 +124,10 @@ namespace GXPEngine
         {
             get { return D8State; }
         }
+        public static int Button12
+        {
+            get { return D12State; }
+        }
 
 
         public static float joystickX
@@ -126,6 +137,14 @@ namespace GXPEngine
         public static float joystickY
         {
             get { return _joystickY; }
+        }
+        public static float secondaryJoystickX
+        {
+            get { return _secondaryJoystickX; }
+        }
+        public static float secondaryJoystickY
+        {
+            get { return _secondaryJoystickY; }
         }
 
     }

@@ -1,33 +1,13 @@
-/*
-  Button
 
-  Turns on and off a light emitting diode(LED) connected to digital pin 13,
-  when pressing a pushbutton attached to pin 2.
-
-  The circuit:
-  - LED attached from pin 13 to ground through 220 ohm resistor
-  - pushbutton attached to pin 2 from +5V
-  - 10K resistor attached to pin 2 from ground
-
-  - Note: on most Arduinos there is already an LED on the board
-    attached to pin 13.
-
-  created 2005
-  by DojoDave <http://www.0j0.org>
-  modified 30 Aug 2011
-  by Tom Igoe
-
-  This example code is in the public domain.
-
-  https://www.arduino.cc/en/Tutorial/BuiltInExamples/Button
-*/
 
 // constants won't change. They're used here to set pin numbers:
 const int buttonPin = 4;     // the number of the pushbutton pin
 const int ledPin =  12;      // the number of the LED pin
 
-const int AnalogXPin = A1;
-const int AnalogYPin = A0;
+const int AnalogXPin1 = A1;
+const int AnalogYPin1 = A0;
+const int AnalogXPin2 = A6;
+const int AnalogYPin2 = A7;
 
 // variables will change:
 int D2State = 0;             // variable for reading the pushbutton status of D2
@@ -37,27 +17,41 @@ int D5State = 0;             // variable for reading the pushbutton status of D5
 int D6State = 0;             // variable for reading the pushbutton status of D6
 int D7State = 0;             // variable for reading the pushbutton status of D7
 int D8State = 0;             // variable for reading the pushbutton status of D8
+int D12State = 0;            // variable for reading the pushbutton status of D12
 
-float joystickX = 0;         //variable for reading the joystick X-axis
-float joystickY = 0;         //variable for reading the joystick Y-axis
+
+float joystickX1 = 0;         //variable for reading the joystick X-axis
+float joystickY1 = 0;         //variable for reading the joystick Y-axis
+float joystickX2 = 0;         //variable for reading the joystick X-axis
+float joystickY2 = 0;         //variable for reading the joystick Y-axis
 
 const int numReadings = 10;
 
-int readingsY[numReadings];      // the readingsY from the analog input
-int readIndexY = 0;              // the index of the current reading
-int totalY = 0;                  // the running totalY
-int averageY = 0;                // the averageY
+int readingsY1[numReadings];      // the readingsY from the analog input
+int readIndexY1 = 0;              // the index of the current reading
+int totalY1 = 0;                  // the running totalY
+int averageY1 = 0;                // the averageY
 
-int readingsX[numReadings];      // the readingsY from the analog input
-int readIndexX = 0;              // the index of the current reading
-int totalX = 0;                  // the running totalY
-int averageX = 0;                // the averageY
+int readingsX1[numReadings];      // the readingsY from the analog input
+int readIndexX1 = 0;              // the index of the current reading
+int totalX1 = 0;                  // the running totalY
+int averageX1 = 0;                // the averageY
+
+int readingsY2[numReadings];      // the readingsY from the analog input
+int readIndexY2 = 0;              // the index of the current reading
+int totalY2 = 0;                  // the running totalY
+int averageY2 = 0;                // the averageY
+
+int readingsX2[numReadings];      // the readingsY from the analog input
+int readIndexX2 = 0;              // the index of the current reading
+int totalX2 = 0;                  // the running totalY
+int averageX2 = 0;                // the averageY
 
 
 
 void setup() {
   // initialize the LED pin as an output:
-  pinMode(ledPin, OUTPUT);
+  // pinMode(ledPin, OUTPUT);
   // initialize the pushbutton pin as an input:
   pinMode(2, INPUT);
   pinMode(3, INPUT);
@@ -66,9 +60,13 @@ void setup() {
   pinMode(6, INPUT);
   pinMode(7, INPUT);
   pinMode(8, INPUT);
+  pinMode(12, INPUT_PULLUP);
 
-  pinMode(AnalogXPin, INPUT);
-  pinMode(AnalogYPin, INPUT);
+  pinMode(AnalogXPin1, INPUT);
+  pinMode(AnalogYPin1, INPUT);
+
+  pinMode(AnalogXPin2, INPUT);
+  pinMode(AnalogYPin2, INPUT);
     
 
 
@@ -105,17 +103,35 @@ void loop() {
   int D8State = digitalRead(8);             //Read the pushbutton status of D8  
   s.concat(D8State);                         //add the state of the pushbutton to the message for GXP
   s.concat(" ");                             //add a space so the code in GXP can split it
+
+  int D12State = digitalRead(12);             //Read the pushbutton status of D12  
+  if(D12State == 1){                          //if statement for inverting the value of D12
+    D12State = 0;
+  }
+  else{ D12State = 1; }
+  s.concat(D12State);                         //add the state of the pushbutton to the message for GXP
+  s.concat(" ");                             //add a space so the code in GXP can split it
   
   
 
-  //joystickX = analogRead(AnalogXPin);
-  joystickX = AnalogSmoothX(AnalogXPin);
-  s.concat(mapfloat(joystickX, 0, 1024, 1, -1));
+
+  joystickX1 = AnalogSmoothX1(AnalogXPin1);
+  s.concat(mapfloat(joystickX1, 0, 1024, 1, -1));
   s.concat(" ");
   
-  //joystickY = analogRead(AnalogYPin);
-  joystickY = AnalogSmoothY(AnalogYPin);
-  s.concat(mapfloat(joystickY, 0, 1024, 1, -1));
+
+  joystickY1 = AnalogSmoothY1(AnalogYPin1);
+  s.concat(mapfloat(joystickY1, 0, 1024, 1, -1));
+  s.concat(" ");
+
+
+  joystickX2 = smoothX2(AnalogXPin2);
+  s.concat(mapfloat(joystickX2, 0, 1024, -1, 1));
+  s.concat(" ");
+  
+
+  joystickY2 = smoothY2(AnalogYPin2);
+  s.concat(mapfloat(joystickY2, 0, 1024, -1, 1));
 
   Serial.println(s);
   s = "";
@@ -127,46 +143,88 @@ float mapfloat(float x, float in_min, float in_max, float out_min, float out_max
   return (float)(x - in_min) * (out_max - out_min) / (float)(in_max - in_min) + out_min;
 }
 
-float AnalogSmoothX(float Input){
+float AnalogSmoothX1(float Input){
   // subtract the last reading:
-  totalX = totalX - readingsX[readIndexX];
+  totalX1 = totalX1 - readingsX1[readIndexX1];
   // read from the sensor:
-  readingsX[readIndexX] = analogRead(Input);
+  readingsX1[readIndexX1] = analogRead(Input);
   // add the reading to the totalX:
-  totalX = totalX + readingsX[readIndexX];
+  totalX1 = totalX1 + readingsX1[readIndexX1];
   // advance to the next position in the array:
-  readIndexX = readIndexX + 1;
+  readIndexX1 = readIndexX1 + 1;
 
   // if we're at the end of the array...
-  if (readIndexX >= numReadings) {
+  if (readIndexX1 >= numReadings) {
     // ...wrap around to the beginning:
-    readIndexX = 0;
+    readIndexX1 = 0;
   }
 
   // calculate the averageX:
-  averageX = totalX / numReadings;
-  return (float)averageX;
+  averageX1 = totalX1 / numReadings;
+  return (float)averageX1;
 }
 
-float AnalogSmoothY(float Input){
+float AnalogSmoothY1(float Input){
   // subtract the last reading:
-  totalY = totalY - readingsY[readIndexY];
+  totalY1 = totalY1 - readingsY1[readIndexY1];
   // read from the sensor:
-  readingsY[readIndexY] = analogRead(Input);
+  readingsY1[readIndexY1] = analogRead(Input);
   // add the reading to the totalY:
-  totalY = totalY + readingsY[readIndexY];
+  totalY1 = totalY1 + readingsY1[readIndexY1];
   // advance to the next position in the array:
-  readIndexY = readIndexY + 1;
+  readIndexY1 = readIndexY1 + 1;
 
   // if we're at the end of the array...
-  if (readIndexY >= numReadings) {
+  if (readIndexY1 >= numReadings) {
     // ...wrap around to the beginning:
-    readIndexY = 0;
+    readIndexY1 = 0;
   }
 
   // calculate the averageY:
-  averageY = totalY / numReadings;
-  return (float)averageY;
+  averageY1 = totalY1 / numReadings;
+  return (float)averageY1;
+}
+
+float smoothX2(float Input){
+  // subtract the last reading:
+  totalX2 = totalX2 - readingsX2[readIndexX2];
+  // read from the sensor:
+  readingsX2[readIndexX2] = analogRead(Input);
+  // add the reading to the totalX:
+  totalX2 = totalX2 + readingsX2[readIndexX2];
+  // advance to the next position in the array:
+  readIndexX2 = readIndexX2 + 1;
+
+  // if we're at the end of the array...
+  if (readIndexX2 >= numReadings) {
+    // ...wrap around to the beginning:
+    readIndexX2 = 0;
+  }
+
+  // calculate the averageX:
+  averageX2 = totalX2 / numReadings;
+  return (float)averageX2;
+}
+
+float smoothY2(float Input){
+  // subtract the last reading:
+  totalY2 = totalY2 - readingsY2[readIndexY2];
+  // read from the sensor:
+  readingsY2[readIndexY2] = analogRead(Input);
+  // add the reading to the totalY:
+  totalY2 = totalY2 + readingsY2[readIndexY2];
+  // advance to the next position in the array:
+  readIndexY2 = readIndexY2 + 1;
+
+  // if we're at the end of the array...
+  if (readIndexY2 >= numReadings) {
+    // ...wrap around to the beginning:
+    readIndexY2 = 0;
+  }
+
+  // calculate the averageY:
+  averageY2 = totalY2 / numReadings;
+  return (float)averageY2;
 }
 
 

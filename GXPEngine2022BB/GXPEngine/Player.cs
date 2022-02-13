@@ -49,47 +49,42 @@ namespace GXPEngine
         {
             
             velocity = new Vector2(0, 0);
-            if (ControllerInput.Button3 == 1)
+            if (ControllerInput.joystickX > 0.04 || ControllerInput.joystickX < -0.04)
             {
-                velocity.x = -1;
+                velocity.x = ControllerInput.joystickX;
             }
-            if (ControllerInput.Button6 == 1)
+            if (ControllerInput.joystickY > 0.04 || ControllerInput.joystickY < -0.04)
             {
-                velocity.x = 1;
-            }
-            if (ControllerInput.Button4 == 1)
-            {
-                velocity.y = -1;
-            }
-            if (ControllerInput.Button5 == 1)
-            {
-                velocity.y = 1;
+                velocity.y = ControllerInput.joystickY;
             }
             //rotation
-            if (ControllerInput.joystickX <= 0.01 && ControllerInput.joystickX >= -0.01)
+            if (ControllerInput.secondaryJoystickX <= 0.19 && ControllerInput.secondaryJoystickX >= -0.19)
             {
-                if(ControllerInput.joystickY <= 0.01 && ControllerInput.joystickY >= -0.01)
+                if(ControllerInput.secondaryJoystickY <= 0.19 && ControllerInput.secondaryJoystickY >= -0.19)
                 {
                     rotation = lastRotation;
                 }
             }
             else
             {
-                desiredRotation = CalculateRotation(new Vector2(x - ControllerInput.joystickX, y - ControllerInput.joystickY));
+                desiredRotation = CalculateRotation(new Vector2(x - ControllerInput.secondaryJoystickX, y - ControllerInput.secondaryJoystickY));
                 SetRotationBetween360();
                 SlowRotation(0.2f);
                 lastRotation = rotation;
+
+                //make sure cardinal directions work with joystick
+                if (ControllerInput.secondaryJoystickX <= -0.98 && ControllerInput.secondaryJoystickY <= 0.2 && ControllerInput.secondaryJoystickY >= -0.2) { rotation = 90; }
+                else if (ControllerInput.secondaryJoystickX >= 0.98 && ControllerInput.secondaryJoystickY <= 0.2 && ControllerInput.secondaryJoystickY >= -0.2) { rotation = -90; }
+                else if (ControllerInput.secondaryJoystickY >= 0.98 && ControllerInput.secondaryJoystickY > 0.2 && ControllerInput.secondaryJoystickX <= 0.2 && ControllerInput.secondaryJoystickX >= -0.2) { rotation = 0; }
+                else if (ControllerInput.secondaryJoystickY <= -0.98 && ControllerInput.secondaryJoystickY < 0.2 && ControllerInput.secondaryJoystickX <= 0.2 && ControllerInput.secondaryJoystickX >= -0.2) { rotation = 180; }
+                else { rotation = lastRotation; }
             }
 
-            //make sure cardinal directions work with joystick
-            if(ControllerInput.joystickX <= -0.98 && ControllerInput.joystickY <= 0.01 && ControllerInput.joystickY >= -0.01) { rotation = 90; }
-            if (ControllerInput.joystickX >= 0.98 && ControllerInput.joystickY <= 0.01 && ControllerInput.joystickY >= -0.01) { rotation = -90; }
-            if (ControllerInput.joystickY >= 0.98 && ControllerInput.joystickY > 0.0 && ControllerInput.joystickX <= 0.01 && ControllerInput.joystickX >= -0.01) { rotation = 0; }
-            if (ControllerInput.joystickY <= -0.98 && ControllerInput.joystickY < 0.0 && ControllerInput.joystickX <= 0.01 && ControllerInput.joystickX >= -0.01) { rotation = 180; }
+            
 
 
             //shooting
-            if (ControllerInput.Button7 == 1)
+            if (ControllerInput.Button2 == 1)
             {
                 if (canShoot)
                 {
