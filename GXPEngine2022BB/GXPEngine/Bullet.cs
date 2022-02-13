@@ -18,6 +18,7 @@ namespace GXPEngine
         {
             movementSpeed = bulletSpeed;
             movementDir = new Vector2(xDirection, yDirection);
+            SetScaleXY(0.5f, 0.5f);
         }
 
         void Update()

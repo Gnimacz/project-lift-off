@@ -1,7 +1,7 @@
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\GXPEngine.exe.config
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\GXPEngine.exe
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\GXPEngine.pdb
-D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Elementary.dll
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Microsoft.Bcl.HashCode.dll
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Microsoft.DotNet.PlatformAbstractions.dll
@@ -10,6 +10,7 @@ D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEn
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Memory.dll
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Numerics.Vectors.dll
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Text.Encodings.Web.dll
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Text.Json.dll
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Threading.Tasks.Extensions.dll
@@ -30,5 +31,3 @@ D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEn
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CopyComplete
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.pdb
-D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Elementary.dll
-D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csprojAssemblyReference.cache

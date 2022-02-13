@@ -188,26 +188,35 @@ public class Sniper : Sprite {
         
     }
 
+
+    //commented out and returns zero for the time being until Dan can finish the function.
     int FindCurrentArea() {
+        /*
         List<int> returnAreas = new List<int>(1);
         returnAreas[0] = 5;
-        for (int i = 0; i < moveAreas.Length; i++) {    
+        for (int i = 0; i < moveAreas.Length; i++)
+        {
             if (x - moveAreas[i].left > float.Epsilon && x - moveAreas[i].right < float.Epsilon)
-                if (y - moveAreas[i].top > float.Epsilon && y - moveAreas[i].bottom < float.Epsilon) {
+                if (y - moveAreas[i].top > float.Epsilon && y - moveAreas[i].bottom < float.Epsilon)
+                {
                     returnAreas.Add(i);
-                    if(returnAreas.Contains(5))
+                    if (returnAreas.Contains(5))
                         returnAreas.Remove(5);
                 }
         }
-        
-        for (int i = 0; i < returnAreas.Count; i++) {
-            int 
-            for (int j = 0; j < currentMoveAreas.Length; j++) {
-                if(moveAreas[returnAreas[i]] == currentMoveAreas[j])
+
+        for (int i = 0; i < returnAreas.Count; i++)
+        {
+
+            for (int j = 0; j < currentMoveAreas.Length; j++)
+            {
+                if (moveAreas[returnAreas[i]] == currentMoveAreas[j])
             }
         }
 
         return returnNumber;
+        */
+        return 0;
     }
 
     bool CheckIfPointIsInArea(Vector2 point, Rectangle[] areas) {

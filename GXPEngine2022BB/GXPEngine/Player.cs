@@ -103,7 +103,7 @@ namespace GXPEngine
 
         void Shoot()
         {
-            Bullet projectile = new Bullet("circle.png", 500, 0, -1);
+            Bullet projectile = new Bullet("circle.png", 500, 0, -1, false);
             EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
             projectile.SetOrigin(projectile.width/ 2, projectile.height / 2);
             projectile.rotation = rotation;

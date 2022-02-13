@@ -2,13 +2,16 @@ using System; // System contains a lot of default C# libraries
 using GXPEngine; // GXPEngine contains the engine
 using System.Drawing; // System.Drawing contains drawing tools such as Color definitions
 
-public class MyGame : Game {
-    public MyGame() : base(1366, 768, false) {// Create a window that's 800x600 and NOT fullscreen
+public class MyGame : Game
+{
+    public MyGame() : base(1366, 768, false)
+    {// Create a window that's 800x600 and NOT fullscreen
         // Draw some things on a canvas:
         EasyDraw canvas = new EasyDraw(1366, 768);
         canvas.Clear(Color.MediumPurple);
 
         Player player = new Player();
+        player.SetXY(width / 2, height/2);
         canvas.AddChild(player);
 
         Grunt grunt = new Grunt();
@@ -16,15 +19,15 @@ public class MyGame : Game {
         canvas.AddChild(grunt);
         grunt.SetTarget(player);
 
-        SuicideBoi suicideBoi = new SuicideBoi();
-        suicideBoi.SetXY(width / 3, height);
-        canvas.AddChild(suicideBoi);
-        suicideBoi.SetTarget(player);
+        //SuicideBoi suicideBoi = new SuicideBoi();
+        //suicideBoi.SetXY(width / 3, height);
+        //canvas.AddChild(suicideBoi);
+        //suicideBoi.SetTarget(player);
 
-        Sniper sniper = new Sniper();
-        sniper.SetXY(width / 5, height / 5);
-        canvas.AddChild(sniper);
-        sniper.SetTarget(player);
+        //Sniper sniper = new Sniper();
+        //sniper.SetXY(width / 5, height / 5);
+        //canvas.AddChild(sniper);
+        //sniper.SetTarget(player);
 
         // Add the canvas to the engine to display it:
         AddChild(canvas);
@@ -32,7 +35,8 @@ public class MyGame : Game {
     }
 
     // For every game object, Update is called every frame, by the engine:
-    void Update() {
+    void Update()
+    {
         // Empty
     }
 

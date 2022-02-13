@@ -21,7 +21,7 @@ public class Grunt : Sprite {
     private Vector2[] movePoints = new Vector2[3];
     private float t = 0;
 
-    public Grunt() : base("Grunt.png") {
+    public Grunt() : base("square.png") {
         SetOrigin(width / 2, height / 2);
         SetScaleXY(0.2f, -0.2f);
         ChooseMovement();
