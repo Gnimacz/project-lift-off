@@ -13,7 +13,7 @@ namespace GXPEngine
 {
     public class Player : Sprite
     {
-        private float speed = 200;
+        private float speed = 300;
         private Vector2 velocity = new Vector2(0, 0);
 
         private Vector2 bulletSpawnPoints = new Vector2(0, 0);
@@ -30,6 +30,7 @@ namespace GXPEngine
         public Player() : base("triangle.png")
         {
             SetOrigin(width / 2, height / 2);
+            SetScaleXY(0.5f, 0.5f);
 
             bulletSpawnPoint.SetXY(x, y);
 
