@@ -155,6 +155,7 @@ namespace GXPEngine
         }
 
         //thanks Dan :)
+        //you are welcome)
         float CalculateRotation(Vector2 target)
         {
             float diffX = target.x - x;
