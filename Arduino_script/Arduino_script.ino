@@ -8,6 +8,8 @@ const int AnalogXPin1 = A1;
 const int AnalogYPin1 = A0;
 const int AnalogXPin2 = A6;
 const int AnalogYPin2 = A7;
+const int shootButtonL = 13;
+const int shootButtonR = 9;
 
 // variables will change:
 int D2State = 0;             // variable for reading the pushbutton status of D2
@@ -18,6 +20,8 @@ int D6State = 0;             // variable for reading the pushbutton status of D6
 int D7State = 0;             // variable for reading the pushbutton status of D7
 int D8State = 0;             // variable for reading the pushbutton status of D8
 int D12State = 0;            // variable for reading the pushbutton status of D12
+int shootButtonLState = 0;    // variable for reading the pushbutton status of D13
+int shootButtonRState = 0;    // variable for reading the pushbutton status of D9
 
 
 float joystickX1 = 0;         //variable for reading the joystick X-axis
@@ -61,6 +65,9 @@ void setup() {
   pinMode(7, INPUT);
   pinMode(8, INPUT);
   pinMode(12, INPUT_PULLUP);
+  pinMode(shootButtonL, INPUT_PULLUP);
+  pinMode(shootButtonR, INPUT_PULLUP);
+  
 
   pinMode(AnalogXPin1, INPUT);
   pinMode(AnalogYPin1, INPUT);
@@ -75,6 +82,7 @@ void setup() {
 void loop() {
  
   String s;
+
 
   int D2State = digitalRead(2);             //Read the pushbutton status of D2
   s.concat(D2State);                         //add the state of the pushbutton to the message for GXP
@@ -104,6 +112,7 @@ void loop() {
   s.concat(D8State);                         //add the state of the pushbutton to the message for GXP
   s.concat(" ");                             //add a space so the code in GXP can split it
 
+
   int D12State = digitalRead(12);             //Read the pushbutton status of D12  
   if(D12State == 1){                          //if statement for inverting the value of D12
     D12State = 0;
@@ -111,6 +120,28 @@ void loop() {
   else{ D12State = 1; }
   s.concat(D12State);                         //add the state of the pushbutton to the message for GXP
   s.concat(" ");                             //add a space so the code in GXP can split it
+
+  int shootButtonLState = digitalRead(shootButtonL);    //Read the pushbutton status of D13
+  if (shootButtonLState == 1){                         //If statement to inverse it for parity sake
+      shootButtonLState = 0;
+    }
+   else{
+      shootButtonLState = 1;
+    }
+  s.concat(shootButtonLState);                //add the state of the pushbutton to the message for GXP
+  s.concat(" ");                             //add a space so the code in GXP can split it
+
+  int shootButtonRState = digitalRead(shootButtonR);    //Read the pushbutton status of D13
+  if (shootButtonRState == 1){                         //If statement to inverse it for parity sake
+      shootButtonRState = 0;
+    }
+   else{
+      shootButtonRState = 1;
+    }
+  s.concat(shootButtonRState);                //add the state of the pushbutton to the message for GXP
+  s.concat(" ");                             //add a space so the code in GXP can split it
+
+
   
   
 
@@ -125,12 +156,12 @@ void loop() {
   s.concat(" ");
 
 
-  joystickX2 = smoothX2(AnalogXPin2);
+  joystickX2 = analogRead(AnalogXPin2);//smoothX2(AnalogXPin2);
   s.concat(mapfloat(joystickX2, 0, 1024, -1, 1));
   s.concat(" ");
   
 
-  joystickY2 = smoothY2(AnalogYPin2);
+  joystickY2 = analogRead(AnalogYPin2);//smoothY2(AnalogYPin2);
   s.concat(mapfloat(joystickY2, 0, 1024, -1, 1));
 
   Serial.println(s);
@@ -226,5 +257,3 @@ float smoothY2(float Input){
   averageY2 = totalY2 / numReadings;
   return (float)averageY2;
 }
-
-

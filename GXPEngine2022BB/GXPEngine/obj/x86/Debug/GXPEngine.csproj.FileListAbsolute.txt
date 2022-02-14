@@ -32,3 +32,38 @@ D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEn
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CopyComplete
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe
 D:\CMGT\year 1\quarter 3\project lift off\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.pdb
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\GXPEngine.exe.config
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\GXPEngine.exe
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\GXPEngine.pdb
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Elementary.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Microsoft.Bcl.HashCode.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Microsoft.Extensions.DependencyModel.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Buffers.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Memory.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Text.Json.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.ValueTuple.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Microsoft.Bcl.HashCode.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Microsoft.DotNet.PlatformAbstractions.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\Microsoft.Extensions.DependencyModel.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Buffers.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Memory.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Text.Json.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.ValueTuple.xml
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.SuggestedBindingRedirects.cache
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe.config
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CopyComplete
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.pdb

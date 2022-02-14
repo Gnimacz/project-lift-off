@@ -25,6 +25,8 @@ namespace GXPEngine
         public static int D7State = 0;             // variable for reading the pushbutton status of D7
         public static int D8State = 0;             // variable for reading the pushbutton status of D8
         public static int D12State = 0;             // variable for reading the pushbutton status of D8
+        public static int D13State = 0;             // variable for reading the pushbutton status of D13
+        public static int D9State = 0;             // variable for reading the pushbutton status of D9
         static float _joystickX = 512;
         static float _joystickY = 512;
         static float _secondaryJoystickX = 512;
@@ -48,7 +50,7 @@ namespace GXPEngine
 
                 serialPort = new SerialPort();
                 serialPort.BaudRate = 9600;
-                serialPort.PortName = ports[1];
+                serialPort.PortName = ports[ports.Length - 1];
                 serialPort.Open();
                 Console.WriteLine("port " + serialPort.PortName + " opened");
 
@@ -58,7 +60,7 @@ namespace GXPEngine
                 }
                 while (_controllerConnected)
                 {
-                    string[] message = new string[13];
+                    string[] message = new string[15];
                     String a = "";
                     a = serialPort.ReadLine();
                     message = a.Split(' ');
@@ -71,12 +73,15 @@ namespace GXPEngine
                     D7State = int.Parse(message[5]);             // variable for reading the pushbutton status of D7
                     D8State = int.Parse(message[6]);             // variable for reading the pushbutton status of D8
                     D12State = int.Parse(message[7]);             // variable for reading the pushbutton status of D8
+                    D13State = int.Parse(message[8]);
+                    D9State = int.Parse(message[9]);
+                    Console.WriteLine(D9State);
 
-                    _joystickX = float.Parse(message[8]) / 100f;
-                    _joystickY = float.Parse(message[9]) / 100f;
+                    _joystickX = float.Parse(message[10]) / 100f;
+                    _joystickY = float.Parse(message[11]) / 100f;
 
-                    _secondaryJoystickX = float.Parse(message[10]) / 100f;
-                    _secondaryJoystickY = float.Parse(message[11]) / 100f;
+                    _secondaryJoystickX = float.Parse(message[12]) / 100f;
+                    _secondaryJoystickY = float.Parse(message[13]) / 100f;
 
 
 
@@ -139,6 +144,14 @@ namespace GXPEngine
         {
             get { return D12State; }
         }
+        public static int Button13
+        {
+            get { return D13State; }
+        }
+        public static int Button9
+        {
+            get { return D9State; }
+        }
 
 
         public static float joystickX
@@ -157,6 +170,7 @@ namespace GXPEngine
         {
             get { return _secondaryJoystickY; }
         }
+        
 
     }
 

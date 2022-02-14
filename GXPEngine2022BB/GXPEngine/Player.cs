@@ -111,7 +111,7 @@ namespace GXPEngine
 
 
             //shooting
-            if (ControllerInput.Button2 == 1 || Input.GetKey(Key.SPACE))
+            if (ControllerInput.Button9 == 1 || Input.GetKey(Key.SPACE))
             {
                 if (canShoot)
                 {
@@ -152,7 +152,6 @@ namespace GXPEngine
         {
             await Task.Delay(timeToWait);
             canShoot = true;
-            Console.WriteLine("Done!");
         }
 
         //thanks Dan :)
