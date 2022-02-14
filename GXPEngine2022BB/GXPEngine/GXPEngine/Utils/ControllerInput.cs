@@ -50,7 +50,7 @@ namespace GXPEngine
 
                 serialPort = new SerialPort();
                 serialPort.BaudRate = 9600;
-                serialPort.PortName = ports[ports.Length - 1];
+                serialPort.PortName = ports[1];
                 serialPort.Open();
                 Console.WriteLine("port " + serialPort.PortName + " opened");
 

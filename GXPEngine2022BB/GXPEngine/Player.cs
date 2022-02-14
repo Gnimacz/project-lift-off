@@ -23,7 +23,7 @@ namespace GXPEngine
 
         private bool canShoot = true;
         private int shootDelay = 100;       //delay between bullet shots in ms
-        private static int health = 3;
+        private static int health = 5;
 
 
         public Player() : base("triangle.png")
@@ -222,6 +222,13 @@ namespace GXPEngine
                     health -= bullet.damage;
                     other.LateDestroy();
                 }
+            }
+            if (other is SuicideBoi)
+            {
+                SuicideBoi damager = other.FindObjectOfType<SuicideBoi>();
+                health -= damager.damage;
+                other.LateRemove();
+                
             }
         }
     }

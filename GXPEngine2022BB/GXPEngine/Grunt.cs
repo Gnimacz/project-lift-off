@@ -20,6 +20,7 @@ public class Grunt : Sprite {
     private Vector2 movePoint;
     private Vector2[] movePoints = new Vector2[3];
     private float t = 0;
+    public int health = 3;
 
     public Grunt() : base("square.png") {
         SetOrigin(width / 2, height / 2);
@@ -37,6 +38,7 @@ public class Grunt : Sprite {
             Shoot();
             lastShootTime = Time.time + shootIntervals;
         }
+
     }
 
     void ChooseSmoothMovement() {
@@ -58,7 +60,7 @@ public class Grunt : Sprite {
     }
 
     void Shoot() {
-        Bullet projectile = new Bullet("circle.png", 500, 0, -1, true);
+        Bullet projectile = new Bullet("circle.png", 500, 0, -1, true, 1);
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
         projectile.SetOrigin(projectile.width / 2, projectile.height / 2);
         projectile.rotation = rotation;
@@ -157,6 +159,23 @@ public class Grunt : Sprite {
             rotation = desiredRotation;
         else {
             rotation += Mathf.Sign(degreeToTurn) * rotationSpeed * Time.deltaTime;
+        }
+    }
+
+    void OnCollision(GameObject other)
+    {
+        if (other is Bullet)
+        {
+            Bullet bullet = other.FindObjectOfType<Bullet>();
+            if (!bullet.canDamage)
+            {
+                health -= bullet.damage;
+                if(health <= 0)
+                {
+                    LateRemove();
+                }
+                other.LateRemove();
+            }
         }
     }
 }

@@ -21,6 +21,9 @@ public class Sniper : Sprite {
     private Rectangle[] currentMoveAreas = new Rectangle[2];
     private int[] currentNumbersOfAreas = new int[2];
 
+    public int health = 4;
+    public int damage = 3;
+
     public Sniper() : base("square.png") {
         SetOrigin(width / 2, height / 2);
         SetScaleXY(0.4f, 0.4f);
@@ -312,5 +315,22 @@ public class Sniper : Sprite {
         }
 
         return true;
+    }
+
+    void OnCollision(GameObject other)
+    {
+        if (other is Bullet)
+        {
+            Bullet bullet = other.FindObjectOfType<Bullet>();
+            if (!bullet.canDamage)
+            {
+                health -= bullet.damage;
+                if (health <= 0)
+                {
+                    LateRemove();
+                }
+                other.LateRemove();
+            }
+        }
     }
 }

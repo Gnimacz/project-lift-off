@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 using GXPEngine.Core;
 using GXPEngine;
 
-    public class SuicideBoi : Sprite {
+public class SuicideBoi : Sprite {
         private float moveSpeed = 0.2f;
         private float rotationSpeed = 10f;
         private float desiredRotation = 0f;
         private Sprite target;
+
+        public int health = 2;
+        public int damage = 3;
         
         public SuicideBoi() : base("square.png")
         {
@@ -79,4 +82,22 @@ using GXPEngine;
             Move(0, -moveSpeed * Time.deltaTime);
         }
 
-    }
+
+        void OnCollision(GameObject other)
+        {
+            if (other is Bullet)
+            {
+                Bullet bullet = other.FindObjectOfType<Bullet>();
+                if (!bullet.canDamage)
+                {
+                    health -= bullet.damage;
+                    if (health <= 0)
+                    {
+                        LateRemove();
+                    }
+                    other.LateRemove();
+                }
+            }
+        }
+
+}
