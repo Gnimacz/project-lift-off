@@ -25,10 +25,16 @@ public class MyGame : Game {
     void Update() {
         EasyDraw canvas = FindObjectOfType<EasyDraw>();
         Player player = FindObjectOfType<Player>();
-        if (currentNumberOfEnemies == 2 && EnemiesLeft == 40) {
+        
+        if (currentNumberOfEnemies == 0 && EnemiesLeft == 40) {
             SpawnGrunt(width/2, height/2, canvas, player);
+        
+            SpawnKamikazee(width/3, height, canvas, player);
         }
-        Console.WriteLine(currentNumberOfEnemies);
+
+        if (currentNumberOfEnemies == 0 && EnemiesLeft == 38) {
+            
+        }
 
         if (Input.GetKeyDown(Key.Q)) {
             ClearEnemies(canvas, player);
@@ -46,6 +52,7 @@ public class MyGame : Game {
         canvas.AddChild(grunt);
         grunt.SetTarget(player);
         currentNumberOfEnemies++;
+        EnemiesLeft--;
     }
     
     void SpawnKamikazee(float xPos, float yPos, EasyDraw canvas, Player player) {
@@ -54,6 +61,7 @@ public class MyGame : Game {
         canvas.AddChild(suicideBoi);
         suicideBoi.SetTarget(player);
         currentNumberOfEnemies++;
+        EnemiesLeft--;
     }
 
     void LevelSpawn() {
@@ -64,9 +72,7 @@ public class MyGame : Game {
         player.SetXY(width / 2, height/2);
         canvas.AddChild(player);
 
-        SpawnGrunt(width/2, height/2, canvas, player);
         
-        SpawnKamikazee(width/3, height, canvas, player);
         
         AddChild(canvas);
         Console.WriteLine("MyGame initialized");
