@@ -22,22 +22,19 @@ public class MyGame : Game {
         Player player = FindObjectOfType<Player>();
         
         if (currentNumberOfEnemies == 0 && EnemiesLeft == 40) {
-            SpawnGrunt(width/2, height/2, canvas, player);
-        
-            SpawnKamikazee(width/3, height, canvas, player);
+            SpawnSniper(120, 120, canvas, player);
         }
 
         if (currentNumberOfEnemies == 0 && EnemiesLeft == 38) {
-            //SpawnSniper(120, 120, canvas, player);
+            
+            
         }
 
         if (Input.GetKeyDown(Key.Q)) {
             ClearEnemies(canvas, player);
             currentNumberOfEnemies = 0;
         }
-        
-        Console.WriteLine("{0}, {1}", currentNumberOfEnemies, EnemiesLeft);
-        
+
     }
 
     static void Main() // Main() is the first method that's called when the program is run

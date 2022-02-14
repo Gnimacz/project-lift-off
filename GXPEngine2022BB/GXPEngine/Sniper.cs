@@ -95,14 +95,15 @@ public class Sniper : Sprite {
 
     void MovementInitialization() {
         SetCurrentAreaOfMovement();
-        if (CheckIfPointIsInArea(movePoint, currentMoveAreas)) {
-            if (CheckIfPathIsInArea()) {
+        if (CheckIfPointIsInAreas(movePoint, currentMoveAreas)) {
+            if (CheckIfPathIsInAreas()) {
                 Movement();
             }
             else {
                 Console.WriteLine("{0}, {1} -> {2}, {3}", x, y, movePoint.x, movePoint.y);
                 SetCornerMovePoint();
                 Console.WriteLine("{0}, {1} -> {2}, {3}", x, y, movePoint.x, movePoint.y);
+                Console.WriteLine("\n");
                 Movement();
             }
         } else {
@@ -187,22 +188,33 @@ public class Sniper : Sprite {
             CornerPoints[1].y = moveAreas[currentArea].height - 77;
         }
 
-        foreach (Vector2 point in CornerPoints) {
-            if (CheckIfPointIsInArea(point, currentMoveAreas)) {
-                movePoint.x = point.x;
-                movePoint.y = point.y;
-                break;
+        int[] NumberOfCurrentAreas = new int[2];
+
+        for (int i = 0; i < CornerPoints.Length; i++) {
+            for (int j = 0; j < currentMoveAreas.Length; j++) {
+                if (CheckIfPointIsInArea(CornerPoints[i], currentMoveAreas[j])) {
+                    NumberOfCurrentAreas[i]++;
+                }
             }
         }
-        
+
+        if (NumberOfCurrentAreas[0] > NumberOfCurrentAreas[1]) {
+            movePoint.x = CornerPoints[0].x;
+            movePoint.y = CornerPoints[0].y;
+        }
+        else {
+            movePoint.x = CornerPoints[1].x;
+            movePoint.y = CornerPoints[1].y;
+        }
+
     }
 
-
-    //commented out and returns zero for the time being until Dan can finish the function.
+    
     int FindCurrentArea() {
-        
-        List<int> returnAreas = new List<int>(1);
-        returnAreas[0] = 5;
+
+        List<int> returnAreas = new List<int>();
+        returnAreas.Add(5);
+        Console.WriteLine(returnAreas.Count);
         for (int i = 0; i < moveAreas.Length; i++)
         {
             if (x - moveAreas[i].left > float.Epsilon && x - moveAreas[i].right < float.Epsilon)
@@ -215,30 +227,60 @@ public class Sniper : Sprite {
         }
 
         for (int i = 0; i < returnAreas.Count; i++) {
-            bool IsCurrent = false;
+            Console.WriteLine("area = {0}, targetArea = {1}", returnAreas[i], currentNumbersOfAreas[i]);
+        }
+        Console.WriteLine("count = {0}", returnAreas.Count);
+
+        List<bool> isCurrentArea = new List<bool>();
+
+        for (int i = 0; i < returnAreas.Count; i++) {
+            bool isCurrent = false;
             for (int j = 0; j < currentNumbersOfAreas.Length; j++) {
                 if (returnAreas[i] == currentNumbersOfAreas[j]) {
-                    IsCurrent = true;
+                    isCurrent = true;
                 }
             }
             
-            if(!IsCurrent) 
-                returnAreas.RemoveAt(i);
-        }
-
-        if (returnAreas.Count == 2) {
-            if (Utils.Random(0f, 2f) > 1f) {
-                returnAreas.RemoveAt(0);
-            }
+            if(isCurrent)
+                isCurrentArea.Add(true);
             else {
-                returnAreas.RemoveAt(1);
+                isCurrentArea.Add(false);
             }
         }
         
-        return returnAreas[0];
+
+        if (returnAreas.Count == 1) {
+            if (returnAreas.Contains(5))
+                return 5;
+            else {
+                return returnAreas[0];
+            }
+
+        }
+
+        if (returnAreas.Count == 2) {
+            if (isCurrentArea[0] && isCurrentArea[1] || !isCurrentArea[0] && !isCurrentArea[1]) {
+                return Utils.Random(0f, 2f) > 1f ? returnAreas[0] : returnAreas[1];
+            }
+
+            if (isCurrentArea[0]) {
+                Console.WriteLine("current area is {0}", returnAreas[0]);
+                return returnAreas[0];
+            }
+
+            if (isCurrentArea[1]) {
+                Console.WriteLine("current area is {0}", returnAreas[1]);
+                return returnAreas[1];
+            }
+
+            
+        }
+        
+        Console.WriteLine("current area is 10");
+        return 10;
     }
 
-    bool CheckIfPointIsInArea(Vector2 point, Rectangle[] areas) {
+    bool CheckIfPointIsInAreas(Vector2 point, Rectangle[] areas) {
         foreach (Rectangle area in areas) {
             if (point.x - area.left > float.Epsilon && point.x - area.right < float.Epsilon)
                 if (point.y - area.top > float.Epsilon && point.y - area.bottom < float.Epsilon) {
@@ -248,11 +290,20 @@ public class Sniper : Sprite {
 
         return false;
     }
+    
+    bool CheckIfPointIsInArea(Vector2 point, Rectangle area) {
+        if (point.x - area.left > float.Epsilon && point.x - area.right < float.Epsilon)
+                if (point.y - area.top > float.Epsilon && point.y - area.bottom < float.Epsilon) {
+                    return true;
+                }
+        
+        return false;
+    }
 
-    bool CheckIfPathIsInArea() {
+    bool CheckIfPathIsInAreas() {
         Vector2 shiftingPoint = new Vector2(x, y);
         for (int i = 0; i < 100; i++) {
-            if (!CheckIfPointIsInArea(shiftingPoint, moveAreas)) {
+            if (!CheckIfPointIsInAreas(shiftingPoint, moveAreas)) {
                 return false;
             }
 
