@@ -19,8 +19,9 @@ public class Sniper : Sprite {
     private Vector2 movePoint;
     private Rectangle[] moveAreas = new Rectangle[4];
     private Rectangle[] currentMoveAreas = new Rectangle[2];
+    private int[] currentNumbersOfAreas = new int[2];
 
-    public Sniper() : base("Sniper.png") {
+    public Sniper() : base("square.png") {
         SetOrigin(width / 2, height / 2);
         SetScaleXY(0.4f, 0.4f);
         SetPossibleMoveAreas();
@@ -128,18 +129,26 @@ public class Sniper : Sprite {
         if (target.x - 683 < float.Epsilon && target.y - 383 < float.Epsilon) {
             currentMoveAreas[0] = moveAreas[1];
             currentMoveAreas[1] = moveAreas[2];
+            currentNumbersOfAreas[0] = 1;
+            currentNumbersOfAreas[1] = 2;
         }
         else if (target.x - 683 < float.Epsilon && target.y - 383 > float.Epsilon) {
             currentMoveAreas[0] = moveAreas[0];
             currentMoveAreas[1] = moveAreas[1];
+            currentNumbersOfAreas[0] = 0;
+            currentNumbersOfAreas[1] = 1;
         }
         else if (target.x - 683 > float.Epsilon && target.y - 383 < float.Epsilon) {
             currentMoveAreas[0] = moveAreas[2];
             currentMoveAreas[1] = moveAreas[3];
+            currentNumbersOfAreas[0] = 2;
+            currentNumbersOfAreas[1] = 3;
         }
         else {
             currentMoveAreas[0] = moveAreas[0];
             currentMoveAreas[1] = moveAreas[3];
+            currentNumbersOfAreas[0] = 0;
+            currentNumbersOfAreas[1] = 3;
         }
     }
 
@@ -191,7 +200,7 @@ public class Sniper : Sprite {
 
     //commented out and returns zero for the time being until Dan can finish the function.
     int FindCurrentArea() {
-        /*
+        
         List<int> returnAreas = new List<int>(1);
         returnAreas[0] = 5;
         for (int i = 0; i < moveAreas.Length; i++)
@@ -205,18 +214,28 @@ public class Sniper : Sprite {
                 }
         }
 
-        for (int i = 0; i < returnAreas.Count; i++)
-        {
-
-            for (int j = 0; j < currentMoveAreas.Length; j++)
-            {
-                if (moveAreas[returnAreas[i]] == currentMoveAreas[j])
+        for (int i = 0; i < returnAreas.Count; i++) {
+            bool IsCurrent = false;
+            for (int j = 0; j < currentNumbersOfAreas.Length; j++) {
+                if (returnAreas[i] == currentNumbersOfAreas[j]) {
+                    IsCurrent = true;
+                }
             }
+            
+            if(!IsCurrent) 
+                returnAreas.RemoveAt(i);
         }
 
-        return returnNumber;
-        */
-        return 0;
+        if (returnAreas.Count == 2) {
+            if (Utils.Random(0f, 2f) > 1f) {
+                returnAreas.RemoveAt(0);
+            }
+            else {
+                returnAreas.RemoveAt(1);
+            }
+        }
+        
+        return returnAreas[0];
     }
 
     bool CheckIfPointIsInArea(Vector2 point, Rectangle[] areas) {

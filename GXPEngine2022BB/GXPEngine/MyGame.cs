@@ -12,11 +12,6 @@ public class MyGame : Game {
 
         LevelSpawn();
 
-        //Sniper sniper = new Sniper();
-        //sniper.SetXY(width / 5, height / 5);
-        //canvas.AddChild(sniper);
-        //sniper.SetTarget(player);
-
         // Add the canvas to the engine to display it:
 
     }
@@ -33,12 +28,16 @@ public class MyGame : Game {
         }
 
         if (currentNumberOfEnemies == 0 && EnemiesLeft == 38) {
-            
+            //SpawnSniper(120, 120, canvas, player);
         }
 
         if (Input.GetKeyDown(Key.Q)) {
             ClearEnemies(canvas, player);
+            currentNumberOfEnemies = 0;
         }
+        
+        Console.WriteLine("{0}, {1}", currentNumberOfEnemies, EnemiesLeft);
+        
     }
 
     static void Main() // Main() is the first method that's called when the program is run
@@ -64,6 +63,15 @@ public class MyGame : Game {
         EnemiesLeft--;
     }
 
+    void SpawnSniper(float xPos, float yPos, EasyDraw canvas, Player player) {
+        Sniper sniper = new Sniper();
+        sniper.SetXY(xPos, yPos);
+        canvas.AddChild(sniper);
+        sniper.SetTarget(player);
+        currentNumberOfEnemies++;
+        EnemiesLeft--;
+    }
+
     void LevelSpawn() {
         EasyDraw canvas = new EasyDraw(1366, 768);
         canvas.Clear(Color.MediumPurple);
@@ -71,8 +79,6 @@ public class MyGame : Game {
         Player player = new Player();
         player.SetXY(width / 2, height/2);
         canvas.AddChild(player);
-
-        
         
         AddChild(canvas);
         Console.WriteLine("MyGame initialized");
