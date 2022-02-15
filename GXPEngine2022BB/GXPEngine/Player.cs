@@ -203,7 +203,7 @@ namespace GXPEngine {
                 if (bullet.canDamage) {
                     health -= bullet.damage;
                     if (health <= 0)
-                        LateDestroy();
+                        //LateDestroy();
                     other.LateDestroy();
                 }
             }
@@ -212,6 +212,7 @@ namespace GXPEngine {
                 SuicideBoi damager = other.FindObjectOfType<SuicideBoi>();
                 health -= damager.damage;
                 other.LateRemove();
+                Level.currentNumberOfEnemies--;
             }
         }
     }
