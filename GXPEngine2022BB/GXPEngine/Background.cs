@@ -5,7 +5,7 @@ using System.Drawing;
 
     public class Background : Sprite{
 
-        public Background() : base("Background.png", true, false) {
+        public Background(string backgroundName) : base(backgroundName, true, false) {
             SetOrigin(width / 2, height / 2);
         }
     }

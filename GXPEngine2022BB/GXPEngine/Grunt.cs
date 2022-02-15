@@ -85,7 +85,7 @@ public class Grunt : Sprite {
     }
 
     void Shoot() {
-        Bullet projectile = new Bullet("circle.png", 0.4f, 0, -1, true, 1);
+        Bullet projectile = new Bullet("Bullet.png", 0.4f, 0, -1, true, 1);
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
         projectile.SetOrigin(projectile.width / 2, projectile.height / 2);
         projectile.rotation = rotation;
@@ -97,7 +97,7 @@ public class Grunt : Sprite {
         Bullet[] projectiles = new Bullet[3];
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
         for (int i = 0; i < 3; i++) {
-            projectiles[i] = new Bullet("circle.png", 0.4f, 0, -1, true);
+            projectiles[i] = new Bullet("Bullet.png", 0.4f, 0, -1, true);
             projectiles[i].SetOrigin(projectiles[i].width / 2, projectiles[i].height / 2);
             projectiles[i].rotation = rotation - 45 + i * 45;
             projectiles[i].SetXY(x, y);

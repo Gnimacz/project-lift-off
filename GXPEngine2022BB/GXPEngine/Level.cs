@@ -17,6 +17,7 @@ public class Level : GameObject {
     public static int screenWidth = 1366;
     public static int screenHeight = 768;
     private float backgroundSpeed = 0.05f;
+    private string[] backgroundNames = new string[2];
 
     public Level() {
         StartLevel();
@@ -30,8 +31,10 @@ public class Level : GameObject {
     void StartLevel() {
         EasyDraw canvas = new EasyDraw(1366, 768);
 
-        SpawnBackground(screenWidth / 2, screenHeight / 2, canvas);
-        SpawnBackground(screenWidth / 2, -screenHeight / 2, canvas);
+        SpawnBackground(screenWidth / 2, screenHeight / 2, canvas, "Background1.png");
+        SpawnBackground(screenWidth / 2, -screenHeight / 2, canvas, "Background1.png");
+        backgroundNames[0] = "Background1";
+        backgroundNames[1] = "Background2";
 
         Player player = new Player();
         player.SetXY(screenWidth / 2, screenHeight / 2);
@@ -180,8 +183,8 @@ public class Level : GameObject {
         }
     }
 
-    void SpawnBackground(float xPos, float yPos, EasyDraw canvas) {
-        Background background = new Background();
+    void SpawnBackground(float xPos, float yPos, EasyDraw canvas, string backgroundName) {
+        Background background = new Background(backgroundName);
         background.SetXY(xPos, yPos);
         canvas.AddChildAt(background, 0);
     }
@@ -192,7 +195,28 @@ public class Level : GameObject {
         for (int i = 0; i < backgrounds.Length; i++) {
             if (backgrounds[i].y - 1.5 * screenHeight >= float.Epsilon) {
                 backgrounds[i].LateDestroy();
-                SpawnBackground(screenWidth / 2, -screenHeight / 2, canvas);
+                
+                switch (backgroundNames[i]) {
+                    case "Background1":
+                        SpawnBackground(screenWidth / 2, -screenHeight / 2, canvas, "Background3.png");
+                        backgroundNames[i] = backgroundNames[i - 1];
+                        backgroundNames[i - 1] = "Background3";
+                        break;
+                    case "Background2":
+                        SpawnBackground(screenWidth / 2, -screenHeight / 2, canvas, "Background1.png");
+                        backgroundNames[i] = backgroundNames[i - 1];
+                        backgroundNames[i - 1] = "Background1";
+                        break;
+                    case "Background3":
+                        SpawnBackground(screenWidth / 2, -screenHeight / 2, canvas, "Background2.png");
+                        backgroundNames[i] = backgroundNames[i - 1];
+                        backgroundNames[i - 1] = "Background2";
+                        break;
+                    default:
+                        Console.WriteLine("Backgrounds broke");
+                        break;
+                }
+                
             }
 
             backgrounds[i].y += backgroundSpeed * Time.deltaTime;
