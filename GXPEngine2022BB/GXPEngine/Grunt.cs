@@ -23,15 +23,15 @@ public class Grunt : Sprite {
     private float t = 0;
     public int health = 3;
 
-    public Grunt() : base("square.png") {
+    public Grunt() : base("Grunt.png") {
         SetOrigin(width / 2, height / 2);
-        SetScaleXY(0.2f, -0.2f);
+        SetScaleXY(0.15f, -0.15f);
         ChooseMovement();
     }
 
-    public Grunt(int shootLevel = 1) : base("square.png") {
+    public Grunt(int shootLevel = 1) : base("Grunt.png") {
         SetOrigin(width / 2, height / 2);
-        SetScaleXY(0.2f, -0.2f);
+        SetScaleXY(0.15f, -0.15f);
         ChooseMovement();
         this.shootLevel = shootLevel;
     }
@@ -85,7 +85,7 @@ public class Grunt : Sprite {
     }
 
     void Shoot() {
-        Bullet projectile = new Bullet("circle.png", 500, 0, -1, true, 1);
+        Bullet projectile = new Bullet("circle.png", 0.5f, 0, -1, true, 1);
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
         projectile.SetOrigin(projectile.width / 2, projectile.height / 2);
         projectile.rotation = rotation;
@@ -97,7 +97,7 @@ public class Grunt : Sprite {
         Bullet[] projectiles = new Bullet[3];
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
         for (int i = 0; i < 3; i++) {
-            projectiles[i] = new Bullet("circle.png", 500, 0, -1, true);
+            projectiles[i] = new Bullet("circle.png", 0.5f, 0, -1, true);
             projectiles[i].SetOrigin(projectiles[i].width / 2, projectiles[i].height / 2);
             projectiles[i].rotation = rotation - 45 + i * 45;
             projectiles[i].SetXY(x, y);
@@ -187,19 +187,16 @@ public class Grunt : Sprite {
         }
     }
 
-    void OnCollision(GameObject other)
-    {
-        if (other is Bullet)
-        {
+    void OnCollision(GameObject other) {
+        if (other is Bullet) {
             Bullet bullet = other.FindObjectOfType<Bullet>();
-            if (!bullet.canDamage)
-            {
+            if (!bullet.canDamage) {
                 health -= bullet.damage;
-                if(health <= 0)
-                {
+                if (health <= 0) {
                     LateRemove();
                     Level.currentNumberOfEnemies--;
                 }
+
                 other.LateRemove();
             }
         }

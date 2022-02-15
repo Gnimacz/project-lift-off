@@ -24,7 +24,7 @@ public class Sniper : Sprite {
     public int health = 4;
     public int damage = 3;
 
-    public Sniper() : base("square.png") {
+    public Sniper() : base("Sniper.png") {
         SetOrigin(width / 2, height / 2);
         SetScaleXY(0.4f, 0.4f);
         SetPossibleMoveAreas();
@@ -109,21 +109,23 @@ public class Sniper : Sprite {
                 Console.WriteLine("\n");
                 Movement();
             }
-        } else {
+        }
+        else {
             SetMovementPoint();
         }
     }
-    
+
     void Movement() {
         float lengthToPoint =
             Mathf.Sqrt(Mathf.Pow(Mathf.Abs(movePoint.x - x), 2) + Mathf.Pow(Mathf.Abs(movePoint.y - y), 2));
         if (Mathf.Sqrt(Mathf.Pow(Mathf.Abs(movePoint.x - x) / lengthToPoint, 2) +
                        Mathf.Pow(Mathf.Abs(movePoint.y - y) / lengthToPoint, 2)) * moveSpeed * Time.deltaTime >
-                        lengthToPoint) {
+            lengthToPoint) {
             x = movePoint.x;
             y = movePoint.y;
             SetMovementPoint();
-        } else {
+        }
+        else {
             Translate((movePoint.x - x) / lengthToPoint * moveSpeed * Time.deltaTime,
                 (movePoint.y - y) / lengthToPoint * moveSpeed * Time.deltaTime);
         }
@@ -175,7 +177,7 @@ public class Sniper : Sprite {
 
     void SetCornerMovePoint() {
         int currentArea = FindCurrentArea();
-        if(currentArea == 5)
+        if (currentArea == 5)
             Console.WriteLine("FindCurrentArea Method Broke");
         Vector2[] CornerPoints = new Vector2[2];
         if (currentArea == 0 || currentArea == 2) {
@@ -209,20 +211,16 @@ public class Sniper : Sprite {
             movePoint.x = CornerPoints[1].x;
             movePoint.y = CornerPoints[1].y;
         }
-
     }
 
-    
-    int FindCurrentArea() {
 
+    int FindCurrentArea() {
         List<int> returnAreas = new List<int>();
         returnAreas.Add(5);
         Console.WriteLine(returnAreas.Count);
-        for (int i = 0; i < moveAreas.Length; i++)
-        {
+        for (int i = 0; i < moveAreas.Length; i++) {
             if (x - moveAreas[i].left > float.Epsilon && x - moveAreas[i].right < float.Epsilon)
-                if (y - moveAreas[i].top > float.Epsilon && y - moveAreas[i].bottom < float.Epsilon)
-                {
+                if (y - moveAreas[i].top > float.Epsilon && y - moveAreas[i].bottom < float.Epsilon) {
                     returnAreas.Add(i);
                     if (returnAreas.Contains(5))
                         returnAreas.Remove(5);
@@ -232,6 +230,7 @@ public class Sniper : Sprite {
         for (int i = 0; i < returnAreas.Count; i++) {
             Console.WriteLine("area = {0}, targetArea = {1}", returnAreas[i], currentNumbersOfAreas[i]);
         }
+
         Console.WriteLine("count = {0}", returnAreas.Count);
 
         List<bool> isCurrentArea = new List<bool>();
@@ -243,14 +242,14 @@ public class Sniper : Sprite {
                     isCurrent = true;
                 }
             }
-            
-            if(isCurrent)
+
+            if (isCurrent)
                 isCurrentArea.Add(true);
             else {
                 isCurrentArea.Add(false);
             }
         }
-        
+
 
         if (returnAreas.Count == 1) {
             if (returnAreas.Contains(5))
@@ -258,7 +257,6 @@ public class Sniper : Sprite {
             else {
                 return returnAreas[0];
             }
-
         }
 
         if (returnAreas.Count == 2) {
@@ -275,10 +273,8 @@ public class Sniper : Sprite {
                 Console.WriteLine("current area is {0}", returnAreas[1]);
                 return returnAreas[1];
             }
-
-            
         }
-        
+
         Console.WriteLine("current area is 10");
         return 10;
     }
@@ -293,13 +289,13 @@ public class Sniper : Sprite {
 
         return false;
     }
-    
+
     bool CheckIfPointIsInArea(Vector2 point, Rectangle area) {
         if (point.x - area.left > float.Epsilon && point.x - area.right < float.Epsilon)
-                if (point.y - area.top > float.Epsilon && point.y - area.bottom < float.Epsilon) {
-                    return true;
-                }
-        
+            if (point.y - area.top > float.Epsilon && point.y - area.bottom < float.Epsilon) {
+                return true;
+            }
+
         return false;
     }
 
@@ -317,19 +313,16 @@ public class Sniper : Sprite {
         return true;
     }
 
-    void OnCollision(GameObject other)
-    {
-        if (other is Bullet)
-        {
+    void OnCollision(GameObject other) {
+        if (other is Bullet) {
             Bullet bullet = other.FindObjectOfType<Bullet>();
-            if (!bullet.canDamage)
-            {
+            if (!bullet.canDamage) {
                 health -= bullet.damage;
-                if (health <= 0)
-                {
+                if (health <= 0) {
                     LateRemove();
                     Level.currentNumberOfEnemies--;
                 }
+
                 other.LateRemove();
             }
         }

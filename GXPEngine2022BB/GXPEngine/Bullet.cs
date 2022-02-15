@@ -6,25 +6,23 @@ using System.Threading.Tasks;
 using GXPEngine.Core;
 using GXPEngine;
 
-namespace GXPEngine
-{
-    public class Bullet : Sprite
-    {
+namespace GXPEngine {
+    public class Bullet : Sprite {
         private float movementSpeed;
         private Vector2 movementDir;
         public int damage = 1;
         public bool canDamage = true;
 
-        public Bullet(String bulletImage, float bulletSpeed, float xDirection, float yDirection, bool canHarmPlayer) : base(bulletImage, true)
-        {
+        public Bullet(String bulletImage, float bulletSpeed, float xDirection, float yDirection, bool canHarmPlayer) :
+            base(bulletImage, true) {
             movementSpeed = bulletSpeed;
             movementDir = new Vector2(xDirection, yDirection);
             SetScaleXY(0.5f, 0.5f);
             canDamage = canHarmPlayer;
         }
 
-        public Bullet(String bulletImage, float bulletSpeed, float xDirection, float yDirection, bool canHarmPlayer, int damage) : base(bulletImage, true)
-        {
+        public Bullet(String bulletImage, float bulletSpeed, float xDirection, float yDirection, bool canHarmPlayer,
+            int damage) : base(bulletImage, true) {
             movementSpeed = bulletSpeed;
             movementDir = new Vector2(xDirection, yDirection);
             SetScaleXY(0.5f, 0.5f);
@@ -32,21 +30,19 @@ namespace GXPEngine
             this.damage = damage;
         }
 
-        void Update()
-        {
+        void Update() {
             MoveBullet();
             OutOfBounds();
         }
 
-        void MoveBullet()
-        {
-            Move(movementDir.x * movementSpeed * Time.deltaTime / 1000f, movementDir.y * movementSpeed * Time.deltaTime / 1000f);
+        void MoveBullet() {
+            float movementLength = Mathf.Sqrt(Mathf.Pow(movementDir.x, 2) + Mathf.Pow(movementDir.y, 2));
+            Move(movementDir.x / movementLength * movementSpeed * Time.deltaTime,
+                movementDir.y / movementLength * movementSpeed * Time.deltaTime);
         }
-        
 
-        private void OutOfBounds()
-        {
-            if(x - Level.screenWidth > float.Epsilon || x < float.Epsilon)
+        private void OutOfBounds() {
+            if (x - Level.screenWidth > float.Epsilon || x < float.Epsilon)
                 LateDestroy();
             if (y - Level.screenHeight > float.Epsilon || y < float.Epsilon)
                 LateDestroy();
