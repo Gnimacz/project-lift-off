@@ -15,15 +15,15 @@ public class Level : GameObject{
         
     private int enemiesLeft = 55;
     public static int currentNumberOfEnemies = 0;
-    private int screenWidth = 1366;
-    private int screenHeight = 768;
+    public static int screenWidth = 1366;
+    public static int screenHeight = 768;
     
     public Level() {
         LevelSpawn();
     }
 
     void Update() {
-        LevelOne();
+       LevelOne();
     }
 
     void LevelSpawn() {
@@ -39,8 +39,8 @@ public class Level : GameObject{
         enemiesLeft = 55;
     }
     
-    void SpawnGrunt(float xPos, float yPos, EasyDraw canvas, Player player) {
-        Grunt grunt = new Grunt();
+    void SpawnGrunt(float xPos, float yPos, EasyDraw canvas, Player player, int shootLevel) {
+        Grunt grunt = new Grunt(shootLevel);
         grunt.SetXY(xPos, yPos);
         canvas.AddChild(grunt);
         grunt.SetTarget(player);
@@ -81,61 +81,60 @@ public class Level : GameObject{
         Console.WriteLine("{0}, {1}", currentNumberOfEnemies, enemiesLeft);
         
         if (currentNumberOfEnemies == 0 && enemiesLeft == 55) {
-            SpawnGrunt(screenWidth/2, 153, canvas, player);
+            SpawnGrunt(screenWidth/2, 153, canvas, player, 1);
         }
         if (currentNumberOfEnemies == 0 && enemiesLeft == 54) {
-            SpawnGrunt(screenWidth / 3, 153, canvas, player);
-            SpawnGrunt(screenWidth*2 / 3, 153, canvas, player);
+            SpawnGrunt(screenWidth / 3, 153, canvas, player, 1);
+            SpawnGrunt(screenWidth*2 / 3, 153, canvas, player, 1);
         }
 
         if (currentNumberOfEnemies == 0 && enemiesLeft == 52)
         {
-            SpawnGrunt(227, 153, canvas, player);
-            SpawnGrunt(227* 2 ,153 , canvas, player);
-            SpawnGrunt(227 * 3,153 , canvas, player);
-            SpawnGrunt(1400, -150, canvas, player);
+            SpawnGrunt(227, 153, canvas, player, 1);
+            SpawnGrunt(227* 2 ,153 , canvas, player, 1);
+            SpawnGrunt(227 * 3,153 , canvas, player, 1);
+            SpawnGrunt(1400, -150, canvas, player, 1);
         }
         if (currentNumberOfEnemies == 0 && enemiesLeft == 48)
         {
-            SpawnGrunt(227, 153, canvas, player);
-            SpawnGrunt(227 * 5, 153, canvas, player);
+            SpawnGrunt(227, 153, canvas, player, 1);
+            SpawnGrunt(227 * 5, 153, canvas, player, 1);
             SpawnKamikazee(screenWidth / 2, 0, canvas, player);
 
         }
         if (currentNumberOfEnemies == 0 && enemiesLeft == 45)
         {
-            SpawnGrunt(227, 153, canvas, player);
-            SpawnGrunt(227 * 5, 153, canvas, player);
+            SpawnGrunt(227, 153, canvas, player, 1);
+            SpawnGrunt(227 * 5, 153, canvas, player, 1);
             SpawnKamikazee(screenWidth / 2, 0, canvas, player);
             SpawnKamikazee(screenWidth / 3, -767/2, canvas, player);
             SpawnKamikazee(screenWidth *2/ 3, -767 *2/ 3, canvas, player);
-            SpawnGrunt(-150, 0, canvas, player);
-            SpawnGrunt(1500, 0, canvas, player);
+            SpawnGrunt(-150, 0, canvas, player, 1);
+            SpawnGrunt(1500, 0, canvas, player, 1);
         }
         if (currentNumberOfEnemies == 0 && enemiesLeft == 38)
         {
-            SpawnGrunt(227, 153, canvas, player);
-            SpawnGrunt(227 * 5, 153, canvas, player);
+            SpawnGrunt(227, 153, canvas, player, 1);
+            SpawnGrunt(227 * 5, 153, canvas, player, 1);
             SpawnKamikazee(screenWidth / 4, 0, canvas, player);
             SpawnKamikazee(screenWidth * 3 / 4, 0, canvas, player);
             SpawnKamikazee(screenWidth / 2, -767 /2, canvas, player);
-            SpawnGrunt(250, 50, canvas, player);
-            SpawnGrunt(250 * 5, 50, canvas, player);
-            SpawnGrunt(250, -200, canvas, player);
-            SpawnGrunt(250 * 5, -200, canvas, player);
-            SpawnGrunt(250*2, -200, canvas, player);
-            SpawnGrunt(250 * 4, -200, canvas, player);
+            SpawnGrunt(250, 50, canvas, player, 1);
+            SpawnGrunt(250 * 5, 50, canvas, player, 1);
+            SpawnGrunt(250, -200, canvas, player, 1);
+            SpawnGrunt(250 * 5, -200, canvas, player, 1);
+            SpawnGrunt(250*2, -200, canvas, player, 1);
+            SpawnGrunt(250 * 4, -200, canvas, player, 1);
         }
         if (currentNumberOfEnemies == 0 && enemiesLeft == 27)//enemiesLeft does not account for sniper
         {
-            SpawnGrunt(227, 153, canvas, player);
-            SpawnGrunt(227 * 5, 153, canvas, player);
+            SpawnGrunt(227, 153, canvas, player, 1);
+            SpawnGrunt(227 * 5, 153, canvas, player, 1);
             SpawnKamikazee(screenWidth / 4, 0, canvas, player);
             SpawnKamikazee(screenWidth * 3 / 4, 0, canvas, player);
             SpawnKamikazee(screenWidth / 2, -767 / 2, canvas, player);
-            SpawnGrunt(250, 50, canvas, player);
-            SpawnGrunt(250 * 5, 50, canvas, player);
-            SpawnSniper(screenWidth/2, -120, canvas, player);
+            SpawnGrunt(250, 50, canvas, player, 1);
+            SpawnGrunt(250 * 5, 50, canvas, player, 1);
         }
         if (currentNumberOfEnemies == 0 && enemiesLeft == 20)
         {
@@ -153,23 +152,23 @@ public class Level : GameObject{
         if (currentNumberOfEnemies == 0 && enemiesLeft == 14)
         {
             //set grunt shoot level 2 or spawn grunt level 2
-            SpawnGrunt(227, 153, canvas, player);
-            SpawnGrunt(227 * 5, 153, canvas, player);
-            SpawnGrunt(250, 50, canvas, player);
-            SpawnGrunt(250 * 5, 50, canvas, player);
+            SpawnGrunt(227, 153, canvas, player, 2);
+            SpawnGrunt(227 * 5, 153, canvas, player, 2);
+            SpawnGrunt(250, 50, canvas, player, 2);
+            SpawnGrunt(250 * 5, 50, canvas, player, 2);
         }
         if (currentNumberOfEnemies == 0 && enemiesLeft == 10)
         {
             //set grunt shoot level 2 or spawn grunt level 2
-            SpawnGrunt(227, 153, canvas, player);
-            SpawnGrunt(227 * 5, 153, canvas, player);
-            SpawnGrunt(250, 50, canvas, player);
-            SpawnGrunt(250 * 5, 50, canvas, player);
-            // SpawnSniper(screenWidth / 2, 660, canvas, player);
-            SpawnGrunt(-227, 153, canvas, player);
-            SpawnGrunt(1600, 153, canvas, player);
-            SpawnGrunt(-227, 50, canvas, player);
-            SpawnGrunt(1600, 50, canvas, player);
+            SpawnGrunt(227, 153, canvas, player, 2);
+            SpawnGrunt(227 * 5, 153, canvas, player, 2);
+            SpawnGrunt(250, 50, canvas, player, 2);
+            SpawnGrunt(250 * 5, 50, canvas, player, 2);
+            SpawnSniper(screenWidth / 2, 660, canvas, player);
+            SpawnGrunt(-227, 153, canvas, player, 2);
+            SpawnGrunt(1600, 153, canvas, player, 2);
+            SpawnGrunt(-227, 50, canvas, player, 2);
+            SpawnGrunt(1600, 50, canvas, player, 2);
         }
 
 

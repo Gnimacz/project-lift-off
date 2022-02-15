@@ -21,8 +21,6 @@ namespace GXPEngine
             movementDir = new Vector2(xDirection, yDirection);
             SetScaleXY(0.5f, 0.5f);
             canDamage = canHarmPlayer;
-
-            BulletTimer();
         }
 
         public Bullet(String bulletImage, float bulletSpeed, float xDirection, float yDirection, bool canHarmPlayer, int damage) : base(bulletImage, true)
@@ -32,33 +30,26 @@ namespace GXPEngine
             SetScaleXY(0.5f, 0.5f);
             canDamage = canHarmPlayer;
             this.damage = damage;
-
-            BulletTimer();
         }
 
         void Update()
         {
             MoveBullet();
+            OutOfBounds();
         }
 
         void MoveBullet()
         {
-            if(x >= game.width || x <= 0)
-            {
-                movementDir.x *= -1;
-            }
-            if (y >= game.height || y <= 0)
-            {
-                movementDir.y *= -1;
-            }
             Move(movementDir.x * movementSpeed * Time.deltaTime / 1000f, movementDir.y * movementSpeed * Time.deltaTime / 1000f);
         }
         
 
-        private async void BulletTimer()
+        private void OutOfBounds()
         {
-            await Task.Delay(2000);
-            LateRemove();
+            if(x - Level.screenWidth > float.Epsilon || x < float.Epsilon)
+                LateDestroy();
+            if (y - Level.screenHeight > float.Epsilon || y < float.Epsilon)
+                LateDestroy();
         }
     }
 }

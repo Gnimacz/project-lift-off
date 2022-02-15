@@ -16,6 +16,7 @@ public class Grunt : Sprite {
     private float desiredRotation = 0f;
     private float rotationSpeed = 0.2f;
     private int lastShootTime = 0;
+    private int shootLevel = 1;
     private int shootIntervals = 700;
     private Vector2 movePoint;
     private Vector2[] movePoints = new Vector2[3];
@@ -28,17 +29,41 @@ public class Grunt : Sprite {
         ChooseMovement();
     }
 
+    public Grunt(int shootLevel = 1) : base("square.png") {
+        SetOrigin(width / 2, height / 2);
+        SetScaleXY(0.2f, -0.2f);
+        ChooseMovement();
+        this.shootLevel = shootLevel;
+    }
+
     void Update() {
         //SmoothMovement();
         Movement();
         SetRotationBetween360();
         SetDesiredRotation();
         SlowRotation();
-        if (Time.time > lastShootTime) {
-            Shoot();
-            lastShootTime = Time.time + shootIntervals;
-        }
+        Shooting();
+    }
 
+    void Shooting() {
+        switch (shootLevel) {
+            case 1:
+                if (Time.time > lastShootTime) {
+                    Shoot();
+                    lastShootTime = Time.time + shootIntervals;
+                }
+
+                break;
+            case 2:
+                if (Time.time > lastShootTime) {
+                    ShootLevelTwo();
+                    lastShootTime = Time.time + shootIntervals;
+                }
+
+                break;
+            default:
+                break;
+        }
     }
 
     void ChooseSmoothMovement() {

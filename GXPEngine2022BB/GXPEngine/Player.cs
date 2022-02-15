@@ -220,6 +220,8 @@ namespace GXPEngine
                 if (bullet.canDamage)
                 {
                     health -= bullet.damage;
+                    if(health <= 0)
+                        LateDestroy();
                     other.LateDestroy();
                 }
             }
