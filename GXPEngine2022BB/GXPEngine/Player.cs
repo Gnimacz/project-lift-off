@@ -130,7 +130,7 @@ namespace GXPEngine {
             projectile.rotation = rotation;
             projectile.SetXY(x, y);
             projectile.SetColor(255, 0, 255);
-            canvas.AddChildAt(projectile, canvas.GetChildCount() - 1);
+            canvas.AddChildAt(projectile, 3);
         }
 
 

@@ -16,18 +16,22 @@ public class Level : GameObject {
     public static int currentNumberOfEnemies = 0;
     public static int screenWidth = 1366;
     public static int screenHeight = 768;
+    private float backgroundSpeed = 0.05f;
 
     public Level() {
-        LevelSpawn();
+        StartLevel();
     }
 
     void Update() {
         LevelOne();
+        LoopBackground();
     }
 
-    void LevelSpawn() {
+    void StartLevel() {
         EasyDraw canvas = new EasyDraw(1366, 768);
-        canvas.Clear(Color.MediumPurple);
+
+        SpawnBackground(screenWidth / 2, screenHeight / 2, canvas);
+        SpawnBackground(screenWidth / 2, -screenHeight / 2, canvas);
 
         Player player = new Player();
         player.SetXY(screenWidth / 2, screenHeight / 2);
@@ -66,9 +70,9 @@ public class Level : GameObject {
     }
 
     void ClearEnemies(EasyDraw canvas, Player player) {
-        List<GameObject> CurrentObjectsONScreen = canvas.GetChildren();
-        CurrentObjectsONScreen.Remove(player);
-        foreach (GameObject gameobject in CurrentObjectsONScreen) {
+        List<GameObject> CurrentObjectsOnScreen = canvas.GetChildren();
+        CurrentObjectsOnScreen.Remove(player);
+        foreach (GameObject gameobject in CurrentObjectsOnScreen) {
             gameobject.LateDestroy();
         }
     }
@@ -169,11 +173,29 @@ public class Level : GameObject {
             SpawnGrunt(-227, 50, canvas, player, 2);
             SpawnGrunt(1600, 50, canvas, player, 2);
         }
-
-
+        
         if (Input.GetKeyDown(Key.Q)) {
             ClearEnemies(canvas, player);
             currentNumberOfEnemies = 0;
+        }
+    }
+
+    void SpawnBackground(float xPos, float yPos, EasyDraw canvas) {
+        Background background = new Background();
+        background.SetXY(xPos, yPos);
+        canvas.AddChildAt(background, 0);
+    }
+
+    void LoopBackground() {
+        EasyDraw canvas = FindObjectOfType<EasyDraw>();
+        GameObject[] backgrounds = FindObjectsOfType(typeof(Background));
+        for (int i = 0; i < backgrounds.Length; i++) {
+            if (backgrounds[i].y - 1.5 * screenHeight >= float.Epsilon) {
+                backgrounds[i].LateDestroy();
+                SpawnBackground(screenWidth / 2, -screenHeight / 2, canvas);
+            }
+
+            backgrounds[i].y += backgroundSpeed * Time.deltaTime;
         }
     }
 }
