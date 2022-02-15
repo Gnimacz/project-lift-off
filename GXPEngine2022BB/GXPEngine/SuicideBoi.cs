@@ -94,6 +94,7 @@ public class SuicideBoi : Sprite {
                     if (health <= 0)
                     {
                         LateRemove();
+                        Level.currentNumberOfEnemies--;
                     }
                     other.LateRemove();
                 }

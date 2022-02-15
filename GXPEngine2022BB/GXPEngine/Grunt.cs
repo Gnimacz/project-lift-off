@@ -173,6 +173,7 @@ public class Grunt : Sprite {
                 if(health <= 0)
                 {
                     LateRemove();
+                    Level.currentNumberOfEnemies--;
                 }
                 other.LateRemove();
             }

@@ -96,7 +96,7 @@ C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Te
 C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.ValueTuple.xml
 C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
-C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe.config
 C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe
 C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.pdb
+C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll

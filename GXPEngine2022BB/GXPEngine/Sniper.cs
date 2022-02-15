@@ -328,6 +328,7 @@ public class Sniper : Sprite {
                 if (health <= 0)
                 {
                     LateRemove();
+                    Level.currentNumberOfEnemies--;
                 }
                 other.LateRemove();
             }
