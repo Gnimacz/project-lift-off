@@ -111,7 +111,7 @@ namespace GXPEngine {
 
 
             //shooting
-            if (ControllerInput.Button9 == 1 || Input.GetKey(Key.SPACE)) {
+            if (ControllerInput.Button12 == 1 || Input.GetKey(Key.SPACE)) {
                 if (canShoot) {
                     Shoot();
                     canShoot = false;
@@ -130,7 +130,7 @@ namespace GXPEngine {
             projectile.rotation = rotation;
             projectile.SetXY(x, y);
             projectile.SetColor(255, 0, 255);
-            canvas.AddChildAt(projectile, 3);
+            canvas.AddChildAt(projectile, canvas.GetChildCount() - 2);
         }
 
 

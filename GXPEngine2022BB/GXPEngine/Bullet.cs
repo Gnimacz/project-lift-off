@@ -22,10 +22,10 @@ namespace GXPEngine {
         }
 
         public Bullet(String bulletImage, float bulletSpeed, float xDirection, float yDirection, bool canHarmPlayer,
-            int damage) : base(bulletImage, true) {
+            int damage, float bulletSize) : base(bulletImage, true) {
             movementSpeed = bulletSpeed;
             movementDir = new Vector2(xDirection, yDirection);
-            SetScaleXY(0.5f, 0.5f);
+            SetScaleXY(bulletSize, bulletSize);
             canDamage = canHarmPlayer;
             this.damage = damage;
         }

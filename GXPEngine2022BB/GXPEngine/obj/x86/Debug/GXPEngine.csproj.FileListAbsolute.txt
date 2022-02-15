@@ -61,8 +61,6 @@ C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bi
 C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.ValueTuple.xml
 C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
-C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.SuggestedBindingRedirects.cache
-C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe.config
 C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CopyComplete
 C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe
@@ -100,3 +98,4 @@ C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEn
 C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe
 C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.pdb
 C:\MyProjects\GXP\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\linda\Desktop\CMGT\github\project-lift-off\GXPEngine2022BB\GXPEngine\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll

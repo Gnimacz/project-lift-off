@@ -147,22 +147,24 @@ void loop() {
 
 
   joystickX1 = AnalogSmoothX1(AnalogXPin1);
-  s.concat(mapfloat(joystickX1, 0, 1024, 1, -1));
+  s.concat(mapfloat(joystickX1, 0, 1024, -1, 1));
   s.concat(" ");
   
 
   joystickY1 = AnalogSmoothY1(AnalogYPin1);
-  s.concat(mapfloat(joystickY1, 0, 1024, 1, -1));
+  s.concat(mapfloat(joystickY1, 0, 1024, -1, 1));
   s.concat(" ");
 
 
   joystickX2 = analogRead(AnalogXPin2);//smoothX2(AnalogXPin2);
-  s.concat(mapfloat(joystickX2, 0, 1024, -1, 1));
+  s.concat(mapfloat(joystickX2, 0, 1024, 1, -1));
+//s.concat(joystickX2);
   s.concat(" ");
   
 
   joystickY2 = analogRead(AnalogYPin2);//smoothY2(AnalogYPin2);
-  s.concat(mapfloat(joystickY2, 0, 1024, -1, 1));
+  s.concat(mapfloat(joystickY2, 0, 1024, 1, -1));
+//  s.concat(joystickY2);
 
   Serial.println(s);
   s = "";
