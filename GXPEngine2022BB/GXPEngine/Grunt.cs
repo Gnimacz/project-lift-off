@@ -85,23 +85,23 @@ public class Grunt : Sprite {
     }
 
     void Shoot() {
-        Bullet projectile = new Bullet("circle.png", 0.5f, 0, -1, true, 1, 0.25f);
+        Bullet projectile = new Bullet("GruntBullet.png", 0.5f, 0, -1, true, 1, 0.25f);
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
         projectile.SetOrigin(projectile.width / 2, projectile.height / 2);
         projectile.rotation = rotation;
         projectile.SetXY(x, y);
-        canvas.AddChildAt(projectile, 0);
+        canvas.AddChildAt(projectile, 3);
     }
 
     void ShootLevelTwo() {
         Bullet[] projectiles = new Bullet[3];
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
         for (int i = 0; i < 3; i++) {
-            projectiles[i] = new Bullet("circle.png", 0.5f, 0, -1, true, 1, 0.25f); ;
+            projectiles[i] = new Bullet("GruntBullet.png", 0.5f, 0, -1, true, 1, 0.25f); ;
             projectiles[i].SetOrigin(projectiles[i].width / 2, projectiles[i].height / 2);
             projectiles[i].rotation = rotation - 45 + i * 45;
             projectiles[i].SetXY(x, y);
-            canvas.AddChildAt(projectiles[i], 0);
+            canvas.AddChildAt(projectiles[i], 3);
         }
     }
 
