@@ -4,14 +4,16 @@ using GXPEngine; // GXPEngine contains the engine
 using System.Drawing; // System.Drawing contains drawing tools such as Color definitions
 
 public class MyGame : Game {
+
+
     public MyGame() : base(1366, 768, false) {
         // Create a window that's 800x600 and NOT fullscreen
         // Draw some things on a canvas:
+        Hud hud = new Hud();
 
         Level level = new Level();
         AddChild(level);
 
-        Hud hud = new Hud();
         AddChild(hud);
 
         // Add the canvas to the engine to display it:

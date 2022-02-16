@@ -39,7 +39,7 @@ namespace GXPEngine
             {
                 for (int i = 0; i < healthAmount; i++)
                 {
-                    healthSprites.Last().Remove();
+                    healthSprites.Last().LateRemove();
                     healthSprites.RemoveAt(healthSprites.Count - 1);
                 }
             }
