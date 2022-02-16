@@ -92,9 +92,22 @@ public class SuicideBoi : Sprite {
                     LateRemove();
                     Level.currentNumberOfEnemies--;
                 }
-
+                Flash();
                 other.LateRemove();
             }
         }
     }
+    private async void Flash()
+    {
+        //SetColor(150, 0, 0);
+        visible = false;
+        await Task.Delay(35);
+        visible = true;
+        await Task.Delay(35);
+        visible = false;
+        await Task.Delay(35);
+        visible = true;
+        //SetColor(255, 255, 255);
+    }
+
 }

@@ -28,7 +28,7 @@ namespace GXPEngine
             textRenderer = new EasyDraw(1366, 768, false);
             textRenderer.TextAlign(CenterMode.Center, CenterMode.Center);
             //TODO(pick a font and use that instead of default windows font);
-            //textRenderer.TextFont(Utils.LoadFont())
+            textRenderer.TextFont(Utils.LoadFont("nove.ttf", 16));
             AddChild(textRenderer);
         }
 

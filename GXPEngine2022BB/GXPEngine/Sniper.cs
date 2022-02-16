@@ -41,7 +41,7 @@ public class Sniper : Sprite {
     void Update() {
         //Console.WriteLine("{0}, {1} -> {2}, {3}", x, y, movePoint.x, movePoint.y);
         //Console.WriteLine(aiming);
-        Console.WriteLine("Sniper x, y : {0}, {1}", x, y);
+        //Console.WriteLine("Sniper x, y : {0}, {1}", x, y);
         MovementInitialization();
         SetRotationBetween360();
         SetDesiredRotation();
@@ -384,9 +384,22 @@ public class Sniper : Sprite {
                     LateRemove();
                     Level.currentNumberOfEnemies--;
                 }
-
+                Flash();
                 other.LateRemove();
             }
         }
+    }
+
+    private async void Flash()
+    {
+        //SetColor(150, 0, 0);
+        visible = false;
+        await Task.Delay(35);
+        visible = true;
+        await Task.Delay(35);
+        visible = false;
+        await Task.Delay(35);
+        visible = true;
+        //SetColor(255, 255, 255);
     }
 }

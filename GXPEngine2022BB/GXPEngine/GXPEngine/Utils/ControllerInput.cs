@@ -42,7 +42,7 @@ namespace GXPEngine {
 
                 serialPort = new SerialPort();
                 serialPort.BaudRate = 9600;
-                serialPort.PortName = ports[0];
+                serialPort.PortName = ports[1];
                 serialPort.Open();
                 Console.WriteLine("port " + serialPort.PortName + " opened");
 
@@ -66,7 +66,6 @@ namespace GXPEngine {
                     D12State = int.Parse(message[7]); // variable for reading the pushbutton status of D8
                     D13State = int.Parse(message[8]);
                     D9State = int.Parse(message[9]);
-                    Console.WriteLine(D9State);
 
                     _joystickX = float.Parse(message[10]) / 100f;
                     _joystickY = float.Parse(message[11]) / 100f;
