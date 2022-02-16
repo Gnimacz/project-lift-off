@@ -214,6 +214,12 @@ namespace GXPEngine {
                 other.LateRemove();
                 Level.currentNumberOfEnemies--;
             }
+
+            if (other is Laser) {
+                Laser laser = other.FindObjectOfType<Laser>();
+                health -= laser.damage;
+            }
+
         }
     }
 }

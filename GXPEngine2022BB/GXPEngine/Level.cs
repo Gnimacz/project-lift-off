@@ -84,10 +84,11 @@ public class Level : GameObject {
         EasyDraw canvas = FindObjectOfType<EasyDraw>();
         Player player = FindObjectOfType<Player>();
 
-        Console.WriteLine("{0}, {1}", currentNumberOfEnemies, enemiesLeft);
+        //Console.WriteLine("{0}, {1}", currentNumberOfEnemies, enemiesLeft);
 
         if (currentNumberOfEnemies == 0 && enemiesLeft == 55) {
             SpawnGrunt(screenWidth / 2, 153, canvas, player, 1);
+            SpawnSniper(screenWidth / 2, 100, canvas, player);
         }
 
         if (currentNumberOfEnemies == 0 && enemiesLeft == 54) {

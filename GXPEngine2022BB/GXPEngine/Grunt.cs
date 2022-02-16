@@ -90,7 +90,7 @@ public class Grunt : Sprite {
         projectile.SetOrigin(projectile.width / 2, projectile.height / 2);
         projectile.rotation = rotation;
         projectile.SetXY(x, y);
-        canvas.AddChildAt(projectile, 3);
+        canvas.AddChildAt(projectile, 4);
     }
 
     void ShootLevelTwo() {
@@ -101,7 +101,7 @@ public class Grunt : Sprite {
             projectiles[i].SetOrigin(projectiles[i].width / 2, projectiles[i].height / 2);
             projectiles[i].rotation = rotation - 45 + i * 45;
             projectiles[i].SetXY(x, y);
-            canvas.AddChildAt(projectiles[i], 3);
+            canvas.AddChildAt(projectiles[i], 4);
         }
     }
 

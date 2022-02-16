@@ -16,7 +16,14 @@ public class Sniper : Sprite {
     private float moveSpeed = 0.3f;
     private float desiredRotation = 0;
     private float rotationSpeed = 10f;
+    private int lastShootTime = 0;
+    private int shootIntervals = 3000;
+    private int shootDelay = 3000;
+    private int startDelayTime;
+    private int currentDelay = 0;
+    private bool aiming = false;
     private Vector2 movePoint;
+    private Vector2 aimPoint;
     private Rectangle[] moveAreas = new Rectangle[4];
     private Rectangle[] currentMoveAreas = new Rectangle[2];
     private int[] currentNumbersOfAreas = new int[2];
@@ -33,10 +40,13 @@ public class Sniper : Sprite {
 
     void Update() {
         //Console.WriteLine("{0}, {1} -> {2}, {3}", x, y, movePoint.x, movePoint.y);
+        //Console.WriteLine(aiming);
+        Console.WriteLine("Sniper x, y : {0}, {1}", x, y);
         MovementInitialization();
         SetRotationBetween360();
         SetDesiredRotation();
         SlowRotation();
+        ShootingInitialization();
     }
 
     void SetPossibleMoveAreas() {
@@ -51,8 +61,19 @@ public class Sniper : Sprite {
     }
 
     void SetDesiredRotation() {
-        float diffX = target.x - x;
-        float diffY = target.y - y;
+
+        float diffX = 0f;
+        float diffY = 0f;
+        
+        if (!aiming) {
+            diffX = target.x - x;
+            diffY = target.y - y;
+        }
+        else {
+            diffX = aimPoint.x - x;
+            diffY = aimPoint.y - y;
+        }
+
         float cos = Mathf.Abs(diffX) /
                     Mathf.Sqrt(Mathf.Pow(Mathf.Abs(diffX), 2) +
                                Mathf.Pow(Mathf.Abs(diffY), 2)); // calculate cos of desired angle
@@ -103,10 +124,10 @@ public class Sniper : Sprite {
                 Movement();
             }
             else {
-                Console.WriteLine("{0}, {1} -> {2}, {3}", x, y, movePoint.x, movePoint.y);
+                //Console.WriteLine("{0}, {1} -> {2}, {3}", x, y, movePoint.x, movePoint.y);
                 SetCornerMovePoint();
-                Console.WriteLine("{0}, {1} -> {2}, {3}", x, y, movePoint.x, movePoint.y);
-                Console.WriteLine("\n");
+                //Console.WriteLine("{0}, {1} -> {2}, {3}", x, y, movePoint.x, movePoint.y);
+                //Console.WriteLine("\n");
                 Movement();
             }
         }
@@ -217,7 +238,7 @@ public class Sniper : Sprite {
     int FindCurrentArea() {
         List<int> returnAreas = new List<int>();
         returnAreas.Add(5);
-        Console.WriteLine(returnAreas.Count);
+        //Console.WriteLine(returnAreas.Count);
         for (int i = 0; i < moveAreas.Length; i++) {
             if (x - moveAreas[i].left > float.Epsilon && x - moveAreas[i].right < float.Epsilon)
                 if (y - moveAreas[i].top > float.Epsilon && y - moveAreas[i].bottom < float.Epsilon) {
@@ -228,10 +249,10 @@ public class Sniper : Sprite {
         }
 
         for (int i = 0; i < returnAreas.Count; i++) {
-            Console.WriteLine("area = {0}, targetArea = {1}", returnAreas[i], currentNumbersOfAreas[i]);
+            //Console.WriteLine("area = {0}, targetArea = {1}", returnAreas[i], currentNumbersOfAreas[i]);
         }
 
-        Console.WriteLine("count = {0}", returnAreas.Count);
+        //Console.WriteLine("count = {0}", returnAreas.Count);
 
         List<bool> isCurrentArea = new List<bool>();
 
@@ -265,17 +286,17 @@ public class Sniper : Sprite {
             }
 
             if (isCurrentArea[0]) {
-                Console.WriteLine("current area is {0}", returnAreas[0]);
+                //Console.WriteLine("current area is {0}", returnAreas[0]);
                 return returnAreas[0];
             }
 
             if (isCurrentArea[1]) {
-                Console.WriteLine("current area is {0}", returnAreas[1]);
+                //Console.WriteLine("current area is {0}", returnAreas[1]);
                 return returnAreas[1];
             }
         }
 
-        Console.WriteLine("current area is 10");
+        //Console.WriteLine("current area is 10");
         return 10;
     }
 
@@ -311,6 +332,47 @@ public class Sniper : Sprite {
         }
 
         return true;
+    }
+
+    void ShootingInitialization() {
+        //Console.WriteLine("shooting cooldown {0}", time.time);
+        if (Time.time - lastShootTime > float.Epsilon && !aiming) {
+            aiming = true;
+            SetAimPoint();
+            startDelayTime = Time.time;
+            currentDelay = 0;
+            lastShootTime = Time.time + shootIntervals + shootDelay + Laser.maxLifeTime;
+        }
+        
+        DelayBeforeShot();
+        
+    }
+
+    void SetAimPoint() {
+        aimPoint.x = target.x;
+        aimPoint.y = target.y;
+    }
+
+    void DelayBeforeShot() {
+        if (currentDelay >= 0) {
+            currentDelay = Time.time - startDelayTime;
+            //Console.WriteLine("Delay before Shot {0}, {1}", currentDelay, shootDelay);
+            if (currentDelay >= shootDelay) {
+                Shoot();
+                currentDelay = -10;
+            }
+        }
+    }
+
+    public void AllowRotation() {
+        aiming = false;
+    }
+
+    void Shoot() {
+        Laser laser = new Laser(this);
+        laser.SetXY(x, y);
+        laser.rotation = - 180;
+        AddChild(laser);
     }
 
     void OnCollision(GameObject other) {
