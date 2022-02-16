@@ -23,6 +23,8 @@ namespace GXPEngine {
         private int shootDelay = 100; //delay between bullet shots in ms
         private static int health = 5;
 
+        private Hud hudRef;
+
 
         public Player() : base("Player.png") {
             SetOrigin(width / 2, height / 2);
@@ -34,6 +36,8 @@ namespace GXPEngine {
 
             Thread thread = new Thread(ControllerInput.GetControllerState);
             thread.Start();
+
+            hudRef = parent.FindObjectOfType<Hud>();
         }
 
         void Update() {
@@ -203,8 +207,12 @@ namespace GXPEngine {
                 if (bullet.canDamage) {
                     health -= bullet.damage;
                     if (health <= 0)
-                        //LateDestroy();
+                    {
+                        LateDestroy();
+                    }
+
                     other.LateDestroy();
+                    hudRef.RemoveHealth();
                 }
             }
 
@@ -213,6 +221,7 @@ namespace GXPEngine {
                 health -= damager.damage;
                 other.LateRemove();
                 Level.currentNumberOfEnemies--;
+                hudRef.RemoveHealth();
             }
         }
     }

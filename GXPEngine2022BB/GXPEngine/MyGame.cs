@@ -11,6 +11,9 @@ public class MyGame : Game {
         Level level = new Level();
         AddChild(level);
 
+        Hud hud = new Hud();
+        AddChild(hud);
+
         // Add the canvas to the engine to display it:
     }
 
