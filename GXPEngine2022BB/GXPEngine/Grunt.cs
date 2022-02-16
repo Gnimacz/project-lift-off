@@ -192,6 +192,7 @@ public class Grunt : Sprite {
             Bullet bullet = other.FindObjectOfType<Bullet>();
             if (!bullet.canDamage) {
                 health -= bullet.damage;
+                Flash();
                 if (health <= 0) {
                     LateRemove();
                     Level.currentNumberOfEnemies--;
@@ -200,5 +201,22 @@ public class Grunt : Sprite {
                 other.LateRemove();
             }
         }
+    }
+
+    private async void Flash()
+    {
+        if (health == 2)
+        {
+            SetColor(150, 150, 0);
+            await Task.Delay(15);
+            SetColor(150, 0, 0);
+        }
+        else if (health == 1)
+        {
+            
+            SetColor(255, 0, 0);
+            
+        }
+
     }
 }

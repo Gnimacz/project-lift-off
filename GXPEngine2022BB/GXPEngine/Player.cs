@@ -21,8 +21,8 @@ namespace GXPEngine {
         private float desiredRotation = 0;
 
         private bool canShoot = true;
-        private int shootDelay = 100; //delay between bullet shots in ms
-        private static int health = 5;
+        private int shootDelay = 300; //delay between bullet shots in ms
+        private static int health = 50;
 
         private Hud hudRef;
 
@@ -140,14 +140,11 @@ namespace GXPEngine {
 
 
             //shooting
-            if (ControllerInput.Button12 == 1 || Input.GetKey(Key.SPACE))
+            if (ControllerInput.Button12 == 1 && canShoot || Input.GetKey(Key.SPACE) && canShoot)
             {
-                if (canShoot)
-                {
-                    Shoot();
-                    canShoot = false;
-                    ShootTimer(shootDelay);
-                }
+                Shoot();
+                canShoot = false;
+                ShootTimer(shootDelay);
             }
 
             Translate(velocity.x * speed * Time.deltaTime / 1000f, velocity.y * speed * Time.deltaTime / 1000f);

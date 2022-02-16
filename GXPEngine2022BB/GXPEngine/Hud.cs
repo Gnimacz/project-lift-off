@@ -11,10 +11,11 @@ namespace GXPEngine
     {
         List<Sprite> healthSprites = new List<Sprite>();
         Sprite sprite;
+        EasyDraw textRenderer;
 
         public Hud() : base(1366, 768, false)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 sprite = new Sprite("Player.png");
                 healthSprites.Add(sprite);
@@ -23,6 +24,12 @@ namespace GXPEngine
                 sprite.y = 20;
                 AddChild(sprite);
             }
+
+            textRenderer = new EasyDraw(1366, 768, false);
+            textRenderer.TextAlign(CenterMode.Center, CenterMode.Center);
+            //TODO(pick a font and use that instead of default windows font);
+            //textRenderer.TextFont(Utils.LoadFont())
+            AddChild(textRenderer);
         }
 
         public void RemoveHealth()
@@ -51,6 +58,9 @@ namespace GXPEngine
             {
                 RemoveHealth();
             }
+            textRenderer.Clear(Color.Empty);
+            textRenderer.Text($"Enemies left: {Level.currentNumberOfEnemies}", game.width - 90, 20);
+
         }
         
     }
