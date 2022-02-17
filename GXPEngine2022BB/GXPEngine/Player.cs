@@ -23,13 +23,15 @@ namespace GXPEngine {
 
         private bool canShoot = true;
         private int shootDelay = 150; //delay between bullet shots in ms
-        private static int health = 50;
+        private static int health = 5;
 
         private Hud hudRef;
         public int score;
+        private int startTime;
 
         public Player() : base("Player.png", 6, 1)
         {
+            startTime = Time.time;
             SetOrigin(width / 2, height / 2);
             SetScaleXY(0.2f, 0.2f);
 
@@ -78,7 +80,7 @@ namespace GXPEngine {
                 Scoreboard.ReadScores();
             }
 
-            score = Time.time;
+            score = Time.time - startTime;
             
         }
 

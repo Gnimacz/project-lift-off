@@ -49,21 +49,15 @@ namespace GXPEngine
             canBlink = true;
         }
 
-        public async void sceneSwap()
+        public void sceneSwap()
         {
-            Sprite blackout = new Sprite("BlackScreen.png");
-            blackout.alpha = 0;
-            AddChild(blackout);
-            
-            
-            Console.WriteLine("done");
 
-            //Hud hud = new Hud();
-            //game.LateAddChild(hud);
-            //Level level = new Level();
-            //game.LateAddChildAt(level, game.GetChildCount() - 1);
-            //LateRemove();
-            
+            Hud hud = new Hud();
+            game.LateAddChild(hud);
+            Level level = new Level();
+            game.LateAddChildAt(level, game.GetChildCount() - 1);
+            LateRemove();
+
         }
     }
 }
