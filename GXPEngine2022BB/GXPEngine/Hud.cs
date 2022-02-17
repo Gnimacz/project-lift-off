@@ -19,7 +19,7 @@ namespace GXPEngine
         {
             for (int i = 0; i < 5; i++)
             {
-                sprite = new Sprite("Player.png");
+                sprite = new Sprite("PlayerSingle.png");
                 healthSprites.Add(sprite);
                 sprite.scale = 0.15f;
                 sprite.x = i * sprite.width;
