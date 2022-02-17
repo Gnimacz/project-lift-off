@@ -69,7 +69,7 @@ namespace GXPEngine
             LateRemove();
             MenuIntro.Stop();
             Hud hud = new Hud();
-            game.LateAddChild(hud);
+            game.AddChild(hud);
             Level level = new Level();
             game.LateAddChildAt(level, game.GetChildCount() - 1);
         }

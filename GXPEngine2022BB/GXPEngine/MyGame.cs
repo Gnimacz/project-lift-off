@@ -30,5 +30,16 @@ public class MyGame : Game {
         Scoreboard.ReadScores();
     }
 
+    public async void Restart()
+    {
+        await Task.Delay(5000);
+        foreach (GameObject item in game.GetChildren())
+        {
+            item.LateDestroy();
+        }
+        await Task.Delay(1000);
+        Main();
+    }
+
 
 }

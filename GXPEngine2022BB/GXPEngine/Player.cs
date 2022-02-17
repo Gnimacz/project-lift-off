@@ -76,6 +76,8 @@ namespace GXPEngine {
                 
                 LateDestroy();
                 Scoreboard.ReadScores();
+                
+
             }
 
             score = Time.time - startTime;
