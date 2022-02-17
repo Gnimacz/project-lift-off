@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using GXPEngine;
 
 namespace GXPEngine
@@ -48,15 +49,21 @@ namespace GXPEngine
             canBlink = true;
         }
 
-        async void sceneSwap()
+        public async void sceneSwap()
         {
+            Sprite blackout = new Sprite("BlackScreen.png");
+            blackout.alpha = 0;
+            AddChild(blackout);
+            
+            
+            Console.WriteLine("done");
 
-
-            LateRemove();
-            Hud hud = new Hud();
-            game.LateAddChild(hud);
-            Level level = new Level();
-            game.LateAddChildAt(level, game.GetChildCount() - 1);
+            //Hud hud = new Hud();
+            //game.LateAddChild(hud);
+            //Level level = new Level();
+            //game.LateAddChildAt(level, game.GetChildCount() - 1);
+            //LateRemove();
+            
         }
     }
 }
