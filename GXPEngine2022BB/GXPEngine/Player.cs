@@ -22,9 +22,10 @@ namespace GXPEngine {
 
         private bool canShoot = true;
         private int shootDelay = 300; //delay between bullet shots in ms
-        private static int health = 50;
+        private static int health = 2;
 
         private Hud hudRef;
+        public int score;
 
         public Player() : base("Player.png")
         {
@@ -48,8 +49,34 @@ namespace GXPEngine {
 
             if (health <= 0)
             {
+                if(Scoreboard.oldScore != "No scores yet")
+                {
+                    int oldScoreInt = int.Parse(Scoreboard.oldScore);
+                    if(oldScoreInt < score)
+                    {
+                        Scoreboard.WriteScore(score);
+                        hudRef.showHighScore = true;
+                    }
+                    else
+                    {
+                        hudRef.showHighScore = true;
+                    }
+
+                    
+                }
+                else if(Scoreboard.oldScore == "No scores yet")
+                {
+                    Scoreboard.WriteScore(score);
+                    hudRef.showHighScore = true;
+                    hudRef.showHighScoreText = false;
+                }
+                
                 LateDestroy();
+                Scoreboard.ReadScores();
             }
+
+            score = Time.time;
+            
         }
 
         private void Movement()

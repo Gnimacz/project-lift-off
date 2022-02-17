@@ -205,18 +205,15 @@ public class Grunt : Sprite {
 
     private async void Flash()
     {
-        if (health == 2)
-        {
-            SetColor(150, 150, 0);
-            await Task.Delay(15);
-            SetColor(150, 0, 0);
-        }
-        else if (health == 1)
-        {
-            
-            SetColor(255, 0, 0);
-            
-        }
-
+        //SetColor(150, 0, 0);
+        visible = false;
+        await Task.Delay(35);
+        visible = true;
+        await Task.Delay(35);
+        visible = false;
+        await Task.Delay(35);
+        visible = true;
+        //SetColor(255, 255, 255);
     }
+
 }
