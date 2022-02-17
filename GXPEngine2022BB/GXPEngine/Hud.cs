@@ -17,7 +17,24 @@ namespace GXPEngine
 
         public Hud() : base(1366, 768, false)
         {
-            for (int i = 0; i < 5; i++)
+            ResetSprites(5);
+
+            textRenderer = new EasyDraw(1366, 768, false);
+            textRenderer.TextAlign(CenterMode.Center, CenterMode.Center);
+            //TODO(pick a font and use that instead of default windows font);
+            textRenderer.TextFont(Utils.LoadFont("nove.ttf", 16));
+            AddChild(textRenderer);
+        }
+        public void ResetSprites(int amount) {
+
+            foreach (Sprite item in healthSprites)
+            {
+                item.LateRemove();
+            }
+
+            healthSprites = new List<Sprite>();
+
+            for (int i = 0; i < amount; i++)
             {
                 sprite = new Sprite("Player.png");
                 healthSprites.Add(sprite);
@@ -26,12 +43,6 @@ namespace GXPEngine
                 sprite.y = 20;
                 AddChild(sprite);
             }
-
-            textRenderer = new EasyDraw(1366, 768, false);
-            textRenderer.TextAlign(CenterMode.Center, CenterMode.Center);
-            //TODO(pick a font and use that instead of default windows font);
-            textRenderer.TextFont(Utils.LoadFont("nove.ttf", 16));
-            AddChild(textRenderer);
         }
 
         public void RemoveHealth()

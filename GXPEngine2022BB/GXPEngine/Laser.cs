@@ -10,13 +10,13 @@ using GXPEngine;
         public int damage = 3;
         private int startLiveTime = 0;
         private int currentLiveTime = 0;
-        public static int maxLifeTime = 2000;
+        public static int maxLifeTime = 20000;
         private Sniper owner;
         
         
         public Laser(Sniper owner) : base("Laser.png", true) {
-            SetOrigin(width / 2, 0);
             SetScaleXY(1f, 2.5f);
+            SetOrigin(0, 0);
             //Console.WriteLine("1");
             startLiveTime = Time.now;
             this.owner = owner;

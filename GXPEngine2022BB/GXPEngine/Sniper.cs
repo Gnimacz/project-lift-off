@@ -13,7 +13,7 @@ using GXPEngine;
 
 public class Sniper : Sprite {
     private Sprite target;
-    private float moveSpeed = 0.3f;
+    private float moveSpeed = 0.2f;
     private float desiredRotation = 0;
     private float rotationSpeed = 10f;
     private int lastShootTime = 0;
@@ -370,7 +370,7 @@ public class Sniper : Sprite {
 
     void Shoot() {
         Laser laser = new Laser(this);
-        laser.SetXY(0, - _texture.height / 2 + 50);
+        laser.SetXY(x, y);
         laser.rotation = - 180;
         AddChild(laser);
     }

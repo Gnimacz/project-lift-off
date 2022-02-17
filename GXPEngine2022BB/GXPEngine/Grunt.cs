@@ -11,7 +11,7 @@ using GXPEngine.Core;
 using GXPEngine;
 
 public class Grunt : Sprite {
-    private float speed = 0.2f;
+    private float speed = 0.3f;
     private Sprite target;
     private float desiredRotation = 0f;
     private float rotationSpeed = 0.2f;
@@ -97,7 +97,7 @@ public class Grunt : Sprite {
         Bullet[] projectiles = new Bullet[3];
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
         for (int i = 0; i < 3; i++) {
-            projectiles[i] = new Bullet("GruntBullet.png", 0.5f, 0, -2, true, 1, 0.25f); ;
+            projectiles[i] = new Bullet("GruntBullet.png", 0.5f, 0, -1, true, 1, 0.25f); ;
             projectiles[i].SetOrigin(projectiles[i].width / 2, projectiles[i].height / 2);
             projectiles[i].rotation = rotation - 45 + i * 45;
             projectiles[i].SetXY(x, y);

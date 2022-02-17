@@ -16,10 +16,10 @@ public class MyGame : Game {
         // Draw some things on a canvas:
         Hud hud = new Hud();
 
-        Level level = new Level();
-        AddChild(level);
-
         AddChild(hud);
+        Level level = new Level();
+        AddChildAt(level, game.GetChildCount() - 2);
+
         
 
         // Add the canvas to the engine to display it:

@@ -12,7 +12,7 @@ using Elementary.Forms;
 namespace GXPEngine {
     public class Player : Sprite
     {
-        private float speed = 300;
+        private float speed = 500;
         private Vector2 velocity = new Vector2(0, 0);
 
         private Pivot bulletSpawnPoint = new Pivot();
@@ -22,7 +22,7 @@ namespace GXPEngine {
 
         private bool canShoot = true;
         private int shootDelay = 150; //delay between bullet shots in ms
-        private static int health = 5;
+        public int health = 50;
 
         private Hud hudRef;
         public int score;
@@ -47,7 +47,6 @@ namespace GXPEngine {
         {
             Movement();
 
-            //handle dying
             if (health <= 0)
             {
                 if(Scoreboard.oldScore != "No scores yet")
@@ -60,7 +59,6 @@ namespace GXPEngine {
                     }
                     else
                     {
-                        Scoreboard.WriteScore(oldScoreInt);
                         hudRef.showHighScore = true;
                     }
 
@@ -169,7 +167,7 @@ namespace GXPEngine {
 
 
             //shooting
-            if (ControllerInput.Button9 == 1 && canShoot || Input.GetKey(Key.SPACE) && canShoot)
+            if (ControllerInput.Button12 == 1 && canShoot || Input.GetKey(Key.SPACE) && canShoot)
             {
                 Shoot();
                 canShoot = false;
@@ -182,7 +180,7 @@ namespace GXPEngine {
 
         void Shoot()
         {
-            Bullet projectile = new Bullet("circle.png", 1.5f, 0, -2, false);
+            Bullet projectile = new Bullet("circle.png", 1.2f, 0, -1, false);
             EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
             projectile.SetOrigin(projectile.width / 2, projectile.height / 2);
             projectile.rotation = rotation;
@@ -290,7 +288,7 @@ namespace GXPEngine {
 
             if (other is Laser) {
                 Laser laser = other.FindObjectOfType<Laser>();
-                TakeDamage(laser.damage);
+                health -= laser.damage;
             }
 
         }
@@ -299,12 +297,7 @@ namespace GXPEngine {
         {
             if(hudRef == null) { hudRef = game.FindObjectOfType<Hud>(); }
             hudRef.RemoveHealth(damageAmount);
-            if (health < damageAmount) {
-                health = 0;
-            }
-            else {
-                health -= damageAmount;
-            }
+            health -= damageAmount;
         }
     }
 }
