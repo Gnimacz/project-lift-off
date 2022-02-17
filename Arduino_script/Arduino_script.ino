@@ -4,8 +4,8 @@
 const int buttonPin = 4;     // the number of the pushbutton pin
 const int ledPin =  12;      // the number of the LED pin
 
-const int AnalogXPin1 = A1;
-const int AnalogYPin1 = A0;
+const int AnalogXPin1 = A4;
+const int AnalogYPin1 = A5;
 const int AnalogXPin2 = A6;
 const int AnalogYPin2 = A7;
 const int shootButtonL = 13;
@@ -147,12 +147,12 @@ void loop() {
 
 
   joystickX1 = AnalogSmoothX1(AnalogXPin1);
-  s.concat(mapfloat(joystickX1, 0, 1024, -1, 1));
+  s.concat(mapfloat(joystickX1, 0, 1024, 1, -1));
   s.concat(" ");
   
 
   joystickY1 = AnalogSmoothY1(AnalogYPin1);
-  s.concat(mapfloat(joystickY1, 0, 1024, -1, 1));
+  s.concat(mapfloat(joystickY1, 0, 1024, 1, -1));
   s.concat(" ");
 
 

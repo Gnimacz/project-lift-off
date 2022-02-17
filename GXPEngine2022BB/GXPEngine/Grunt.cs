@@ -11,13 +11,13 @@ using GXPEngine.Core;
 using GXPEngine;
 
 public class Grunt : Sprite {
-    private float speed = 0.3f;
+    private float speed = 0.2f;
     private Sprite target;
     private float desiredRotation = 0f;
     private float rotationSpeed = 0.2f;
     private int lastShootTime = 0;
     private int shootLevel = 1;
-    private int shootIntervals = 1000;
+    private int shootIntervals = 1400;
     private Vector2 movePoint;
     private Vector2[] movePoints = new Vector2[3];
     private float t = 0;
@@ -97,7 +97,7 @@ public class Grunt : Sprite {
         Bullet[] projectiles = new Bullet[3];
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
         for (int i = 0; i < 3; i++) {
-            projectiles[i] = new Bullet("GruntBullet.png", 0.5f, 0, -1, true, 1, 0.25f); ;
+            projectiles[i] = new Bullet("GruntBullet.png", 0.5f, 0, -2, true, 1, 0.25f); ;
             projectiles[i].SetOrigin(projectiles[i].width / 2, projectiles[i].height / 2);
             projectiles[i].rotation = rotation - 45 + i * 45;
             projectiles[i].SetXY(x, y);

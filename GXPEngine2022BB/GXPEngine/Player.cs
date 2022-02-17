@@ -21,8 +21,8 @@ namespace GXPEngine {
         private float desiredRotation = 0;
 
         private bool canShoot = true;
-        private int shootDelay = 300; //delay between bullet shots in ms
-        private static int health = 2;
+        private int shootDelay = 150; //delay between bullet shots in ms
+        private static int health = 5;
 
         private Hud hudRef;
         public int score;
@@ -47,6 +47,7 @@ namespace GXPEngine {
         {
             Movement();
 
+            //handle dying
             if (health <= 0)
             {
                 if(Scoreboard.oldScore != "No scores yet")
@@ -59,6 +60,7 @@ namespace GXPEngine {
                     }
                     else
                     {
+                        Scoreboard.WriteScore(oldScoreInt);
                         hudRef.showHighScore = true;
                     }
 
@@ -167,7 +169,7 @@ namespace GXPEngine {
 
 
             //shooting
-            if (ControllerInput.Button12 == 1 && canShoot || Input.GetKey(Key.SPACE) && canShoot)
+            if (ControllerInput.Button9 == 1 && canShoot || Input.GetKey(Key.SPACE) && canShoot)
             {
                 Shoot();
                 canShoot = false;
@@ -180,7 +182,7 @@ namespace GXPEngine {
 
         void Shoot()
         {
-            Bullet projectile = new Bullet("circle.png", 0.5f, 0, -1, false);
+            Bullet projectile = new Bullet("circle.png", 1.5f, 0, -2, false);
             EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
             projectile.SetOrigin(projectile.width / 2, projectile.height / 2);
             projectile.rotation = rotation;

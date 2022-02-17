@@ -10,12 +10,12 @@ using GXPEngine.Core;
 using GXPEngine;
 
 public class SuicideBoi : Sprite {
-    private float moveSpeed = 0.2f;
+    private float moveSpeed = 0.3f;
     private float rotationSpeed = 10f;
     private float desiredRotation = 0f;
     private Sprite target;
 
-    public int health = 2;
+    public int health = 1;
     public int damage = 3;
 
     public SuicideBoi() : base("Kamikazee.png") {
