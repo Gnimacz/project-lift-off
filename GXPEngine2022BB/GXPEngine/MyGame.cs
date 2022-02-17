@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 public class MyGame : Game {
 
-
     public MyGame() : base(1366, 768, false) {
         //read the scoreboard file to get the current high score
         readscores();
@@ -14,12 +13,8 @@ public class MyGame : Game {
 
         // Create a window that's 800x600 and NOT fullscreen
         // Draw some things on a canvas:
-        Hud hud = new Hud();
-
-        Level level = new Level();
-        AddChild(level);
-
-        AddChild(hud);
+        MainMenu menu = new MainMenu();
+        AddChild(menu);
         
 
         // Add the canvas to the engine to display it:
@@ -34,5 +29,7 @@ public class MyGame : Game {
     {
         Scoreboard.ReadScores();
     }
+
+
 
 }

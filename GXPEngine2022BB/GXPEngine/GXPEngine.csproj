@@ -98,6 +98,7 @@
     <Compile Include="Hud.cs" />
     <Compile Include="Laser.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="MainMenu.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />

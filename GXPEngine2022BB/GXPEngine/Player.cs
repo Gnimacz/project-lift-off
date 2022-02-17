@@ -22,7 +22,7 @@ namespace GXPEngine {
 
         private bool canShoot = true;
         private int shootDelay = 150; //delay between bullet shots in ms
-        private static int health = 5;
+        private static int health = 50;
 
         private Hud hudRef;
         public int score;
@@ -182,12 +182,11 @@ namespace GXPEngine {
 
         void Shoot()
         {
-            Bullet projectile = new Bullet("circle.png", 1.5f, 0, -2, false);
+            Bullet projectile = new Bullet("BulletPlayer.png", 1.5f, 0, -2, false,1,0.2f);
             EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
             projectile.SetOrigin(projectile.width / 2, projectile.height / 2);
             projectile.rotation = rotation;
             projectile.SetXY(x, y);
-            projectile.SetColor(255, 0, 255);
             canvas.AddChildAt(projectile, canvas.GetChildCount() - 2);
         }
 
