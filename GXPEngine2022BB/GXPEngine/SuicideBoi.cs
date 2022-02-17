@@ -9,43 +9,27 @@ using System.Threading.Tasks;
 using GXPEngine.Core;
 using GXPEngine;
 
-public class SuicideBoi : AnimationSprite {
-    private float moveSpeed = 0.2f;
+public class SuicideBoi : Sprite {
+    private float moveSpeed = 0.3f;
     private float rotationSpeed = 10f;
     private float desiredRotation = 0f;
-    private int animationCounter = 0;
     private Sprite target;
 
-    public int health = 2;
+    public int health = 1;
     public int damage = 3;
 
-    public SuicideBoi() : base("Kamikazee.png", 7, 1) {
+    public SuicideBoi() : base("Kamikazee.png") {
         SetOrigin(width / 2, height / 2);
-        SetScaleXY(0.8f, -0.8f);
+        SetScaleXY(0.2f, -0.2f);
     }
 
     void Update() {
-        if (health > 0) {
-            Movement();
-            SetRotationBetween360();
-            SetDesiredRotation();
-            SlowRotation();
-        } else {
-            Dying();
-        }
+        Movement();
+        SetRotationBetween360();
+        SetDesiredRotation();
+        SlowRotation();
     }
 
-    void Dying() {
-        if(animationCounter >= 10)
-            if (health <= 0) {
-                animationCounter = 0;
-                SetFrame(currentFrame + 1);
-                if(currentFrame == 6)
-                    LateDestroy();
-            }
-
-        animationCounter++;
-    }
     public void SetTarget(Sprite target) {
         this.target = target;
     }
@@ -98,17 +82,14 @@ public class SuicideBoi : AnimationSprite {
         Move(0, -moveSpeed * Time.deltaTime);
     }
 
-    public void Suicide() {
-        health = 0;
-    }
-
 
     void OnCollision(GameObject other) {
-        if (other is Bullet && health > 0) {
+        if (other is Bullet) {
             Bullet bullet = other.FindObjectOfType<Bullet>();
             if (!bullet.canDamage) {
                 health -= bullet.damage;
                 if (health <= 0) {
+                    LateRemove();
                     Level.currentNumberOfEnemies--;
                 }
                 Flash();

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,11 +10,10 @@ using Elementary;
 using Elementary.Forms;
 
 namespace GXPEngine {
-    public class Player : AnimationSprite
+    public class Player : Sprite
     {
-        private float speed = 0.6f;
+        private float speed = 300;
         private Vector2 velocity = new Vector2(0, 0);
-        private int animationCounter = 10;
 
         private Pivot bulletSpawnPoint = new Pivot();
 
@@ -23,13 +21,13 @@ namespace GXPEngine {
         private float desiredRotation = 0;
 
         private bool canShoot = true;
-        private int shootDelay = 300; //delay between bullet shots in ms
+        private int shootDelay = 150; //delay between bullet shots in ms
         private static int health = 50;
 
         private Hud hudRef;
         public int score;
 
-        public Player() : base("PlayerAnimation.png", 6, 1)
+        public Player() : base("Player.png")
         {
             SetOrigin(width / 2, height / 2);
             SetScaleXY(0.2f, 0.2f);
@@ -42,12 +40,14 @@ namespace GXPEngine {
             thread.Start();
 
             hudRef = game.FindObjectOfType<Hud>();
+
         }
-        
+
         void Update()
         {
             Movement();
 
+            //handle dying
             if (health <= 0)
             {
                 if(Scoreboard.oldScore != "No scores yet")
@@ -60,6 +60,7 @@ namespace GXPEngine {
                     }
                     else
                     {
+                        Scoreboard.WriteScore(oldScoreInt);
                         hudRef.showHighScore = true;
                     }
 
@@ -168,38 +169,24 @@ namespace GXPEngine {
 
 
             //shooting
-            if (ControllerInput.Button12 == 1 && canShoot || Input.GetKey(Key.SPACE) && canShoot)
+            if (ControllerInput.Button9 == 1 && canShoot || Input.GetKey(Key.SPACE) && canShoot)
             {
                 Shoot();
                 canShoot = false;
                 ShootTimer(shootDelay);
             }
 
-            float travelLength = Mathf.Sqrt(Mathf.Pow(velocity.x, 2) + Mathf.Pow(velocity.y , 2));
-            if(travelLength != 0)
-                Translate(velocity.x / travelLength * speed * Time.deltaTime, velocity.y / travelLength * speed * Time.deltaTime);
-            Animation();
-        }
-
-        void Animation() {
-            if (animationCounter == 10) {
-                animationCounter = 0;
-                SetFrame(currentFrame + 1);
-                if (currentFrame == 5)
-                    currentFrame = 0;
-            }
-            animationCounter++;
+            Translate(velocity.x * speed * Time.deltaTime / 1000f, velocity.y * speed * Time.deltaTime / 1000f);
         }
 
 
         void Shoot()
         {
-            Bullet projectile = new Bullet("PlayerBullet.png", 0.5f, 0, -1, false);
+            Bullet projectile = new Bullet("BulletPlayer.png", 1.5f, 0, -2, false,1,0.2f);
             EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
             projectile.SetOrigin(projectile.width / 2, projectile.height / 2);
             projectile.rotation = rotation;
             projectile.SetXY(x, y);
-            projectile.SetColor(255, 0, 255);
             canvas.AddChildAt(projectile, canvas.GetChildCount() - 2);
         }
 
@@ -295,34 +282,28 @@ namespace GXPEngine {
             if (other is SuicideBoi)
             {
                 SuicideBoi damager = other.FindObjectOfType<SuicideBoi>();
-                if (damager.health > 0) {
-                    TakeDamage(damager.damage);
-                    damager.Suicide();
-
-                    Level.currentNumberOfEnemies--;
-                }
+                TakeDamage(damager.damage);
+                other.LateRemove();
+                Level.currentNumberOfEnemies--;
             }
 
             if (other is Laser) {
                 Laser laser = other.FindObjectOfType<Laser>();
-                if (!laser.haveDealtDamage) {
-                    TakeDamage(laser.damage);
-                    laser.haveDealtDamage = true;
-                }
+                TakeDamage(laser.damage);
             }
 
         }
 
-        private void TakeDamage(int damageAmount) {
-            int actualDamageAmount;
-            if (health < damageAmount)
-                actualDamageAmount = health;
-            else {
-                actualDamageAmount = damageAmount;
+        private void TakeDamage(int damageAmount)
+        {
+            if(hudRef == null) { hudRef = game.FindObjectOfType<Hud>(); }
+            hudRef.RemoveHealth(damageAmount);
+            if (health < damageAmount) {
+                health = 0;
             }
-            if(hudRef == null) hudRef = game.FindObjectOfType<Hud>(); 
-            hudRef.RemoveHealth(actualDamageAmount);
-            health -= actualDamageAmount;
+            else {
+                health -= damageAmount;
+            }
         }
     }
 }

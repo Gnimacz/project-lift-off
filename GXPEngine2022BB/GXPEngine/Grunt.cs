@@ -10,45 +10,39 @@ using System.Threading.Tasks;
 using GXPEngine.Core;
 using GXPEngine;
 
-public class Grunt : AnimationSprite {
-    private float speed = 0.3f;
+public class Grunt : Sprite {
+    private float speed = 0.2f;
     private Sprite target;
     private float desiredRotation = 0f;
     private float rotationSpeed = 0.2f;
-    private float animationCounter = 10;
     private int lastShootTime = 0;
     private int shootLevel = 1;
-    private int shootIntervals = 1000;
+    private int shootIntervals = 1400;
     private Vector2 movePoint;
     private Vector2[] movePoints = new Vector2[3];
     private float t = 0;
     public int health = 3;
 
-    public Grunt() : base("Grunt.png", 8, 1) {
+    public Grunt() : base("Grunt.png") {
         SetOrigin(width / 2, height / 2);
-        SetScaleXY(0.8f, -0.8f);
+        SetScaleXY(0.15f, -0.15f);
         ChooseMovement();
     }
 
-    public Grunt(int shootLevel = 1) : base("Grunt.png", 8, 1) {
+    public Grunt(int shootLevel = 1) : base("Grunt.png") {
         SetOrigin(width / 2, height / 2);
-        SetScaleXY(0.8f, -0.8f);
+        SetScaleXY(0.15f, -0.15f);
         ChooseMovement();
         this.shootLevel = shootLevel;
     }
 
     void Update() {
         //SmoothMovement();
-        if (health > 0) {
-            Movement();
-            SetRotationBetween360();
-            SetDesiredRotation();
-            SlowRotation();
-            Shooting();
-        }
-        else {
-            Dying();
-        }
+        Movement();
+        SetRotationBetween360();
+        SetDesiredRotation();
+        SlowRotation();
+        Shooting();
     }
 
     void Shooting() {
@@ -103,7 +97,7 @@ public class Grunt : AnimationSprite {
         Bullet[] projectiles = new Bullet[3];
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
         for (int i = 0; i < 3; i++) {
-            projectiles[i] = new Bullet("GruntBullet.png", 0.5f, 0, -1, true, 1, 0.25f); ;
+            projectiles[i] = new Bullet("GruntBullet.png", 0.5f, 0, -2, true, 1, 0.25f); ;
             projectiles[i].SetOrigin(projectiles[i].width / 2, projectiles[i].height / 2);
             projectiles[i].rotation = rotation - 45 + i * 45;
             projectiles[i].SetXY(x, y);
@@ -193,27 +187,17 @@ public class Grunt : AnimationSprite {
         }
     }
 
-    void Dying() {
-        if(animationCounter >= 10)
-            if (health <= 0) {
-                animationCounter = 0;
-                SetFrame(currentFrame + 1);
-                if(currentFrame == 7)
-                    LateDestroy();
-            }
-
-        animationCounter++;
-    }
-
     void OnCollision(GameObject other) {
-        if (other is Bullet && health > 0) {
+        if (other is Bullet) {
             Bullet bullet = other.FindObjectOfType<Bullet>();
             if (!bullet.canDamage) {
                 health -= bullet.damage;
                 Flash();
                 if (health <= 0) {
+                    LateRemove();
                     Level.currentNumberOfEnemies--;
                 }
+
                 other.LateRemove();
             }
         }
