@@ -58,7 +58,7 @@ public class Sniper : AnimationSprite {
             if (health <= 0) {
                 animationCounter = 0;
                 SetFrame(currentFrame + 1);
-                if(currentFrame == 7)
+                if(currentFrame == 5)
                     LateDestroy();
             }
 

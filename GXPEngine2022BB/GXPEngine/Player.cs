@@ -10,10 +10,10 @@ using Elementary;
 using Elementary.Forms;
 
 namespace GXPEngine {
-    public class Player : Sprite
-    {
-        private float speed = 300;
+    public class Player : AnimationSprite {
+        private float speed = 0.6f;
         private Vector2 velocity = new Vector2(0, 0);
+        private int animationCounter = 0;
 
         private Pivot bulletSpawnPoint = new Pivot();
 
@@ -27,7 +27,7 @@ namespace GXPEngine {
         private Hud hudRef;
         public int score;
 
-        public Player() : base("Player.png")
+        public Player() : base("Player.png", 6, 1)
         {
             SetOrigin(width / 2, height / 2);
             SetScaleXY(0.2f, 0.2f);
@@ -176,10 +176,23 @@ namespace GXPEngine {
                 ShootTimer(shootDelay);
             }
 
-            Translate(velocity.x * speed * Time.deltaTime / 1000f, velocity.y * speed * Time.deltaTime / 1000f);
+            float travelLength = Mathf.Sqrt(Mathf.Pow(velocity.x, 2) + Mathf.Pow(velocity.y , 2));
+            if (travelLength != 0) {
+                Translate(velocity.x / travelLength * speed * Time.deltaTime,
+                    velocity.y / travelLength * speed * Time.deltaTime);
+                Animation();
+            }
         }
 
-
+        void Animation() {
+            if (animationCounter == 10) {
+                animationCounter = 0;
+                SetFrame(currentFrame + 1);
+                if (currentFrame == 5)
+                    currentFrame = 0;
+            }
+            animationCounter++;
+        }
         void Shoot()
         {
             Bullet projectile = new Bullet("BulletPlayer.png", 1.5f, 0, -2, false,1,0.2f);
@@ -282,14 +295,20 @@ namespace GXPEngine {
             if (other is SuicideBoi)
             {
                 SuicideBoi damager = other.FindObjectOfType<SuicideBoi>();
-                TakeDamage(damager.damage);
-                other.LateRemove();
-                Level.currentNumberOfEnemies--;
+                if (damager.health > 0) {
+                    TakeDamage(damager.damage);
+                    damager.Suicide();
+
+                    Level.currentNumberOfEnemies--;
+                }
             }
 
             if (other is Laser) {
                 Laser laser = other.FindObjectOfType<Laser>();
-                TakeDamage(laser.damage);
+                if (!laser.haveDealtDamage) {
+                    TakeDamage(laser.damage);
+                    laser.haveDealtDamage = true;
+                }
             }
 
         }

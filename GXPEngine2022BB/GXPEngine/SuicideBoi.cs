@@ -3,33 +3,55 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Design;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using GXPEngine.Core;
 using GXPEngine;
 
-public class SuicideBoi : Sprite {
+public class SuicideBoi : AnimationSprite {
     private float moveSpeed = 0.3f;
     private float rotationSpeed = 10f;
     private float desiredRotation = 0f;
+    private int animationCounter = 0;
     private Sprite target;
 
     public int health = 1;
     public int damage = 3;
 
-    public SuicideBoi() : base("Kamikazee.png") {
+    public SuicideBoi() : base("Kamikazee.png", 7, 1) {
         SetOrigin(width / 2, height / 2);
-        SetScaleXY(0.2f, -0.2f);
+        SetScaleXY(0.8f, -0.8f);
     }
 
     void Update() {
-        Movement();
-        SetRotationBetween360();
-        SetDesiredRotation();
-        SlowRotation();
+        if (health > 0) {
+            Movement();
+            SetRotationBetween360();
+            SetDesiredRotation();
+            SlowRotation();
+        } else {
+            Dying();
+        }
     }
+    
+    void Dying() {
+        if(animationCounter >= 10)
+            if (health <= 0) {
+                animationCounter = 0;
+                SetFrame(currentFrame + 1);
+                if(currentFrame == 6)
+                    LateDestroy();
+            }
 
+        animationCounter++;
+    }
+    
+    public void Suicide() {
+        health = 0;
+    }
+    
     public void SetTarget(Sprite target) {
         this.target = target;
     }
@@ -84,12 +106,11 @@ public class SuicideBoi : Sprite {
 
 
     void OnCollision(GameObject other) {
-        if (other is Bullet) {
+        if (other is Bullet && health > 0) {
             Bullet bullet = other.FindObjectOfType<Bullet>();
             if (!bullet.canDamage) {
                 health -= bullet.damage;
                 if (health <= 0) {
-                    LateRemove();
                     Level.currentNumberOfEnemies--;
                 }
                 Flash();
