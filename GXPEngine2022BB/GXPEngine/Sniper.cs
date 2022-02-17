@@ -370,7 +370,7 @@ public class Sniper : Sprite {
 
     void Shoot() {
         Laser laser = new Laser(this);
-        laser.SetXY(x, y);
+        laser.SetXY(0, - _texture.height / 2 + 50);
         laser.rotation = - 180;
         AddChild(laser);
     }

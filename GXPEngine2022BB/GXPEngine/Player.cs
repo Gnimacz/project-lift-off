@@ -261,7 +261,7 @@ namespace GXPEngine {
 
             if (other is Laser) {
                 Laser laser = other.FindObjectOfType<Laser>();
-                health -= laser.damage;
+                TakeDamage(laser.damage);
             }
 
         }
@@ -270,7 +270,12 @@ namespace GXPEngine {
         {
             if(hudRef == null) { hudRef = game.FindObjectOfType<Hud>(); }
             hudRef.RemoveHealth(damageAmount);
-            health -= damageAmount;
+            if (health < damageAmount) {
+                health = 0;
+            }
+            else {
+                health -= damageAmount;
+            }
         }
     }
 }
