@@ -18,6 +18,8 @@ public class Level : GameObject {
     public static int screenHeight = 768;
     private float backgroundSpeed = 0.05f;
     private string[] backgroundNames = new string[2];
+    private SoundChannel levelMusic;
+    private bool shouldBePlaying = true;
 
     public Level() {
         StartLevel();
@@ -26,6 +28,16 @@ public class Level : GameObject {
     void Update() {
         LevelOne();
         LoopBackground();
+
+        StartMusicLoop();
+    }
+    void StartMusicLoop() {
+        if (!levelMusic.IsPlaying && shouldBePlaying) {
+            levelMusic = new Sound("GameLoop.wav", true).Play(true, 0);
+            levelMusic.Volume = 1f;
+            levelMusic.IsPaused = false;
+        }
+            
     }
 
     void StartLevel() {
@@ -43,6 +55,10 @@ public class Level : GameObject {
         AddChild(canvas);
         Console.WriteLine("MyGame initialized");
         enemiesLeft = 55;
+        
+        levelMusic = new Sound("GameIntro.wav", false).Play(true, 0);
+        levelMusic.Volume = 1f;
+        levelMusic.IsPaused = false;
     }
 
     void SpawnGrunt(float xPos, float yPos, EasyDraw canvas, Player player, int shootLevel) {
@@ -223,5 +239,14 @@ public class Level : GameObject {
 
             backgrounds[i].y += backgroundSpeed * Time.deltaTime;
         }
+    }
+    async void sceneSwap() {
+        shouldBePlaying = false;
+        LateRemove();
+        levelMusic.Stop();
+        Hud hud = new Hud();
+        game.LateAddChild(hud);
+        Level level = new Level();
+        game.LateAddChildAt(level, game.GetChildCount() - 1);
     }
 }
