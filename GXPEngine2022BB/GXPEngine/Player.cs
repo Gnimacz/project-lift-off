@@ -23,7 +23,7 @@ namespace GXPEngine {
 
         private bool canShoot = true;
         private int shootDelay = 150; //delay between bullet shots in ms
-        private static int health = 5;
+        public int health = 50;
 
         private Hud hudRef;
         public int score;
@@ -50,7 +50,6 @@ namespace GXPEngine {
         {
             Movement();
 
-            //handle dying
             if (health <= 0)
             {
                 if(Scoreboard.oldScore != "No scores yet")
@@ -63,7 +62,6 @@ namespace GXPEngine {
                     }
                     else
                     {
-                        Scoreboard.WriteScore(oldScoreInt);
                         hudRef.showHighScore = true;
                     }
 
@@ -172,7 +170,7 @@ namespace GXPEngine {
 
 
             //shooting
-            if (ControllerInput.Button9 == 1 && canShoot || Input.GetKey(Key.SPACE) && canShoot)
+            if (ControllerInput.Button12 == 1 && canShoot || Input.GetKey(Key.SPACE) && canShoot)
             {
                 Shoot();
                 canShoot = false;
@@ -355,12 +353,7 @@ namespace GXPEngine {
         {
             if(hudRef == null) { hudRef = game.FindObjectOfType<Hud>(); }
             hudRef.RemoveHealth(damageAmount);
-            if (health < damageAmount) {
-                health = 0;
-            }
-            else {
-                health -= damageAmount;
-            }
+            health -= damageAmount;
         }
     }
 }

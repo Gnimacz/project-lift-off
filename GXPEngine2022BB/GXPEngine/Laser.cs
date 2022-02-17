@@ -12,7 +12,7 @@ using GXPEngine;
         public bool haveDealtDamage = false;
         private int startLiveTime = 0;
         private int currentLiveTime = 0;
-        public static int maxLifeTime = 2000;
+        public static int maxLifeTime = 20000;
         private Sniper owner;
         
         

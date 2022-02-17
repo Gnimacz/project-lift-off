@@ -127,7 +127,7 @@ public class Grunt : AnimationSprite {
         sound.Volume = 0.1f;
         sound.IsPaused = false;
         for (int i = 0; i < 3; i++) {
-            projectiles[i] = new Bullet("GruntBullet.png", 0.5f, 0, -2, true, 1, 0.25f); ;
+            projectiles[i] = new Bullet("GruntBullet.png", 0.5f, 0, -1, true, 1, 0.25f); ;
             projectiles[i].SetOrigin(projectiles[i].width / 2, projectiles[i].height / 2);
             projectiles[i].rotation = rotation - 45 + i * 45;
             projectiles[i].SetXY(x, y);

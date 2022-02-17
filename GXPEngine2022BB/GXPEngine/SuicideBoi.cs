@@ -18,7 +18,7 @@ public class SuicideBoi : AnimationSprite {
     private Sprite target;
 
     public int health = 1;
-    public int damage = 3;
+    public int damage = 2;
 
     public SuicideBoi() : base("Kamikazee.png", 7, 1) {
         SetOrigin(width / 2, height / 2);

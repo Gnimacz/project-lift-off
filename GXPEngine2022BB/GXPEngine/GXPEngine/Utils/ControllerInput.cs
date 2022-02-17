@@ -42,7 +42,7 @@ namespace GXPEngine {
 
                 serialPort = new SerialPort();
                 serialPort.BaudRate = 9600;
-                serialPort.PortName = ports[2];
+                serialPort.PortName = ports[1];
                 serialPort.Open();
                 Console.WriteLine("port " + serialPort.PortName + " opened");
 
@@ -67,11 +67,11 @@ namespace GXPEngine {
                     D13State = int.Parse(message[8]);
                     D9State = int.Parse(message[9]);
 
-                    _joystickX = float.Parse(message[12]) / 100f;
-                    _joystickY = float.Parse(message[13]) / 100f;
+                    _joystickX = float.Parse(message[10]) / 100f;
+                    _joystickY = float.Parse(message[11]) / 100f;
 
-                    _secondaryJoystickX = float.Parse(message[10]) / 100f;
-                    _secondaryJoystickY = float.Parse(message[11]) / 100f;
+                    _secondaryJoystickX = float.Parse(message[12]) / 100f;
+                    _secondaryJoystickY = float.Parse(message[13]) / 100f;
                 }
             }
             catch (Exception) {
