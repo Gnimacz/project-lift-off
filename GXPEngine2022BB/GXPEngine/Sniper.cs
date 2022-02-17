@@ -58,6 +58,11 @@ public class Sniper : AnimationSprite {
             if (health <= 0) {
                 animationCounter = 0;
                 SetFrame(currentFrame + 1);
+                if (currentFrame == 1) {
+                    SoundChannel sound = new Sound("Explosion.mp3").Play(true);
+                    sound.Volume = 0.1f;
+                    sound.IsPaused = false;
+                }
                 if(currentFrame == 5)
                     LateDestroy();
             }
@@ -386,6 +391,9 @@ public class Sniper : AnimationSprite {
 
     void Shoot() {
         Laser laser = new Laser(this);
+        SoundChannel sound = new Sound("Laser.mp3").Play(true);
+        sound.Volume = 0.1f;
+        sound.IsPaused = false;
         laser.SetXY(0, - _texture.height / 2 + 50);
         laser.rotation = - 180;
         AddChild(laser);

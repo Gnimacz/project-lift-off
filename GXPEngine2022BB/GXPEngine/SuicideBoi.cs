@@ -41,6 +41,12 @@ public class SuicideBoi : AnimationSprite {
             if (health <= 0) {
                 animationCounter = 0;
                 SetFrame(currentFrame + 1);
+                if (currentFrame == 1) {
+                    SoundChannel sound = new Sound("Explosion.mp3").Play(true);
+                    sound.Volume = 0.1f;
+                    sound.IsPaused = false;
+                }
+
                 if(currentFrame == 6)
                     LateDestroy();
             }

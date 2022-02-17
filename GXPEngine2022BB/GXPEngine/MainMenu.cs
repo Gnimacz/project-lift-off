@@ -12,6 +12,8 @@ namespace GXPEngine
         EasyDraw text;
         private bool canBlink = true;
         private int blinkDelay = 1000;
+        private SoundChannel MenuIntro;
+        private bool shouldBePlaying = true;
 
         public MainMenu() : base()
         {
@@ -22,7 +24,9 @@ namespace GXPEngine
             text.TextAlign(CenterMode.Center, CenterMode.Center);
             text.TextFont(Utils.LoadFont("nove.ttf", 20));
             text.Text("Shoot To Start", game.width / 2, game.height - 256);
-
+            MenuIntro = new Sound("MenuIntro.wav", false).Play(true, 0);
+            MenuIntro.Volume = 0.4f;
+            MenuIntro.IsPaused = false;
         }
 
         void Update()
@@ -36,6 +40,8 @@ namespace GXPEngine
             {
                 sceneSwap();
             }
+
+            StartMusicLoop();
         }
             
         async void Blink()
@@ -48,9 +54,20 @@ namespace GXPEngine
             canBlink = true;
         }
 
-        async void sceneSwap()
-        {
+
+        void StartMusicLoop() {
+            if (!MenuIntro.IsPlaying && shouldBePlaying) {
+                MenuIntro = new Sound("MenuLoop.wav", true).Play(true, 0);
+                MenuIntro.Volume = 1f;
+                MenuIntro.IsPaused = false;
+            }
+            
+        }
+
+        async void sceneSwap() {
+            shouldBePlaying = false;
             LateRemove();
+            MenuIntro.Stop();
             Hud hud = new Hud();
             game.LateAddChild(hud);
             Level level = new Level();

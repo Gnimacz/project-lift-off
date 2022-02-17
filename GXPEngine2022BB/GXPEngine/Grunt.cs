@@ -56,6 +56,11 @@ public class Grunt : AnimationSprite {
             if (health <= 0) {
                 animationCounter = 0;
                 SetFrame(currentFrame + 1);
+                if (currentFrame == 1) {
+                    SoundChannel sound = new Sound("Explosion.mp3").Play(true);
+                    sound.Volume = 0.1f;
+                    sound.IsPaused = false;
+                }
                 if(currentFrame == 7)
                     LateDestroy();
             }
@@ -105,6 +110,10 @@ public class Grunt : AnimationSprite {
     void Shoot() {
         Bullet projectile = new Bullet("GruntBullet.png", 0.5f, 0, -1, true, 1, 0.25f);
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
+        SoundChannel sound = new Sound("GruntShot.mp3").Play(true);
+        sound.Volume = 0.1f;
+        sound.IsPaused = false;
+        Console.WriteLine("plays");
         projectile.SetOrigin(projectile.width / 2, projectile.height / 2);
         projectile.rotation = rotation;
         projectile.SetXY(x, y);
@@ -114,6 +123,9 @@ public class Grunt : AnimationSprite {
     void ShootLevelTwo() {
         Bullet[] projectiles = new Bullet[3];
         EasyDraw canvas = parent.FindObjectOfType<EasyDraw>();
+        SoundChannel sound = new Sound("GruntShot.mp3").Play();
+        sound.Volume = 0.1f;
+        sound.IsPaused = false;
         for (int i = 0; i < 3; i++) {
             projectiles[i] = new Bullet("GruntBullet.png", 0.5f, 0, -2, true, 1, 0.25f); ;
             projectiles[i].SetOrigin(projectiles[i].width / 2, projectiles[i].height / 2);
