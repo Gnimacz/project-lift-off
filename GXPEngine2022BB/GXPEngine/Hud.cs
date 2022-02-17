@@ -44,12 +44,18 @@ namespace GXPEngine
         }
         public void RemoveHealth(int healthAmount)
         {
-            if (healthSprites.Count > 0)
+            if (healthSprites.Count > healthAmount)
             {
                 for (int i = 0; i < healthAmount; i++)
                 {
                     healthSprites.Last().LateRemove();
                     healthSprites.RemoveAt(healthSprites.Count - 1);
+                }
+            }else {
+                for (int i = healthSprites.Count - 1; i > 0; i--)
+                {
+                    healthSprites.Last().LateRemove();
+                    healthSprites.RemoveAt(i);
                 }
             }
         }

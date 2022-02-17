@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using GXPEngine;
-using GXPEngine.Core;
 using Elementary;
 using Elementary.Forms;
+using Vector2 = GXPEngine.Core.Vector2;
 
 namespace GXPEngine {
-    public class Player : Sprite
-    {
-        private float speed = 300;
+    public class Player : AnimationSprite {
+        private float speed = 0.6f;
         private Vector2 velocity = new Vector2(0, 0);
+        private int animationCounter = 0;
 
         private Pivot bulletSpawnPoint = new Pivot();
 
@@ -27,7 +28,7 @@ namespace GXPEngine {
         private Hud hudRef;
         public int score;
 
-        public Player() : base("Player.png")
+        public Player() : base("Player.png", 6, 1)
         {
             SetOrigin(width / 2, height / 2);
             SetScaleXY(0.2f, 0.2f);
@@ -176,10 +177,43 @@ namespace GXPEngine {
                 ShootTimer(shootDelay);
             }
 
-            Translate(velocity.x * speed * Time.deltaTime / 1000f, velocity.y * speed * Time.deltaTime / 1000f);
+            float travelLength = Mathf.Sqrt(Mathf.Pow(velocity.x, 2) + Mathf.Pow(velocity.y , 2));
+            if (travelLength != 0) {
+                velocity = NormalizeAndOutOfBounds(velocity, travelLength);
+                Translate(velocity.x , 0f);
+                Translate(0f, velocity.y);
+                Animation();
+            }
         }
 
+        Vector2 NormalizeAndOutOfBounds(Vector2 velocity, float travelLength) {
+            Vector2 returnVelocity = velocity;
+            if (x + velocity.x / travelLength * speed * Time.deltaTime - 1366f + width / 2 > float.Epsilon) 
+                returnVelocity.x = 1366f - width / 2 - x;
+            else if (x + velocity.x / travelLength * speed * Time.deltaTime - width / 2 < float.Epsilon) 
+                returnVelocity.x = width / 2 - x;
+            else 
+                returnVelocity.x = velocity.x / travelLength * speed * Time.deltaTime;
+            
+            if (y + velocity.y / travelLength * speed * Time.deltaTime - 768f + height / 2 > float.Epsilon) 
+                returnVelocity.y = 768f - height / 2 - y;
+            else if (y + velocity.y / travelLength * speed * Time.deltaTime - height / 2 < float.Epsilon) 
+                returnVelocity.y = height / 2 - y;
+            else 
+                returnVelocity.y = velocity.y / travelLength * speed * Time.deltaTime;
+            
+            return returnVelocity;
+        }
 
+        void Animation() {
+            if (animationCounter == 10) {
+                animationCounter = 0;
+                SetFrame(currentFrame + 1);
+                if (currentFrame == 5)
+                    currentFrame = 0;
+            }
+            animationCounter++;
+        }
         void Shoot()
         {
             Bullet projectile = new Bullet("BulletPlayer.png", 1.5f, 0, -2, false,1,0.2f);
@@ -273,6 +307,7 @@ namespace GXPEngine {
                 if (bullet.canDamage)
                 {
                     TakeDamage(bullet.damage);
+                    Flash();
 
 
                     other.LateDestroy();
@@ -282,18 +317,38 @@ namespace GXPEngine {
             if (other is SuicideBoi)
             {
                 SuicideBoi damager = other.FindObjectOfType<SuicideBoi>();
-                TakeDamage(damager.damage);
-                other.LateRemove();
-                Level.currentNumberOfEnemies--;
+                if (damager.health > 0) {
+                    TakeDamage(damager.damage);
+                    damager.Suicide();
+                    Flash();
+                    Level.currentNumberOfEnemies--;
+                }
             }
 
             if (other is Laser) {
                 Laser laser = other.FindObjectOfType<Laser>();
-                TakeDamage(laser.damage);
+                if (!laser.haveDealtDamage) {
+                    TakeDamage(laser.damage);
+                    Flash();
+                    laser.haveDealtDamage = true;
+                }
             }
 
         }
 
+        private async void Flash()
+        {
+            //SetColor(150, 0, 0);
+            visible = false;
+            await Task.Delay(35);
+            visible = true;
+            await Task.Delay(35);
+            visible = false;
+            await Task.Delay(35);
+            visible = true;
+            //SetColor(255, 255, 255);
+        }
+        
         private void TakeDamage(int damageAmount)
         {
             if(hudRef == null) { hudRef = game.FindObjectOfType<Hud>(); }

@@ -88,7 +88,8 @@ public class Level : GameObject {
 
         if (currentNumberOfEnemies == 0 && enemiesLeft == 55) {
             SpawnGrunt(screenWidth / 2, 153, canvas, player, 1);
-        
+            SpawnKamikazee(800, 900, canvas, player);
+            SpawnSniper(screenWidth / 2, 100, canvas, player);
         }
 
         if (currentNumberOfEnemies == 0 && enemiesLeft == 54) {
