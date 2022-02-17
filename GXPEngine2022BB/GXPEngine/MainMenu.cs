@@ -50,8 +50,6 @@ namespace GXPEngine
 
         async void sceneSwap()
         {
-
-
             LateRemove();
             Hud hud = new Hud();
             game.LateAddChild(hud);
