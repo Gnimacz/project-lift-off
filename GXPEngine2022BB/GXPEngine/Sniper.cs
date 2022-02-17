@@ -5,14 +5,16 @@ using System.Diagnostics.SymbolStore;
 using System.Drawing.Design;
 using System.Drawing.Text;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using GXPEngine.Core;
 using GXPEngine;
 
-public class Sniper : Sprite {
+public class Sniper : AnimationSprite {
     private Sprite target;
+    private int animationCounter = 0;
     private float moveSpeed = 0.3f;
     private float desiredRotation = 0;
     private float rotationSpeed = 10f;
@@ -31,22 +33,36 @@ public class Sniper : Sprite {
     public int health = 4;
     public int damage = 3;
 
-    public Sniper() : base("Sniper.png") {
+    public Sniper() : base("Sniper.png", 6, 1) {
         SetOrigin(width / 2, height / 2);
-        SetScaleXY(0.4f, 0.4f);
+        SetScaleXY(1.2f, 1.2f);
         SetPossibleMoveAreas();
         SetMovementPoint();
     }
 
     void Update() {
-        //Console.WriteLine("{0}, {1} -> {2}, {3}", x, y, movePoint.x, movePoint.y);
-        //Console.WriteLine(aiming);
-        //Console.WriteLine("Sniper x, y : {0}, {1}", x, y);
-        MovementInitialization();
-        SetRotationBetween360();
-        SetDesiredRotation();
-        SlowRotation();
-        ShootingInitialization();
+        if (health > 0) { 
+            MovementInitialization();
+            SetRotationBetween360();
+            SetDesiredRotation();
+            SlowRotation();
+            ShootingInitialization();
+        }
+        else {
+            Dying();
+        }
+    }
+    
+    void Dying() {
+        if(animationCounter >= 10)
+            if (health <= 0) {
+                animationCounter = 0;
+                SetFrame(currentFrame + 1);
+                if(currentFrame == 7)
+                    LateDestroy();
+            }
+
+        animationCounter++;
     }
 
     void SetPossibleMoveAreas() {
@@ -376,12 +392,11 @@ public class Sniper : Sprite {
     }
 
     void OnCollision(GameObject other) {
-        if (other is Bullet) {
+        if (other is Bullet && health > 0) {
             Bullet bullet = other.FindObjectOfType<Bullet>();
             if (!bullet.canDamage) {
                 health -= bullet.damage;
                 if (health <= 0) {
-                    LateRemove();
                     Level.currentNumberOfEnemies--;
                 }
                 Flash();

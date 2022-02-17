@@ -17,7 +17,7 @@ namespace GXPEngine {
             base(bulletImage, true) {
             movementSpeed = bulletSpeed;
             movementDir = new Vector2(xDirection, yDirection);
-            SetScaleXY(0.5f, 0.5f);
+            SetScaleXY(0.3f, 0.3f);
             canDamage = canHarmPlayer;
         }
 
