@@ -12,6 +12,8 @@ namespace GXPEngine
         List<Sprite> healthSprites = new List<Sprite>();
         Sprite sprite;
         EasyDraw textRenderer;
+        public bool showHighScoreText = false;
+        public bool showHighScore = false;
 
         public Hud() : base(1366, 768, false)
         {
@@ -54,13 +56,36 @@ namespace GXPEngine
 
         void Update()
         {
-            if (Input.GetKeyUp(Key.ENTER))
-            {
-                RemoveHealth();
-            }
             textRenderer.Clear(Color.Empty);
-            textRenderer.Text($"Enemies left: {Level.currentNumberOfEnemies}", game.width - 90, 20);
+            
+            if (!showHighScore)
+            {
+                textRenderer.Text($"Enemies left: {Level.currentNumberOfEnemies}", game.width - 90, 20);
+                
+            }
 
+            if (showHighScore && !showHighScoreText)
+            {
+                foreach (Sprite item in healthSprites)
+                {
+                    item.LateRemove();
+                }
+                ShowScores();
+            }
+            else if (showHighScoreText && showHighScore)
+            {
+                foreach (Sprite item in healthSprites)
+                {
+                    item.LateRemove();
+                }
+                textRenderer.Text("No Scores yet");
+            }
+
+        }
+
+        public void ShowScores()
+        {
+            textRenderer.Text($"Current High Score\n{Scoreboard.scores}");
         }
         
     }
