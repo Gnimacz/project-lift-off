@@ -102,7 +102,7 @@ namespace GXPEngine
 
         public void ShowScores()
         {
-            textRenderer.Text($"Current High Score\n{Scoreboard.scores}");
+            textRenderer.Text($"Time Survived:\n{Scoreboard.scores} Seconds");
         }
 
         

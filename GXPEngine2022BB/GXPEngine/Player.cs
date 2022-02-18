@@ -26,7 +26,7 @@ namespace GXPEngine {
         public int health = 5;
 
         private Hud hudRef;
-        public int score;
+        public float score;
         private int startTime;
 
         public Player() : base("Player.png", 6, 1)
@@ -49,30 +49,34 @@ namespace GXPEngine {
         void Update()
         {
             Movement();
+            score = (Time.time - startTime)/1000;
 
             if (health <= 0)
             {
-                if(Scoreboard.oldScore != "No scores yet")
-                {
-                    int oldScoreInt = int.Parse(Scoreboard.oldScore);
-                    if(oldScoreInt < score)
-                    {
-                        Scoreboard.WriteScore(score);
-                        hudRef.showHighScore = true;
-                    }
-                    else
-                    {
-                        hudRef.showHighScore = true;
-                    }
+                Scoreboard.WriteScore(score);
+                hudRef.showHighScore = true;
+
+                //if(Scoreboard.oldScore != "No scores yet")
+                //{
+                //    int oldScoreInt = int.Parse(Scoreboard.oldScore);
+                //    if(oldScoreInt < score)
+                //    {
+                //        Scoreboard.WriteScore(score);
+                //        hudRef.showHighScore = true;
+                //    }
+                //    else
+                //    {
+                //        hudRef.showHighScore = true;
+                //    }
 
                     
-                }
-                else if(Scoreboard.oldScore == "No scores yet")
-                {
-                    Scoreboard.WriteScore(score);
-                    hudRef.showHighScore = true;
-                    hudRef.showHighScoreText = false;
-                }
+                //}
+                //else if(Scoreboard.oldScore == "No scores yet")
+                //{
+                //    Scoreboard.WriteScore(score);
+                //    hudRef.showHighScore = true;
+                //    hudRef.showHighScoreText = false;
+                //}
                 
                 LateRemove();
                 Scoreboard.ReadScores();
@@ -80,7 +84,7 @@ namespace GXPEngine {
                 
             }
 
-            score = Time.time - startTime;
+            
             
         }
 

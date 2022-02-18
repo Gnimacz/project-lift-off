@@ -32,6 +32,24 @@ namespace GXPEngine
                 ReadScores();
             }
         }
+        public static void WriteScore(float score)
+        {
+            try
+            {
+                //Pass the filepath and filename to the StreamWriter Constructor
+                StreamWriter sw = new StreamWriter(@"scores.txt");
+                sw.WriteLineAsync($"{score}");
+                sw.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Wrote new scores to file");
+            }
+        }
         public static void WriteScore(int score)
         {
             try
@@ -50,6 +68,7 @@ namespace GXPEngine
                 Console.WriteLine("Wrote new scores to file");
             }
         }
+
         public static void ReadScores()
         {
             
