@@ -42,7 +42,7 @@ namespace GXPEngine {
 
                 serialPort = new SerialPort();
                 serialPort.BaudRate = 9600;
-                serialPort.PortName = ports[1];
+                serialPort.PortName = ports[0];
                 serialPort.Open();
                 Console.WriteLine("port " + serialPort.PortName + " opened");
 
@@ -75,7 +75,7 @@ namespace GXPEngine {
                 }
             }
             catch (Exception) {
-                Console.WriteLine("No Device Connected!\nSwitching controls to keyboard mode");
+                Console.WriteLine("No Device Connected!\nSwitching controls to keyboard mode\nIf there is an arduino connected, try changing the value on line 45 of the ControllerInput.cs script to either a 0, 1 or 2.");
                 serialPort.Close();
                 _controllerConnected = false;
                 Console.WriteLine(_controllerConnected);
