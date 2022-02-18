@@ -35,7 +35,7 @@ using GXPEngine;
             currentLiveTime = Time.now - startLiveTime;
             if (currentLiveTime >= maxLifeTime) {
                 owner.AllowRotation();
-                LateDestroy();
+                LateRemove();
             }
         }
     }

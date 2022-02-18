@@ -48,7 +48,7 @@ public class SuicideBoi : AnimationSprite {
                 }
 
                 if(currentFrame == 6)
-                    LateDestroy();
+                    LateRemove();
             }
 
         animationCounter++;

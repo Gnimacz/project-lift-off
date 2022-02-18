@@ -64,7 +64,7 @@ public class Sniper : AnimationSprite {
                     sound.IsPaused = false;
                 }
                 if(currentFrame == 5)
-                    LateDestroy();
+                    LateRemove();
             }
 
         animationCounter++;

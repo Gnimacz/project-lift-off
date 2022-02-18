@@ -104,6 +104,7 @@ namespace GXPEngine
         {
             textRenderer.Text($"Current High Score\n{Scoreboard.scores}");
         }
+
         
     }
 }

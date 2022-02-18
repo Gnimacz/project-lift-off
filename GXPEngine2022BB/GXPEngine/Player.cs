@@ -23,7 +23,7 @@ namespace GXPEngine {
 
         private bool canShoot = true;
         private int shootDelay = 150; //delay between bullet shots in ms
-        public int health = 50;
+        public int health = 5;
 
         private Hud hudRef;
         public int score;
@@ -74,10 +74,10 @@ namespace GXPEngine {
                     hudRef.showHighScoreText = false;
                 }
                 
-                LateDestroy();
+                LateRemove();
                 Scoreboard.ReadScores();
+                Globals.shouldReset = true;
                 
-
             }
 
             score = Time.time - startTime;
@@ -312,7 +312,7 @@ namespace GXPEngine {
                     Flash();
 
 
-                    other.LateDestroy();
+                    other.LateRemove();
                 }
             }
 

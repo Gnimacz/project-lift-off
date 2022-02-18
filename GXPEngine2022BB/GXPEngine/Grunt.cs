@@ -62,7 +62,7 @@ public class Grunt : AnimationSprite {
                     sound.IsPaused = false;
                 }
                 if(currentFrame == 7)
-                    LateDestroy();
+                    LateRemove();
             }
 
         animationCounter++;

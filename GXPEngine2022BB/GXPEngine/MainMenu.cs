@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using GXPEngine;
 
 namespace GXPEngine
@@ -48,6 +49,7 @@ namespace GXPEngine
         {
             text.visible = true;
             await Task.Delay(blinkDelay);
+            Console.WriteLine("OKAY?");
             text.visible = false;
             await Task.Delay(blinkDelay);
             text.visible = false;
@@ -65,13 +67,18 @@ namespace GXPEngine
         }
 
         async void sceneSwap() {
+            text.Clear(Color.Empty);
+            Console.WriteLine("LEVEL");
+            text.LateRemove();
             shouldBePlaying = false;
+            game.RemoveChild(this);
             LateRemove();
+            
             MenuIntro.Stop();
             Hud hud = new Hud();
             game.AddChild(hud);
             Level level = new Level();
-            game.LateAddChildAt(level, game.GetChildCount() - 1);
+            game.LateAddChildAt(level, 0);
         }
     }
 }

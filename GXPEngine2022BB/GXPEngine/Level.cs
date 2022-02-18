@@ -32,8 +32,13 @@ public class Level : GameObject {
     void Update() {
         LevelOne();
         LoopBackground();
-
+        if(player.health <= 0)
+        {
+            shouldBePlaying = false;
+            levelMusic.Stop();
+        }
         StartMusicLoop();
+
     }
     void StartMusicLoop() {
         if (!levelMusic.IsPlaying && shouldBePlaying) {
@@ -96,7 +101,7 @@ public class Level : GameObject {
         List<GameObject> CurrentObjectsOnScreen = canvas.GetChildren();
         CurrentObjectsOnScreen.Remove(player);
         foreach (GameObject gameobject in CurrentObjectsOnScreen) {
-            gameobject.LateDestroy();
+            gameobject.LateRemove();
         }
     }
 
@@ -244,7 +249,7 @@ public class Level : GameObject {
         GameObject[] backgrounds = FindObjectsOfType(typeof(Background));
         for (int i = 0; i < backgrounds.Length; i++) {
             if (backgrounds[i].y - 1.5 * screenHeight >= float.Epsilon) {
-                backgrounds[i].LateDestroy();
+                backgrounds[i].LateRemove();
                 
                 switch (backgroundNames[i]) {
                     case "Background1":
@@ -273,12 +278,19 @@ public class Level : GameObject {
         }
     }
     async void sceneSwap() {
-        shouldBePlaying = false;
-        LateRemove();
-        levelMusic.Stop();
-        Hud hud = new Hud();
-        game.LateAddChild(hud);
-        Level level = new Level();
-        game.LateAddChildAt(level, game.GetChildCount() - 1);
+        await Task.Delay(4000);
+        foreach (var item in game.GetChildren())
+        {
+            item.LateRemove();
+        }
+        enemiesLeft = 55;
+        currentNumberOfEnemies = 0;
+
+        Sprite sprite = new Sprite("PlayerSingle.png");
+        game.AddChild(sprite);
+        MainMenu main = new MainMenu();
+        game.AddChild(main);
+
     }
+
 }

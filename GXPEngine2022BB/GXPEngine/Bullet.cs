@@ -43,9 +43,9 @@ namespace GXPEngine {
 
         private void OutOfBounds() {
             if (x - Level.screenWidth > float.Epsilon || x < float.Epsilon)
-                LateDestroy();
+                LateRemove();
             if (y - Level.screenHeight > float.Epsilon || y < float.Epsilon)
-                LateDestroy();
+                LateRemove();
         }
     }
 }

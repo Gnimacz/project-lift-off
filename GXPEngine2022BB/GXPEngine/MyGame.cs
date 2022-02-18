@@ -6,15 +6,10 @@ using System.Threading.Tasks;
 
 public class MyGame : Game {
 
+    Sprite fake;
     public MyGame() : base(1366, 768, false) {
-        //read the scoreboard file to get the current high score
-        readscores();
         
-
-        // Create a window that's 800x600 and NOT fullscreen
-        // Draw some things on a canvas:
-        MainMenu menu = new MainMenu();
-        AddChild(menu);
+        Setup();
         
 
         // Add the canvas to the engine to display it:
@@ -25,20 +20,48 @@ public class MyGame : Game {
         new MyGame().Start(); // Create a "MyGame" and start it
     }
 
+
     private void readscores()
     {
         Scoreboard.ReadScores();
     }
 
+    void Update()
+    {
+        if (Globals.shouldReset)
+        {
+            Globals.shouldReset = false;
+            Restart();
+        }
+    }
+
+    //not sure why but this seems to break the whole game. Not sure how to fix
     public async void Restart()
     {
-        await Task.Delay(5000);
+        await Task.Delay(4000);
         foreach (GameObject item in game.GetChildren())
         {
-            item.LateDestroy();
+            item.LateRemove();
         }
         await Task.Delay(1000);
-        Main();
+        Setup();
+    }
+
+    private void Setup()
+    {
+        foreach (var item in GetChildren())
+        {
+            item.Remove();
+        }
+
+        //read the scoreboard file to get the current high score
+        readscores();
+
+
+        // Create a window that's 800x600 and NOT fullscreen
+        // Draw some things on a canvas:
+        MainMenu menu = new MainMenu();
+        AddChild(menu);
     }
 
 
