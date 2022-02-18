@@ -26,14 +26,14 @@ public class MyGame : Game {
         Scoreboard.ReadScores();
     }
 
-    void Update()
-    {
-        if (Globals.shouldReset)
-        {
-            Globals.shouldReset = false;
-            Restart();
-        }
-    }
+    //void Update()
+    //{
+    //    if (Globals.shouldReset)
+    //    {
+    //        Globals.shouldReset = false;
+    //        Restart();
+    //    }
+    //}
 
     //not sure why but this seems to break the whole game. Not sure how to fix
     public async void Restart()
