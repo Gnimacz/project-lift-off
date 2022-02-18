@@ -113,9 +113,7 @@ public class Level : GameObject {
 
         if (currentNumberOfEnemies == 0 && enemiesLeft == 55) {
             SpawnGrunt(screenWidth / 2, 153, canvas, player, 1);
-            SpawnKamikazee(800, 900, canvas, player);
-            SpawnSniper(screenWidth / 2, 100, canvas, player);
-        }
+            }
 
         if (currentNumberOfEnemies == 0 && enemiesLeft == 54) {
             player.health = 5;
@@ -197,14 +195,14 @@ public class Level : GameObject {
             SpawnGrunt(227 * 5, -50, canvas, player, 1);
         }
 
-        if (currentNumberOfEnemies == 0 && enemiesLeft == 17) {
+        if (currentNumberOfEnemies == 0 && enemiesLeft == 15) {
             player.health = 5;
             hudRef.ResetSprites(player.health);
             SpawnGrunt(227, -50, canvas, player, 2);
             SpawnGrunt(227 * 5, -50, canvas, player, 2);
             }
 
-        if (currentNumberOfEnemies == 0 && enemiesLeft == 10) {
+        if (currentNumberOfEnemies == 0 && enemiesLeft == 13) {
             //set grunt shoot level 2 or spawn grunt level 2
             player.health = 5;
             hudRef.ResetSprites(player.health);
@@ -214,7 +212,7 @@ public class Level : GameObject {
             SpawnGrunt(-300, 300, canvas, player, 2);
             SpawnGrunt(1700, 300, canvas, player, 2);
         }
-        if (currentNumberOfEnemies == 0 && enemiesLeft == 10)
+        if (currentNumberOfEnemies == 0 && enemiesLeft == 8)
         {
             //set grunt shoot level 2 or spawn grunt level 2
             player.health = 5;
@@ -228,9 +226,7 @@ public class Level : GameObject {
 
             SpawnGrunt(-300, 300, canvas, player, 2);
             SpawnGrunt(1700, 300, canvas, player, 2);
-            SpawnGrunt(-300, -300, canvas, player, 2);
-            SpawnGrunt(1700, -300, canvas, player, 2);
-        }
+            }
 
         if (Input.GetKeyDown(Key.Q)) {
             ClearEnemies(canvas, player);
