@@ -44,7 +44,7 @@ namespace GXPEngine {
                 serialPort.BaudRate = 9600;
                 serialPort.PortName = ports[0];
                 serialPort.Open();
-                Console.WriteLine("port " + serialPort.PortName + " opened");
+                Console.WriteLine("port " + serialPort.PortName + " opened\nIf the controls don't work. Try switching the com port number at line 45 in ControllerInput.cs");
 
                 if (serialPort.IsOpen) {
                     _controllerConnected = true;
