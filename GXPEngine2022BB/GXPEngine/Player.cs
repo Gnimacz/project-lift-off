@@ -39,8 +39,7 @@ namespace GXPEngine {
 
             LateAddChild(bulletSpawnPoint);
 
-            Thread thread = new Thread(ControllerInput.GetControllerState);
-            thread.Start();
+            
 
             hudRef = game.FindObjectOfType<Hud>();
 
@@ -93,14 +92,14 @@ namespace GXPEngine {
             velocity = new Vector2(0, 0);
             if (ControllerInput.controllerConnected)
             {
-                if (ControllerInput.joystickX > 0.04 || ControllerInput.joystickX < -0.04)
+                if (ControllerInput.joystickX > 0.4 || ControllerInput.joystickX < -0.4)
                 {
-                    velocity.x = ControllerInput.joystickX;
+                    velocity.x = -1 * ControllerInput.joystickX;
                 }
 
-                if (ControllerInput.joystickY > 0.04 || ControllerInput.joystickY < -0.04)
+                if (ControllerInput.joystickY > 0.4 || ControllerInput.joystickY < -0.4)
                 {
-                    velocity.y = ControllerInput.joystickY;
+                    velocity.y = -1 * ControllerInput.joystickY;
                 }
 
                 //rotation
@@ -176,7 +175,7 @@ namespace GXPEngine {
 
 
             //shooting
-            if (ControllerInput.Button12 == 1 && canShoot || Input.GetKey(Key.SPACE) && canShoot)
+            if (ControllerInput.Button9 == 1 && canShoot || Input.GetKey(Key.SPACE) && canShoot)
             {
                 Shoot();
                 canShoot = false;

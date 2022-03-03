@@ -3,12 +3,15 @@ using System.Collections.Generic; // System contains a lot of default C# librari
 using GXPEngine; // GXPEngine contains the engine
 using System.Drawing; // System.Drawing contains drawing tools such as Color definitions
 using System.Threading.Tasks;
+using System.Threading;
 
 public class MyGame : Game {
 
     Sprite fake;
     public MyGame() : base(1366, 768, false) {
-        
+        Thread thread = new Thread(ControllerInput.GetControllerState);
+        thread.Start();
+
         Setup();
         
 
